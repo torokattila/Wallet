@@ -33,4 +33,4 @@ const config = {
     },
 };
 
-module.exports = [config[env] || config['development'], config['seed']];
+module.exports = [config[env] || config['development']];

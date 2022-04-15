@@ -1,4 +1,4 @@
-import config from 'config';
+import config from '../config';
 import path from 'path';
 import winston, { Logger } from 'winston';
 import dailyRotate from 'winston-daily-rotate-file';
