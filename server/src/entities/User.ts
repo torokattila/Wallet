@@ -7,7 +7,7 @@ export default class User extends EntityBase {
     @Column({ name: 'google_id' })
     googleId: string;
 
-    @Column()
+    @Column({ unique: true })
     email: string;
 
     @Column()
