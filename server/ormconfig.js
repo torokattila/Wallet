@@ -13,8 +13,8 @@ const config = {
         cli: {
             migrationsDir: 'db/migrations',
         },
-        logging: true,
-        synchronize: false,
+        logging: false,
+        synchronize: true,
     },
     production: {
         type: 'postgres',
@@ -29,7 +29,7 @@ const config = {
             migrationsDir: 'db/migrations',
         },
         logging: false,
-        synchronize: false,
+        synchronize: true,
     },
 };
 
