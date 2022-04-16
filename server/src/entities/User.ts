@@ -19,6 +19,9 @@ export default class User extends EntityBase {
     @Column()
     password: string;
 
+    @Column({ default: 0 })
+    balance: number;
+
     @OneToMany(() => Purchase, (purchase) => purchase.user)
     purchases: Purchase[];
 }

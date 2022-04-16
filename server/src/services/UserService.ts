@@ -1,4 +1,4 @@
-import User from 'entities/User';
+import User from '../entities/User';
 import bcrypt from 'bcrypt';
 import { getConnection } from 'typeorm';
 import { Logger } from 'common';
@@ -16,6 +16,23 @@ class UserService {
         } catch (error: any) {
             logger.error('find_by_email_failed_in_UserService');
             throw new Error(error);
+        }
+    }
+
+    public async findById(userId: string): Promise<User> {
+        try {
+            const queryBuilder =
+                this.gerRepository().createQueryBuilder('user');
+            queryBuilder.leftJoinAndSelect('user.purchases', 'purchases');
+            queryBuilder.andWhere('user.id = :id', { id: userId });
+
+            const user = await queryBuilder.getOne();
+            delete user.password;
+
+            return Promise.resolve(user);
+        } catch (error: any) {
+            logger.error('Find user by id operation failed in UserService');
+            throw new Error('user_not_found');
         }
     }
 

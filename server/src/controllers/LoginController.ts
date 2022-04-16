@@ -20,6 +20,8 @@ class LoginController {
     }
 
     private async login(req: Request, res: Response) {
+        logger.info('POST /login called');
+
         const { email, password } = req.body;
 
         try {
@@ -36,7 +38,7 @@ class LoginController {
 
                 delete user.password;
 
-                logger.info(`/login status code: ${StatusCodes.OK}`);
+                logger.info(`POST /login status code: ${StatusCodes.OK}`);
                 return res
                     .status(StatusCodes.OK)
                     .send({ login: 'success', token: accessToken, user });
