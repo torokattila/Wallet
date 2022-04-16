@@ -34,6 +34,13 @@ class UserService {
         return bcrypt.hash(hashBase, 10);
     }
 
+    public verifyPassword(
+        password1: string,
+        password2: string
+    ): Promise<boolean> {
+        return bcrypt.compare(password1, password2);
+    }
+
     public validatePasswordMatch(
         password: string,
         passwordConfirm: string

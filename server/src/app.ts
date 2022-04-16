@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import express, { Application } from 'express';
 import cors from 'cors';
 import RegistrationController from 'controllers/RegistrationController';
+import LoginController from 'controllers/LoginController';
 
 class App {
     public express: Application;
@@ -19,6 +20,7 @@ class App {
 
     private routes() {
         this.express.use('/register', RegistrationController);
+        this.express.use('/login', LoginController);
     }
 
     private middlewares() {

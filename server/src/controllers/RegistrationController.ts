@@ -1,7 +1,8 @@
-import { NextFunction, Request, Response, Router } from 'express';
+import { Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { PromiseRejectionHandler } from '../common';
 import UserService from 'services/UserService';
+import { sign } from 'jsonwebtoken';
 import { Logger } from '../common';
 
 const logger = Logger(__filename);
@@ -60,13 +61,30 @@ class RegistrationController {
             });
         }
 
+        delete data.passwordConfirm;
+
         const user = await UserService.save(data);
         user.password = await UserService.generateHash(user.password);
 
         const result = await UserService.save(user);
+        const secret: string | undefined = process.env.JWT_TOKEN_SECRET;
 
-        logger.info(`POST /register status code: ${StatusCodes.OK}`);
-        return res.status(StatusCodes.OK).send(result);
+        delete result.password;
+
+        if (secret) {
+            const accessToken = sign(
+                {
+                    id: user.id,
+                },
+                secret
+            );
+
+            logger.info(`POST /register status code: ${StatusCodes.CREATED}`);
+            return res.status(StatusCodes.OK).send({
+                token: accessToken,
+                user: result,
+            });
+        }
     }
 }
 
