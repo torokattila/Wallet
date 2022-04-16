@@ -1,10 +1,10 @@
-import { Column, Entity, OneToMany } from "typeorm";
-import EntityBase from "./EntityBase";
-import Purchase from "./Purchase";
+import { Column, Entity, OneToMany } from 'typeorm';
+import EntityBase from './EntityBase';
+import Purchase from './Purchase';
 
 @Entity({ name: 'users' })
 export default class User extends EntityBase {
-    @Column({ name: 'google_id' })
+    @Column({ name: 'google_id', nullable: true })
     googleId: string;
 
     @Column({ unique: true })

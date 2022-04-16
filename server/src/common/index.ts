@@ -1,3 +1,4 @@
 import Logger from 'common/Logger';
+import PromiseRejectionHandler from './PromiseRejectionHandler';
 
-export { Logger };
+export { Logger, PromiseRejectionHandler };
