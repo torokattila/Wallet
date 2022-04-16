@@ -22,6 +22,7 @@ const config: any = {
         port: process.env.PORT,
         jwtTokenSecret: process.env.JWT_TOKEN_SECRET,
         tokenSecret: process.env.TOKEN_SECRET,
+        defaultPageSize: Number.MAX_SAFE_INTEGER,
     },
     development: {
         env: 'dev',

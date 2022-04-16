@@ -2,10 +2,14 @@ import Currency from '../enums/Currency';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import EntityBase from './EntityBase';
 import User from './User';
+import PurchaseCategory from '../enums/PurchaseCategory';
 
 @Entity({ name: 'purchases' })
 export default class Purchase extends EntityBase {
-    @ManyToOne(() => User, (user) => user.purchases, { onDelete: 'CASCADE', cascade: true })
+    @ManyToOne(() => User, (user) => user.purchases, {
+        onDelete: 'CASCADE',
+        cascade: true,
+    })
     @JoinColumn({ name: 'user_id' })
     user: User;
 
@@ -21,4 +25,11 @@ export default class Purchase extends EntityBase {
         default: Currency.HUF,
     })
     currency: Currency;
+
+    @Column({
+        type: 'enum',
+        enum: PurchaseCategory,
+        default: PurchaseCategory.OTHER,
+    })
+    category: PurchaseCategory;
 }

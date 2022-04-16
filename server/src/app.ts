@@ -2,8 +2,11 @@ import config from './config';
 import morgan from 'morgan';
 import express, { Application } from 'express';
 import cors from 'cors';
-import RegistrationController from 'controllers/RegistrationController';
-import LoginController from 'controllers/LoginController';
+import RegistrationController from './controllers/RegistrationController';
+import LoginController from './controllers/LoginController';
+import PurchaseController from './controllers/PurchaseController';
+import UserController from './controllers/UserController';
+import { authenticate } from 'middlewares/Authenticate';
 
 class App {
     public express: Application;
@@ -21,6 +24,8 @@ class App {
     private routes() {
         this.express.use('/register', RegistrationController);
         this.express.use('/login', LoginController);
+        this.express.use('/users', authenticate, UserController);
+        this.express.use('/purchases', authenticate, PurchaseController);
     }
 
     private middlewares() {
