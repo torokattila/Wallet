@@ -14,7 +14,6 @@ const logger = Logger(__filename);
 
 const PurchaseSchema = Yup.object().shape({
     amount: Yup.number().required('amount_required'),
-    currency: Yup.string().required('currency_required'),
     category: Yup.string().required('category_required'),
     userId: Yup.string().required('user_id_required'),
 });
@@ -46,14 +45,6 @@ class PurchaseController {
         const { page, size, from, to, category } = req.query;
         const filter = {} as PurchaseFilterOptions;
         const pagination = {} as PaginationOptions;
-
-        const testUser = new User();
-        testUser.id = 'aa514990-1b91-451e-af7f-b21057155555';
-        testUser.email = 'torcsiattila93@gmail.com';
-        testUser.firstname = 'Attila';
-        testUser.lastname = 'Török';
-
-        req.user = testUser;
 
         const userId = req.user.id;
 

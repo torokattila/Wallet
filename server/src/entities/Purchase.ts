@@ -1,4 +1,3 @@
-import Currency from '../enums/Currency';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import EntityBase from './EntityBase';
 import User from './User';
@@ -18,13 +17,6 @@ export default class Purchase extends EntityBase {
 
     @Column()
     amount: number;
-
-    @Column({
-        type: 'enum',
-        enum: Currency,
-        default: Currency.HUF,
-    })
-    currency: Currency;
 
     @Column({
         type: 'enum',
