@@ -66,7 +66,7 @@ class PurchaseService {
             if (findParams.filter.to) {
                 queryBuilder.andWhere(
                     new Brackets((qb) => {
-                        qb.where('purchase.to <= :to', {
+                        qb.where('purchase.created <= :to', {
                             to: findParams.filter.to,
                         });
                     })
@@ -130,7 +130,6 @@ class PurchaseService {
             oldPurchase.amount = purchase.amount;
             oldPurchase.category = purchase.category;
             oldPurchase.modified = new Date();
-            oldPurchase.currency = purchase.currency;
 
             const updatedPurchase = await this.getRepository().save(
                 oldPurchase

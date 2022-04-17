@@ -24,6 +24,8 @@ class UserService {
             const queryBuilder =
                 this.gerRepository().createQueryBuilder('user');
             queryBuilder.leftJoinAndSelect('user.purchases', 'purchases');
+            queryBuilder.leftJoinAndSelect('user.incomes', 'incomes');
+
             queryBuilder.andWhere('user.id = :id', { id: userId });
 
             const user = await queryBuilder.getOne();

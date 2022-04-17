@@ -7,6 +7,7 @@ import LoginController from './controllers/LoginController';
 import PurchaseController from './controllers/PurchaseController';
 import UserController from './controllers/UserController';
 import { authenticate } from 'middlewares/Authenticate';
+import IncomeController from 'controllers/IncomeController';
 
 class App {
     public express: Application;
@@ -26,6 +27,7 @@ class App {
         this.express.use('/login', LoginController);
         this.express.use('/users', authenticate, UserController);
         this.express.use('/purchases', authenticate, PurchaseController);
+        this.express.use('/incomes', authenticate, IncomeController);
     }
 
     private middlewares() {

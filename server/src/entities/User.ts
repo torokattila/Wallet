@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import EntityBase from './EntityBase';
+import Income from './Income';
 import Purchase from './Purchase';
 
 @Entity({ name: 'users' })
@@ -24,4 +25,7 @@ export default class User extends EntityBase {
 
     @OneToMany(() => Purchase, (purchase) => purchase.user)
     purchases: Purchase[];
+
+    @OneToMany(() => Income, (income) => income.user)
+    incomes: Income[];
 }
