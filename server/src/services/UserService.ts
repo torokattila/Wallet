@@ -8,7 +8,7 @@ const logger = Logger(__filename);
 class UserService {
     public async findByEmail(email: string): Promise<User> {
         try {
-            const foundUser = await this.gerRepository().findOne({
+            const foundUser = await this.getRepository().findOne({
                 where: { email },
             });
 
@@ -22,7 +22,7 @@ class UserService {
     public async findById(userId: string): Promise<User> {
         try {
             const queryBuilder =
-                this.gerRepository().createQueryBuilder('user');
+                this.getRepository().createQueryBuilder('user');
             queryBuilder.leftJoinAndSelect('user.purchases', 'purchases');
             queryBuilder.leftJoinAndSelect('user.incomes', 'incomes');
 
@@ -38,15 +38,66 @@ class UserService {
         }
     }
 
+    public async update(userId: string, user: Partial<User>): Promise<User> {
+        try {
+            const editedUser = user;
+            editedUser.modified = new Date();
+
+            await this.getRepository().update(userId, editedUser);
+
+            const result = await this.findById(userId);
+
+            return result;
+        } catch (error: any) {
+            console.log(error);
+            logger.error('Update operation failed in UserService');
+            throw new Error('update_operation_failed_in_UserService');
+        }
+    }
+
     public async save(user: User): Promise<User> {
         try {
-            const savedUser = await this.gerRepository().save(user);
+            const savedUser = await this.getRepository().save(user);
 
             return savedUser;
         } catch (error: any) {
             logger.error('user_save_failed_in_UserService');
             throw new Error(error);
         }
+    }
+
+    public async delete(userId: string): Promise<void> {
+        try {
+            await this.getRepository().delete(userId);
+        } catch (error: any) {
+            logger.error('Delete operation failed in UserService');
+            throw new Error('delete_operation_failed_in_UserService');
+        }
+    }
+
+    public async updatePassword(id: string, password: string): Promise<User> {
+        try {
+            const foundUser = await this.getRepository().findOne({
+                where: { id },
+            });
+            foundUser.password = await this.generateHash(password);
+            foundUser.modified = new Date();
+
+            const savedUser = await this.getRepository().save(foundUser);
+            delete savedUser.password;
+
+            return savedUser;
+        } catch (error: any) {
+            logger.error('Update password operation failed in UserService');
+            throw new Error('update_password_operation_failed_in_UserService');
+        }
+    }
+
+    public async comparePassword(
+        password1: string,
+        password2: string
+    ): Promise<boolean> {
+        return await bcrypt.compare(password1, password2);
     }
 
     public generateHash(hashBase: string) {
@@ -69,7 +120,7 @@ class UserService {
         return true;
     }
 
-    private gerRepository() {
+    private getRepository() {
         return getConnection().getRepository(User);
     }
 }
