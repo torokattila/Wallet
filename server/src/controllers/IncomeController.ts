@@ -6,6 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 import IncomeService, { IncomeFilterOptions } from '../services/IncomeService';
 import { validate as uuidValidate } from 'uuid';
 import PaginationOptions from 'types/PaginationOptions';
+import User from 'entities/User';
 
 const logger = Logger(__filename);
 

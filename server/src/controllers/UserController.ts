@@ -5,7 +5,6 @@ import { Logger } from '../common';
 import { validate as uuidValidate } from 'uuid';
 import UserService from 'services/UserService';
 import * as Yup from 'yup';
-import User from 'entities/User';
 
 const logger = Logger(__filename);
 
@@ -30,6 +29,31 @@ class UserController {
             PromiseRejectionHandler(this.updatePassword)
         );
         this.router.delete('/:id', PromiseRejectionHandler(this.deleteUser));
+    }
+
+    private async getUser(req: Request, res: Response) {
+        logger.info(
+            `GET /users/:id called, id param: ${JSON.stringify(req.params.id)}`
+        );
+
+        const id = req.params.id;
+
+        if (!id || !uuidValidate(id)) {
+            throw new Error('invalid_path_parameters');
+        }
+
+        const user = await UserService.findById(id);
+
+        if (!user) {
+            return res.status(StatusCodes.BAD_REQUEST).send({
+                errors: ['user_not_found'],
+            });
+        }
+
+        delete user.password;
+
+        logger.info(`GET /users/:id status code: ${StatusCodes.OK}`);
+        return res.status(StatusCodes.OK).send(user);
     }
 
     private async updateUser(req: Request, res: Response) {
@@ -60,31 +84,6 @@ class UserController {
 
         logger.info(`PUT /users/:id status code: ${StatusCodes.OK}`);
         return res.status(StatusCodes.OK).send(updatedUser);
-    }
-
-    private async getUser(req: Request, res: Response) {
-        logger.info(
-            `GET /users/:id called, id param: ${JSON.stringify(req.params.id)}`
-        );
-
-        const id = req.params.id;
-
-        if (!id || !uuidValidate(id)) {
-            throw new Error('invalid_path_parameters');
-        }
-
-        const user = await UserService.findById(id);
-
-        if (!user) {
-            return res.status(StatusCodes.BAD_REQUEST).send({
-                errors: ['user_not_found'],
-            });
-        }
-
-        delete user.password;
-
-        logger.info(`GET /users/:id status code: ${StatusCodes.OK}`);
-        return res.status(StatusCodes.OK).send(user);
     }
 
     private async updatePassword(req: Request, res: Response) {
@@ -155,7 +154,7 @@ class UserController {
             throw new Error('invalid_path_parameters');
         }
 
-        await UserService.delete(id);
+        await UserService.remove(id);
 
         logger.info(`DELETE /users/:id status code: ${StatusCodes.NO_CONTENT}`);
         return res.sendStatus(StatusCodes.NO_CONTENT);

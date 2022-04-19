@@ -47,7 +47,12 @@ class RegistrationController {
             });
         }
 
-        if (!data.firstname.trim() || !data.lastname.trim()) {
+        if (
+            !data.firstname ||
+            !data.lastname ||
+            data.firstname.trim() === '' ||
+            data.lastname.trim() === ''
+        ) {
             return res.status(StatusCodes.BAD_REQUEST).send({
                 errors: ['firstname_and_lastname_required'],
             });

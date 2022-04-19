@@ -24,8 +24,20 @@ class LoginController {
 
         const { email, password } = req.body;
 
+        if (!email) {
+            return res.status(StatusCodes.BAD_REQUEST).send({
+                errors: ['email_is_required'],
+            });
+        }
+
+        if (!password) {
+            return res.status(StatusCodes.BAD_REQUEST).send({
+                errors: ['password_is_required'],
+            });
+        }
+
         try {
-            const user = await LoginService.authenticate(
+            const user = await LoginService.authenticateLogin(
                 email as string,
                 password as string
             );

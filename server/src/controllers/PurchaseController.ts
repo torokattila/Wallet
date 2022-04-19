@@ -8,7 +8,6 @@ import PurchaseService, {
 } from 'services/PurchaseService';
 import { validate as uuidValidate } from 'uuid';
 import PaginationOptions from 'types/PaginationOptions';
-import User from 'entities/User';
 
 const logger = Logger(__filename);
 
