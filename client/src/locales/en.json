@@ -1,0 +1,22 @@
+{
+    "general": {
+        "login": {
+            "registration": "Registration",
+            "login": "Login",
+            "login_google": "Login with Google account"
+        },
+        "form": {
+            "password": "Password",
+            "passwordConfirm": "Password confirmation",
+            "firstname": "Firstname",
+            "lastname": "Lastname",
+            "wrong_username_or_password": "Wrong username or password",
+            "firstname_required": "Firstname is required",
+            "lastname_required": "Lastname is required",
+            "password_required": "Password is required",
+            "password_confirm_required": "Password confirmation is required",
+            "email_required": "Email address is required",
+            "existing_email": "Existing email address"
+        }
+    }
+}
