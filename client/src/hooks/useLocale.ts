@@ -7,13 +7,13 @@ const LANGS = [
         label: 'English',
         value: 'en',
         systemValue: enUS,
-        icon: '/static/icons/ic_flag_en.svg',
+        icon: '/static/ic_flag_en.svg',
     },
     {
         label: 'Magyar',
         value: 'hu',
         systemValue: huHU,
-        icon: '/static/icons/ic_flag_hu.svg',
+        icon: '/static/ic_flag_hu.svg',
     },
 ];
 

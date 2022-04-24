@@ -1,3 +1,4 @@
+import React from 'react';
 import { createContext, ReactNode, useEffect, useReducer } from 'react';
 import {
     ActionMap,
@@ -5,8 +6,6 @@ import {
     AuthState,
 } from '../@types/authentication';
 import User from '../models/User';
-import axios from '../utils/axios';
-import config from '../config/index';
 import useApi from '../hooks/useApi';
 import AuthTypes from '../enums/AuthTypes';
 
