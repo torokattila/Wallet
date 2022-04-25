@@ -2,9 +2,10 @@ import { styled } from '@mui/material/styles';
 import { Box, Container, Stack } from '@mui/material';
 import LanguagePopover from '../../layouts/LanguagePopover';
 import useLocales from '../../hooks/useLocale';
+import LoginForm from '../../components/Login/LoginForm';
 
 const ContentStyle = styled('div')(({ theme }) => ({
-    maxWidth: 480,
+    maxWidth: 650,
     margin: 'auto',
     display: 'flex',
     flexDirection: 'column',
@@ -37,8 +38,8 @@ const Login = (): JSX.Element => {
                 </Box>
             </Box>
 
-            <Container maxWidth="md">
-                <Container maxWidth="sm">
+            <Container maxWidth="lg">
+                <Container maxWidth="md">
                     <ContentStyle>
                         <Stack
                             direction="row"
@@ -51,7 +52,7 @@ const Login = (): JSX.Element => {
                                 style={{ maxWidth: '15vw', maxHeight: 'auto' }}
                             />
                         </Stack>
-                        <div>Login</div>
+                        <LoginForm />
                     </ContentStyle>
                 </Container>
             </Container>
