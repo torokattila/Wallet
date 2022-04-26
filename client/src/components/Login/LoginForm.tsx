@@ -51,6 +51,19 @@ const LoginForm = (): JSX.Element => {
                         </Typography>
                     </Button>
                 </Stack>
+
+                <Stack sx={{ pt: 5 }} alignItems="flex-end" spacing={2}>
+                    <Typography color="secondary" variant="subtitle1">
+                        Nincs még fiókod?
+                    </Typography>
+                    <Button
+                        color="secondary"
+                        sx={{ fontWeight: 'bold' }}
+                        variant="outlined"
+                    >
+                        Regisztráció
+                    </Button>
+                </Stack>
             </Card>
         </Stack>
     );

@@ -1,18 +1,29 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import './App.css';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import useAuth from './hooks/useAuth';
 import Router from './routes';
+import './index.css';
+import './fonts/NunitoSans-Regular.ttf';
+import { ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material';
+
+const theme = createTheme({
+    typography: {
+        fontFamily: 'NunitoSans',
+    },
+});
 
 function App() {
     const { isInitialized } = useAuth();
     const queryClient = new QueryClient();
 
     return (
-        <QueryClientProvider client={queryClient}>
-            {isInitialized ? <Router /> : <LoadingScreen />}
-        </QueryClientProvider>
+        <ThemeProvider theme={theme}>
+            <QueryClientProvider client={queryClient}>
+                {isInitialized ? <Router /> : <LoadingScreen />}
+            </QueryClientProvider>
+        </ThemeProvider>
     );
 }
 

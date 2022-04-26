@@ -1,8 +1,9 @@
 import { styled } from '@mui/material/styles';
-import { Box, Container, Stack } from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
 import LanguagePopover from '../../layouts/LanguagePopover';
 import useLocales from '../../hooks/useLocale';
 import LoginForm from '../../components/Login/LoginForm';
+import './Login.css';
 
 const ContentStyle = styled('div')(({ theme }) => ({
     maxWidth: 650,
@@ -19,7 +20,7 @@ const Login = (): JSX.Element => {
     };
 
     return (
-        <>
+        <div className='login-page-container'>
             <Box
                 sx={{
                     display: 'flex',
@@ -41,22 +42,31 @@ const Login = (): JSX.Element => {
             <Container maxWidth="lg">
                 <Container maxWidth="md">
                     <ContentStyle>
-                        <Stack
-                            direction="row"
-                            justifyContent="center"
-                            sx={{ mb: 5 }}
-                        >
+                        <Stack direction="row" justifyContent="center">
                             <img
                                 src="/wallet.png"
                                 alt="wallet_logo"
-                                style={{ maxWidth: '15vw', maxHeight: 'auto' }}
+                                style={{ maxWidth: '140px', maxHeight: 'auto' }}
                             />
+                        </Stack>
+                        <Stack
+                            justifyContent="center"
+                            alignItems="center"
+                            sx={{ mb: 4 }}
+                        >
+                            <Typography
+                                sx={{ fontWeight: 'bold' }}
+                                color="#3F087A"
+                                variant="h4"
+                            >
+                                Wallet.
+                            </Typography>
                         </Stack>
                         <LoginForm />
                     </ContentStyle>
                 </Container>
             </Container>
-        </>
+        </div>
     );
 };
 
