@@ -1,5 +1,5 @@
 .login-page-container {
-    background: url('../../../public/static/layered-waves.svg');
+    background: url('../../../../public/static/layered-waves.svg');
     background-size: cover;
     object-fit: cover;
     background-repeat: no-repeat;

@@ -1,8 +1,12 @@
 import { styled } from '@mui/material/styles';
 import { Box, Container, Stack, Typography } from '@mui/material';
-import LanguagePopover from '../../layouts/LanguagePopover';
-import useLocales from '../../hooks/useLocale';
-import LoginForm from '../../components/Login/LoginForm';
+import LanguagePopover from '../../../layouts/LanguagePopover';
+import LoginForm from '../../../components/Login/LoginForm';
+import RegistrationForm from '../../../components/Registration/RegistrationForm';
+
+import useLocales from '../../../hooks/useLocale';
+import { useLocation } from 'react-router-dom';
+
 import './Login.css';
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -14,13 +18,14 @@ const ContentStyle = styled('div')(({ theme }) => ({
 }));
 
 const Login = (): JSX.Element => {
+    const location = useLocation();
     const { onChangeLang, translate, currentLang, allLang } = useLocales();
     const handleLanguageChange = (value: string) => {
         onChangeLang(value);
     };
 
     return (
-        <div className='login-page-container'>
+        <div className="login-page-container">
             <Box
                 sx={{
                     display: 'flex',
@@ -62,7 +67,11 @@ const Login = (): JSX.Element => {
                                 Wallet.
                             </Typography>
                         </Stack>
-                        <LoginForm />
+                        {location.pathname === '/login' ? (
+                            <LoginForm />
+                        ) : location.pathname === '/register' ? (
+                            <RegistrationForm />
+                        ) : null}
                     </ContentStyle>
                 </Container>
             </Container>

@@ -1,9 +1,8 @@
 import { Button, Card, Stack, TextField, Typography } from '@mui/material';
-import GoogleIcon from '@mui/icons-material/Google';
 import { useNavigate } from 'react-router-dom';
 import useLocales from '../../hooks/useLocale';
 
-const LoginForm = (): JSX.Element => {
+const RegistrationForm = (): JSX.Element => {
     const { translate } = useLocales();
     const navigate = useNavigate();
 
@@ -16,9 +15,21 @@ const LoginForm = (): JSX.Element => {
                     align="center"
                     variant="h5"
                 >
-                    {translate('general.login.login')}
+                    {translate('general.login.registration')}
                 </Typography>
                 <Stack spacing={3}>
+                    <TextField
+                        color="secondary"
+                        fullWidth
+                        type="text"
+                        label={translate('general.form.lastname')}
+                    />
+                    <TextField
+                        color="secondary"
+                        fullWidth
+                        type="text"
+                        label={translate('general.form.firstname')}
+                    />
                     <TextField
                         color="secondary"
                         fullWidth
@@ -31,6 +42,12 @@ const LoginForm = (): JSX.Element => {
                         type="password"
                         label={translate('general.form.password')}
                     />
+                    <TextField
+                        color="secondary"
+                        fullWidth
+                        type="password"
+                        label={translate('general.form.password_confirm')}
+                    />
                 </Stack>
 
                 <Stack sx={{ pt: 8 }} spacing={3}>
@@ -39,35 +56,21 @@ const LoginForm = (): JSX.Element => {
                         color="secondary"
                         variant="contained"
                     >
-                        {translate('general.login.login')}
-                    </Button>
-
-                    <Button
-                        variant="outlined"
-                        color="secondary"
-                        sx={{ fontWeight: 'bold', p: 2, borderRadius: '8px' }}
-                    >
-                        <GoogleIcon sx={{ mr: 2, color: 'secondary' }} />
-                        <Typography
-                            variant="subtitle2"
-                            sx={{ fontWeight: 'bold' }}
-                        >
-                            {translate('general.login.login_google')}
-                        </Typography>
+                        {translate('general.login.registration')}
                     </Button>
                 </Stack>
 
                 <Stack sx={{ pt: 5 }} alignItems="flex-end" spacing={2}>
                     <Typography color="secondary" variant="subtitle1">
-                        {translate('general.login.dont_have_account')}
+                        {translate('general.login.have_account')}
                     </Typography>
                     <Button
                         color="secondary"
                         sx={{ fontWeight: 'bold' }}
                         variant="outlined"
-                        onClick={() => navigate('/register')}
+                        onClick={() => navigate('/login')}
                     >
-                        {translate('general.login.registration')}
+                        {translate('general.login.login')}
                     </Button>
                 </Stack>
             </Card>
@@ -75,4 +78,4 @@ const LoginForm = (): JSX.Element => {
     );
 };
 
-export default LoginForm;
+export default RegistrationForm;

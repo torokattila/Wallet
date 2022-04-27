@@ -3,11 +3,14 @@
         "login": {
             "registration": "Regisztráció",
             "login": "Bejelentkezés",
-            "login_google": "Bejelentkezés Google fiókkal"
+            "login_google": "Belépés Google fiókkal",
+            "dont_have_account": "Nincs még fiókod?",
+            "have_account": "Van már fiókod?"
         },
         "form": {
+            "email": "E-mail cím",
             "password": "Jelszó",
-            "passwordConfirm": "Jelszó megerősítése",
+            "password_confirm": "Jelszó megerősítése",
             "firstname": "Keresztnév",
             "lastname": "Vezetéknév",
             "wrong_username_or_password": "Hibás felhasználónév vagy jelszó",

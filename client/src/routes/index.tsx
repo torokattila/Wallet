@@ -9,10 +9,10 @@ export default function Router(): React.ReactElement | null {
             path: '/login',
             element: <Login />,
         },
-        // {
-        //     path: '/register',
-        //     element: <Registration />,
-        // },
+        {
+            path: '/register',
+            element: <Login />,
+        },
         {
             path: '',
             element: (
@@ -30,9 +30,6 @@ export default function Router(): React.ReactElement | null {
     ]);
 }
 
-const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
-// const Registration = Loadable(
-//     lazy(() => import('../pages/authentication/Registration'))
-// );
+const Login = Loadable(lazy(() => import('../pages/authentication/Login/Login')));
 // const UserProfile = Loadable(lazy(() => import('../pages/UserProfile')));
 const Home = Loadable(lazy(() => import('../pages/Home')));

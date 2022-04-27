@@ -3,11 +3,14 @@
         "login": {
             "registration": "Registration",
             "login": "Login",
-            "login_google": "Login with Google account"
+            "login_google": "Login with Google account",
+            "dont_have_account": "Don't you have an account yet?",
+            "have_account": "Do you have an account?"
         },
         "form": {
+            "email": "E-mail address",
             "password": "Password",
-            "passwordConfirm": "Password confirmation",
+            "password_confirm": "Password confirmation",
             "firstname": "Firstname",
             "lastname": "Lastname",
             "wrong_username_or_password": "Wrong username or password",

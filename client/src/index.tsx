@@ -6,19 +6,23 @@ import { LocalizationProvider } from '@mui/lab';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './locales/i18n';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
     <React.StrictMode>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <BrowserRouter>
-                <AuthProvider>
-                    <App />
-                </AuthProvider>
-            </BrowserRouter>
-        </LocalizationProvider>
+        <I18nextProvider i18n={i18n}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <BrowserRouter>
+                    <AuthProvider>
+                        <App />
+                    </AuthProvider>
+                </BrowserRouter>
+            </LocalizationProvider>
+        </I18nextProvider>
     </React.StrictMode>
 );
 
