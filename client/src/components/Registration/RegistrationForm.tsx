@@ -1,10 +1,38 @@
-import { Button, Card, Stack, TextField, Typography } from '@mui/material';
+import {
+    Button,
+    Card,
+    Stack,
+    IconButton,
+    InputAdornment,
+    TextField,
+    Typography,
+} from '@mui/material';
+import eyeFill from '@iconify/icons-eva/eye-fill';
+import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
+import RegistrationContainer from '../../containers/Registration/RegistrationContainer';
 import useLocales from '../../hooks/useLocale';
 
 const RegistrationForm = (): JSX.Element => {
     const { translate } = useLocales();
     const navigate = useNavigate();
+    const {
+        firstname,
+        setFirstame,
+        lastname,
+        setLastame,
+        email,
+        setEmail,
+        password,
+        setPassword,
+        passwordConfirm,
+        setPasswordConfirm,
+        isPassword,
+        setIsPassword,
+        isPasswordConfirm,
+        setIsPasswordConfirm,
+    } = RegistrationContainer();
 
     return (
         <Stack>
@@ -23,30 +51,80 @@ const RegistrationForm = (): JSX.Element => {
                         fullWidth
                         type="text"
                         label={translate('general.form.lastname')}
+                        value={lastname}
+                        onChange={(e) => setLastame(e.target.value)}
                     />
                     <TextField
                         color="secondary"
                         fullWidth
                         type="text"
                         label={translate('general.form.firstname')}
+                        value={firstname}
+                        onChange={(e) => setFirstame(e.target.value)}
                     />
                     <TextField
                         color="secondary"
                         fullWidth
                         type="email"
                         label={translate('general.form.email')}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <TextField
                         color="secondary"
                         fullWidth
-                        type="password"
+                        type={isPassword ? 'password' : 'text'}
                         label={translate('general.form.password')}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={() =>
+                                            setIsPassword(!isPassword)
+                                        }
+                                        edge="end"
+                                    >
+                                        <Icon
+                                            icon={
+                                                isPassword
+                                                    ? eyeFill
+                                                    : eyeOffFill
+                                            }
+                                        />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                     <TextField
                         color="secondary"
                         fullWidth
-                        type="password"
+                        type={isPasswordConfirm ? 'password' : 'text'}
                         label={translate('general.form.password_confirm')}
+                        value={passwordConfirm}
+                        onChange={(e) => setPasswordConfirm(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={() =>
+                                            setIsPasswordConfirm(!isPasswordConfirm)
+                                        }
+                                        edge="end"
+                                    >
+                                        <Icon
+                                            icon={
+                                                isPasswordConfirm
+                                                    ? eyeFill
+                                                    : eyeOffFill
+                                            }
+                                        />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
                     />
                 </Stack>
 

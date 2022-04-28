@@ -31,5 +31,5 @@ export default function Router(): React.ReactElement | null {
 }
 
 const Login = Loadable(lazy(() => import('../pages/authentication/Login/Login')));
-// const UserProfile = Loadable(lazy(() => import('../pages/UserProfile')));
-const Home = Loadable(lazy(() => import('../pages/Home')));
+// const UserProfile = Loadable(lazy(() => import('../pages/Profile')));
+const Home = Loadable(lazy(() => import('../pages/Home/Home')));

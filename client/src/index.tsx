@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './locales/i18n';
+import { SnackbarProvider } from 'notistack';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -18,7 +19,18 @@ root.render(
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <BrowserRouter>
                     <AuthProvider>
-                        <App />
+                        <SnackbarProvider
+                            maxSnack={1}
+                            dense
+                            preventDuplicate
+                            autoHideDuration={3000}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                        >
+                            <App />
+                        </SnackbarProvider>
                     </AuthProvider>
                 </BrowserRouter>
             </LocalizationProvider>

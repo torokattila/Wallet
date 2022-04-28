@@ -16,6 +16,10 @@ class LocalStorageManager {
     async setUser(user: User) {
         localStorage.setItem('user', JSON.stringify(user));
     }
+
+    async setToken(token: string) {
+        localStorage.setItem('access_token', token);
+    }
 }
 
 export default new LocalStorageManager();
