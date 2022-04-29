@@ -18,8 +18,9 @@
             "lastname_required": "Lastname is required",
             "password_required": "Password is required",
             "password_confirm_required": "Password confirmation is required",
+            "passwords_do_not_match": "Passwords do not match",
             "email_required": "Email address is required",
-            "existing_email": "Existing email address"
+            "existing_email": "Email already exists"
         }
     }
 }

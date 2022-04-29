@@ -51,7 +51,7 @@ const LoginContainer = () => {
         }
     };
 
-    const handleSubmit = async (e: React.SyntheticEvent) => {
+    const handleSubmit = async (e: React.SyntheticEvent): Promise<void> => {
         e.preventDefault();
 
         const payload: LoginPayload = {
@@ -62,7 +62,7 @@ const LoginContainer = () => {
         const isFormVerified = await verifyForm();
 
         if (isFormVerified) {
-            axios
+            await axios
                 .post(`${config.loginUrl}`, payload)
                 .then((response: AxiosResponse) => {
                     const { user, token } = response.data;

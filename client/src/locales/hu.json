@@ -18,6 +18,7 @@
             "lastname_required": "A vezetéknév megadása kötelező",
             "password_required": "A jelszó megadása közelező",
             "password_confirm_required": "A jelszó megerősítése közelező",
+            "passwords_do_not_match": "A jelszavak nem egyeznek",
             "email_required": "Az Email cím megadása kötelező",
             "existing_email": "Már létezik felhasználó ilyen Email címmel"
         }
