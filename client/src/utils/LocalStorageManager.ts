@@ -20,6 +20,11 @@ class LocalStorageManager {
     async setToken(token: string) {
         localStorage.setItem('access_token', token);
     }
+
+    async removeLocalStorage() {
+        localStorage.removeItem('user');
+        localStorage.removeItem('access_token');
+    }
 }
 
 export default new LocalStorageManager();

@@ -21,6 +21,10 @@
             "passwords_do_not_match": "A jelszavak nem egyeznek",
             "email_required": "Az Email cím megadása kötelező",
             "existing_email": "Már létezik felhasználó ilyen Email címmel"
+        },
+        "sidebar": {
+            "profile": "Profil",
+            "logout": "Kijelentkezés"
         }
     }
 }

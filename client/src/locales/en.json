@@ -21,6 +21,10 @@
             "passwords_do_not_match": "Passwords do not match",
             "email_required": "Email address is required",
             "existing_email": "Email already exists"
+        },
+        "sidebar": {
+            "profile": "Profile",
+            "logout": "Logout"
         }
     }
 }
