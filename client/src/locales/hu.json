@@ -24,7 +24,16 @@
         },
         "sidebar": {
             "profile": "Profil",
-            "logout": "Kijelentkezés"
+            "logout": "Kijelentkezés",
+            "home_page": "Főoldal"
+        },
+        "profile_page": {
+            "change_data": "Adatok módosítása",
+            "edit": "Módosítás",
+            "change_password": "Jelszó módosítása",
+            "current_password": "Jelenlegi jelszó",
+            "new_password": "Új jelszó",
+            "new_password_confirm": "Új jelszó megerősítése"
         }
     }
 }

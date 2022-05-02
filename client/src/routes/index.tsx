@@ -20,16 +20,20 @@ export default function Router(): React.ReactElement | null {
                     <Home />
                 </AuthGuard>
             ),
-            // children: [
-            //     {
-            //         path: 'profile',
-            //         element: <Profile />
-            //     }
-            // ]
+        },
+        {
+            path: '/profile',
+            element: (
+                <AuthGuard>
+                    <Profile />
+                </AuthGuard>
+            ),
         },
     ]);
 }
 
-const Login = Loadable(lazy(() => import('../pages/authentication/Login/Login')));
-// const UserProfile = Loadable(lazy(() => import('../pages/Profile')));
+const Login = Loadable(
+    lazy(() => import('../pages/authentication/Login/Login'))
+);
+const Profile = Loadable(lazy(() => import('../pages/Profile/Profile')));
 const Home = Loadable(lazy(() => import('../pages/Home/Home')));

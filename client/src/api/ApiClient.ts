@@ -45,7 +45,12 @@ class ApiClient {
 
     async getCurrentUser(): Promise<User> {
         const response: AxiosResponse<User> = await this.client.get<User>(
-            `/me`
+            `/me`,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
         );
         return response.data;
     }

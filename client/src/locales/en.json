@@ -24,7 +24,16 @@
         },
         "sidebar": {
             "profile": "Profile",
-            "logout": "Logout"
+            "logout": "Logout",
+            "home_page": "Home"
+        },
+        "profile_page": {
+            "change_data": "Edit credentials",
+            "edit": "Edit",
+            "change_password": "Change password",
+            "current_password": "Current password",
+            "new_password": "New password",
+            "new_password_confirm": "New password confirmation"
         }
     }
 }
