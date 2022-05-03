@@ -14,6 +14,7 @@
             "firstname": "Keresztnév",
             "lastname": "Vezetéknév",
             "wrong_username_or_password": "Hibás felhasználónév vagy jelszó",
+            "wrong_email_format": "Az email cím formátuma nem megfelelő",
             "firstname_required": "A keresztnév megadása közelező",
             "lastname_required": "A vezetéknév megadása kötelező",
             "password_required": "A jelszó megadása közelező",
@@ -33,7 +34,14 @@
             "change_password": "Jelszó módosítása",
             "current_password": "Jelenlegi jelszó",
             "new_password": "Új jelszó",
-            "new_password_confirm": "Új jelszó megerősítése"
+            "new_password_confirm": "Új jelszó megerősítése",
+            "current_password_required": "A jelenlegi jelszó megadása kötelező",
+            "new_password_required": "Az új jelszó megadása kötelező",
+            "new_password_confirm_required": "Az új jelszó megerősítése kötelező",
+            "wrong_current_password": "A jelenlegi jelszó nem egyezik",
+            "password_change_successful": "Sikeres jelszó módosítás",
+            "validation_error": "Az adatok validálása sikertelen",
+            "password_change_failed": "Sikertelen jelszó módosítás"
         }
     }
 }

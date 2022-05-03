@@ -1,6 +1,7 @@
-import { PromiseRejectionHandler } from "common";
-import { Router, Request, Response } from "express";
-import { StatusCodes } from "http-status-codes";
+import { PromiseRejectionHandler } from 'common';
+import { Router, Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
+import UserService from 'services/UserService';
 
 class MeController {
     router: Router;
@@ -15,7 +16,8 @@ class MeController {
     }
 
     private async getUserData(req: Request, res: Response) {
-        const user = req.user;
+        const requestUser = req.user;
+        const user = await UserService.findById(requestUser.id);
 
         if (!user) return res.sendStatus(StatusCodes.UNAUTHORIZED);
 

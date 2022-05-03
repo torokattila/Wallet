@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 const logger = Logger(__filename);
 
 const UserUpdateSchema = Yup.object().shape({
+    email: Yup.string().required('email_required'),
     firstname: Yup.string().required('firstname_required'),
     lastname: Yup.string().required('lastname_required'),
 });
@@ -88,7 +89,7 @@ class UserController {
 
     private async updatePassword(req: Request, res: Response) {
         logger.info(
-            `PUT /users/:id called, id param: ${JSON.stringify(req.params.id)}`
+            `PUT /users/:id/password/update called, id param: ${JSON.stringify(req.params.id)}`
         );
 
         const id = req.params.id;

@@ -2,6 +2,8 @@ import {
     Box,
     Button,
     Card,
+    IconButton,
+    InputAdornment,
     Stack,
     TextField,
     Typography,
@@ -16,10 +18,36 @@ import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { Icon } from '@iconify/react';
 
+import ProfileContainer from '../../containers/Profile/ProfileContainer';
+
 const Profile = (): JSX.Element => {
     const { translate } = useLocales();
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('sm'));
+
+    const {
+        email,
+        setEmail,
+        firstname,
+        setFirstname,
+        lastname,
+        setLastname,
+        currentPassword,
+        setCurrentPassword,
+        newPassword,
+        setNewPassword,
+        newPasswordConfirm,
+        setNewPasswordConfirm,
+        isCurrentPassword,
+        setIsCurrentPassword,
+        isNewPassword,
+        setIsNewPassword,
+        isNewPasswordConfirm,
+        setIsNewPasswordConfirm,
+        baseDataErrors,
+        passwordChangeErrors,
+        handlePasswordChangeSubmit,
+    } = ProfileContainer();
 
     return (
         <DrawerLayout>
@@ -54,16 +82,22 @@ const Profile = (): JSX.Element => {
                             <TextField
                                 color="secondary"
                                 type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 label={translate('general.form.email')}
                             />
                             <TextField
                                 color="secondary"
-                                type="email"
+                                type="text"
+                                value={lastname}
+                                onChange={(e) => setLastname(e.target.value)}
                                 label={translate('general.form.lastname')}
                             />
                             <TextField
                                 color="secondary"
-                                type="email"
+                                type="text"
+                                value={firstname}
+                                onChange={(e) => setFirstname(e.target.value)}
                                 label={translate('general.form.firstname')}
                             />
                         </Stack>
@@ -91,7 +125,10 @@ const Profile = (): JSX.Element => {
                         width: matches ? '60%' : '100%',
                     }}
                 >
-                    <form>
+                    <form
+                        autoComplete="off"
+                        onSubmit={handlePasswordChangeSubmit}
+                    >
                         <Typography
                             variant="h5"
                             color="secondary"
@@ -106,24 +143,121 @@ const Profile = (): JSX.Element => {
                         >
                             <TextField
                                 color="secondary"
-                                type="password"
+                                type={isCurrentPassword ? 'password' : 'text'}
+                                value={currentPassword}
+                                onChange={(e) =>
+                                    setCurrentPassword(e.target.value)
+                                }
                                 label={translate(
                                     'general.profile_page.current_password'
                                 )}
+                                error={
+                                    passwordChangeErrors.currentPassword !==
+                                    undefined
+                                }
+                                helperText={
+                                    passwordChangeErrors.currentPassword
+                                }
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() =>
+                                                    setIsCurrentPassword(
+                                                        !isCurrentPassword
+                                                    )
+                                                }
+                                                edge="end"
+                                            >
+                                                <Icon
+                                                    icon={
+                                                        isCurrentPassword
+                                                            ? eyeFill
+                                                            : eyeOffFill
+                                                    }
+                                                />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
                             <TextField
                                 color="secondary"
-                                type="password"
+                                type={isNewPassword ? 'password' : 'text'}
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
                                 label={translate(
                                     'general.profile_page.new_password'
                                 )}
+                                error={
+                                    passwordChangeErrors.newPassword !==
+                                    undefined
+                                }
+                                helperText={passwordChangeErrors.newPassword}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() =>
+                                                    setIsNewPassword(
+                                                        !isNewPassword
+                                                    )
+                                                }
+                                                edge="end"
+                                            >
+                                                <Icon
+                                                    icon={
+                                                        isNewPassword
+                                                            ? eyeFill
+                                                            : eyeOffFill
+                                                    }
+                                                />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
                             <TextField
                                 color="secondary"
-                                type="password"
+                                type={
+                                    isNewPasswordConfirm ? 'password' : 'text'
+                                }
+                                value={newPasswordConfirm}
+                                onChange={(e) =>
+                                    setNewPasswordConfirm(e.target.value)
+                                }
                                 label={translate(
                                     'general.profile_page.new_password_confirm'
                                 )}
+                                error={
+                                    passwordChangeErrors.newPasswordConfirm !==
+                                    undefined
+                                }
+                                helperText={
+                                    passwordChangeErrors.newPasswordConfirm
+                                }
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={() =>
+                                                    setIsNewPasswordConfirm(
+                                                        !isNewPasswordConfirm
+                                                    )
+                                                }
+                                                edge="end"
+                                            >
+                                                <Icon
+                                                    icon={
+                                                        isNewPasswordConfirm
+                                                            ? eyeFill
+                                                            : eyeOffFill
+                                                    }
+                                                />
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
                         </Stack>
                         <Stack alignItems="flex-end">
@@ -136,7 +270,7 @@ const Profile = (): JSX.Element => {
                                 }}
                                 color="secondary"
                                 variant="contained"
-                                // type="submit"
+                                type="submit"
                             >
                                 {translate('general.profile_page.edit')}
                             </Button>

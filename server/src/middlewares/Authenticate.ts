@@ -13,7 +13,6 @@ declare module 'express' {
 
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
     const accessToken: Secret | undefined = req.header('access_token');
-    console.log(req.header)
 
     if (!accessToken) {
         return res

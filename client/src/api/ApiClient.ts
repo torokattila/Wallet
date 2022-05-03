@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import config from '../config';
 import User from '../models/User';
 import StatusCodes from 'http-status-codes';
+import PasswordChangePayload from './payloads/Profile/PasswordChangePayload';
 
 export const ApiURL =
     config.api.port !== 80 && config.api.port !== 443
@@ -46,6 +47,30 @@ class ApiClient {
     async getCurrentUser(): Promise<User> {
         const response: AxiosResponse<User> = await this.client.get<User>(
             `/me`,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
+        );
+        return response.data;
+    }
+
+    async updateUser(userId: string, data: User): Promise<User> {
+        const response: AxiosResponse<User> = await this.client.put(
+            `/users/${userId}`,
+            data
+        );
+        return response.data;
+    }
+
+    async updateUserPassword(
+        userId: string,
+        data: PasswordChangePayload
+    ): Promise<User> {
+        const response: AxiosResponse<User> = await this.client.put(
+            `/users/${userId}/password/update`,
+            data,
             {
                 headers: {
                     access_token: localStorage.getItem('access_token') || '',

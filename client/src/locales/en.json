@@ -14,6 +14,7 @@
             "firstname": "Firstname",
             "lastname": "Lastname",
             "wrong_username_or_password": "Wrong username or password",
+            "wrong_email_format": "Wrong email format",
             "firstname_required": "Firstname is required",
             "lastname_required": "Lastname is required",
             "password_required": "Password is required",
@@ -33,7 +34,14 @@
             "change_password": "Change password",
             "current_password": "Current password",
             "new_password": "New password",
-            "new_password_confirm": "New password confirmation"
+            "new_password_confirm": "New password confirmation",
+            "current_password_required": "Current password is required",
+            "new_password_required": "New password is required",
+            "new_password_confirm_required": "New password confirmation is required",
+            "wrong_current_password": "Wrong current password",
+            "password_change_successful": "Successful password change",
+            "validation_error": "Data validation failed",
+            "password_change_failed": "Failed to change password"
         }
     }
 }
