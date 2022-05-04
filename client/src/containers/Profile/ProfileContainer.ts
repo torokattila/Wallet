@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSnackbar } from 'notistack';
 import useLocales from '../../hooks/useLocale';
 import LocalStorageManager from '../../utils/LocalStorageManager';
 import useApi from '../../hooks/useApi';
-import { useMutation } from 'react-query';
-import User from '../../models/User';
 import * as Yup from 'yup';
 import UserEditPayload from '../../api/payloads/Profile/UserEditPayload';
 import PasswordChangePayload from '../../api/payloads/Profile/PasswordChangePayload';
@@ -38,11 +36,6 @@ const ProfileContainer = () => {
     const [passwordChangeErrors, setPasswordChangeErrors] = useState<{
         [key: string]: string;
     }>({});
-
-    const updateUser = useMutation(
-        async (payload: User) =>
-            await apiClient.updateUser(user?.id ? user.id : '', payload)
-    );
 
     const UserEditSchema = Yup.object().shape({
         firstname: Yup.string().required(

@@ -1,12 +1,4 @@
-import {
-    Button,
-    Card,
-    IconButton,
-    Stack,
-    TextField,
-    Typography,
-    useMediaQuery,
-} from '@mui/material';
+import { Button, Card, Stack, TextField, Typography, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import DrawerLayout from '../../components/Drawer/DrawerLayout';
 import useLocales from '../../hooks/useLocale';

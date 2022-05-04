@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
