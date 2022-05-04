@@ -3,6 +3,7 @@ import config from '../config';
 import User from '../models/User';
 import StatusCodes from 'http-status-codes';
 import PasswordChangePayload from './payloads/Profile/PasswordChangePayload';
+import UserEditPayload from './payloads/Profile/UserEditPayload';
 
 export const ApiURL =
     config.api.port !== 80 && config.api.port !== 443
@@ -56,10 +57,15 @@ class ApiClient {
         return response.data;
     }
 
-    async updateUser(userId: string, data: User): Promise<User> {
+    async updateUser(userId: string, data: UserEditPayload): Promise<User> {
         const response: AxiosResponse<User> = await this.client.put(
             `/users/${userId}`,
-            data
+            data,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
         );
         return response.data;
     }

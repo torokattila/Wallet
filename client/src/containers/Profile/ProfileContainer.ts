@@ -30,6 +30,7 @@ const ProfileContainer = () => {
     const [isNewPassword, setIsNewPassword] = useState<boolean>(true);
     const [isNewPasswordConfirm, setIsNewPasswordConfirm] =
         useState<boolean>(true);
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
 
     const [baseDataErrors, setBaseDataErrors] = useState<{
         [key: string]: string;
@@ -122,9 +123,7 @@ const ProfileContainer = () => {
         }
     };
 
-    const handlePasswordChangeSubmit = async (e: React.SyntheticEvent) => {
-        e.preventDefault();
-
+    const handlePasswordChangeSubmit = async () => {
         const payload: PasswordChangePayload = {
             currentPassword,
             newPassword,
@@ -195,6 +194,74 @@ const ProfileContainer = () => {
         }
     };
 
+    const handleUpdateUser = async () => {
+        const payload: UserEditPayload = {
+            email,
+            firstname,
+            lastname,
+        };
+
+        const isVerified = await verifyBaseDatasForm();
+
+        if (isVerified) {
+            try {
+                await apiClient.updateUser(user?.id ? user.id : '', payload);
+
+                const key = enqueueSnackbar(
+                    translate('general.profile_page.successful_modification'),
+                    {
+                        variant: 'success',
+                        onClick: () => {
+                            closeSnackbar(key);
+                        },
+                    }
+                );
+            } catch (error: any) {
+                if (error.response.data.errors[0] === 'existing_email') {
+                    const key = enqueueSnackbar(
+                        translate('general.form.existing_email'),
+                        {
+                            variant: 'error',
+                            onClick: () => {
+                                closeSnackbar(key);
+                            },
+                        }
+                    );
+                } else {
+                    const key = enqueueSnackbar(
+                        translate(
+                            'general.profile_page.unsuccessful_modification'
+                        ),
+                        {
+                            variant: 'error',
+                            onClick: () => {
+                                closeSnackbar(key);
+                            },
+                        }
+                    );
+                }
+            }
+        } else {
+            const key = enqueueSnackbar(
+                translate('general.profile_page.validation_error'),
+                {
+                    variant: 'error',
+                    onClick: () => {
+                        closeSnackbar(key);
+                    },
+                }
+            );
+        }
+    };
+
+    const handleOpenDialog = () => {
+        setOpenDialog(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
     return {
         email,
         setEmail,
@@ -217,6 +284,10 @@ const ProfileContainer = () => {
         baseDataErrors,
         passwordChangeErrors,
         handlePasswordChangeSubmit,
+        openDialog,
+        handleOpenDialog,
+        handleCloseDialog,
+        handleUpdateUser,
     };
 };
 

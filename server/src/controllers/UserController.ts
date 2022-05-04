@@ -81,6 +81,14 @@ class UserController {
             });
         }
 
+        const foundUserByEmail = await UserService.findByEmail(req.body.email);
+
+        if (foundUserByEmail && foundUserByEmail.id !== req.user.id) {
+            return res.status(StatusCodes.BAD_REQUEST).send({
+                errors: ['existing_email'],
+            });
+        }
+
         const updatedUser = await UserService.update(id, editableUser);
 
         logger.info(`PUT /users/:id status code: ${StatusCodes.OK}`);
@@ -89,7 +97,9 @@ class UserController {
 
     private async updatePassword(req: Request, res: Response) {
         logger.info(
-            `PUT /users/:id/password/update called, id param: ${JSON.stringify(req.params.id)}`
+            `PUT /users/:id/password/update called, id param: ${JSON.stringify(
+                req.params.id
+            )}`
         );
 
         const id = req.params.id;

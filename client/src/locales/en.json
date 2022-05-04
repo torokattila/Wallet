@@ -41,7 +41,15 @@
             "wrong_current_password": "Wrong current password",
             "password_change_successful": "Successful password change",
             "validation_error": "Data validation failed",
-            "password_change_failed": "Failed to change password"
+            "password_change_failed": "Failed to change password",
+            "successful_modification": "Successful modification",
+            "unsuccessful_modification": "Unsuccessful modification"
+        },
+        "confirm_dialog": {
+            "are_you_sure": "Are you sure?",
+            "operation_cannot_be_undone": "The operation cannot be undone",
+            "yes": "Yes",
+            "cancel": "Cancel"
         }
     }
 }

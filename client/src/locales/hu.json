@@ -41,7 +41,15 @@
             "wrong_current_password": "A jelenlegi jelszó nem egyezik",
             "password_change_successful": "Sikeres jelszó módosítás",
             "validation_error": "Az adatok validálása sikertelen",
-            "password_change_failed": "Sikertelen jelszó módosítás"
+            "password_change_failed": "Sikertelen jelszó módosítás",
+            "successful_modification": "Sikeres módosítás",
+            "unsuccessful_modification": "Sikertelen módosítás"
+        },
+        "confirm_dialog": {
+            "are_you_sure": "Biztos benne?",
+            "operation_cannot_be_undone": "A művelet nem visszavonható",
+            "yes": "Igen",
+            "cancel": "Mégse"
         }
     }
 }

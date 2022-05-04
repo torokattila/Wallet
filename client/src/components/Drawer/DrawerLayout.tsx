@@ -173,6 +173,7 @@ const DrawerLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                         button
                         onClick={() => {
                             navigate('/');
+                            handleDrawerClose();
                         }}
                     >
                         <ListItemIcon>
@@ -184,7 +185,13 @@ const DrawerLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                     </ListItem>
                 </List>
                 <List>
-                    <ListItem button onClick={() => navigate('/profile')}>
+                    <ListItem
+                        button
+                        onClick={() => {
+                            navigate('/profile');
+                            handleDrawerClose();
+                        }}
+                    >
                         <ListItemIcon>
                             <AccountCircleOutlinedIcon color="secondary" />
                         </ListItemIcon>
