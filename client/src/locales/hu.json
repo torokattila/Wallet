@@ -50,6 +50,10 @@
             "operation_cannot_be_undone": "A művelet nem visszavonható",
             "yes": "Igen",
             "cancel": "Mégse"
+        },
+        "home_page": {
+            "balance": "Egyenleg",
+            "add_income": "Bevétel hozzáadása"
         }
     }
 }

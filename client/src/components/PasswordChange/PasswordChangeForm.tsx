@@ -45,6 +45,7 @@ const PasswordChangeForm = (): JSX.Element => {
                 sx={{
                     p: 4,
                     width: matches ? '60%' : '100%',
+                    borderRadius: '15px',
                 }}
             >
                 <Typography

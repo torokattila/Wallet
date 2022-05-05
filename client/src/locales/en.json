@@ -50,6 +50,10 @@
             "operation_cannot_be_undone": "The operation cannot be undone",
             "yes": "Yes",
             "cancel": "Cancel"
+        },
+        "home_page": {
+            "balance": "Balance",
+            "add_income": "Add income"
         }
     }
 }
