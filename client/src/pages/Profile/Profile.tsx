@@ -1,31 +1,9 @@
-import { Button, Card, Stack, TextField, Typography, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Stack } from '@mui/material';
 import DrawerLayout from '../../components/Drawer/DrawerLayout';
-import useLocales from '../../hooks/useLocale';
-
-import ProfileContainer from '../../containers/Profile/ProfileContainer';
-import ConfirmDialog from '../../components/ConfirmDialog/ConfirmDialog';
 import PasswordChangeForm from '../../components/PasswordChange/PasswordChangeForm';
+import UserEditForm from '../../components/UserEdit/UserEditForm';
 
 const Profile = (): JSX.Element => {
-    const { translate } = useLocales();
-    const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.up('sm'));
-
-    const {
-        email,
-        setEmail,
-        firstname,
-        setFirstname,
-        lastname,
-        setLastname,
-        baseDataErrors,
-        openDialog,
-        handleOpenDialog,
-        handleCloseDialog,
-        handleUpdateUser,
-    } = ProfileContainer();
-
     return (
         <DrawerLayout>
             <Stack
@@ -37,76 +15,9 @@ const Profile = (): JSX.Element => {
                 spacing={10}
                 sx={{ margin: 0 }}
             >
-                <Card
-                    sx={{
-                        p: 4,
-                        width: matches ? '60%' : '100%',
-                    }}
-                >
-                    <Typography
-                        variant="h5"
-                        color="secondary"
-                        sx={{ fontWeight: 'bold' }}
-                    >
-                        {translate('general.profile_page.change_data')}
-                    </Typography>
-
-                    <Stack
-                        sx={{ maxWidth: matches ? '50%' : '100%', mt: 10 }}
-                        spacing={3}
-                    >
-                        <TextField
-                            color="secondary"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            label={translate('general.form.email')}
-                            error={baseDataErrors.email !== undefined}
-                            helperText={baseDataErrors.email}
-                        />
-                        <TextField
-                            color="secondary"
-                            type="text"
-                            value={lastname}
-                            onChange={(e) => setLastname(e.target.value)}
-                            label={translate('general.form.lastname')}
-                            error={baseDataErrors.lastname !== undefined}
-                            helperText={baseDataErrors.lastname}
-                        />
-                        <TextField
-                            color="secondary"
-                            type="text"
-                            value={firstname}
-                            onChange={(e) => setFirstname(e.target.value)}
-                            label={translate('general.form.firstname')}
-                            error={baseDataErrors.firstname !== undefined}
-                            helperText={baseDataErrors.firstname}
-                        />
-                    </Stack>
-                    <Stack alignItems="flex-end">
-                        <Button
-                            size="large"
-                            sx={{
-                                fontWeight: 'bold',
-                                borderRadius: '8px',
-                                mt: 4,
-                            }}
-                            color="secondary"
-                            variant="contained"
-                            onClick={handleOpenDialog}
-                        >
-                            {translate('general.profile_page.edit')}
-                        </Button>
-                    </Stack>
-                </Card>
-
+                <UserEditForm />
                 <PasswordChangeForm />
             </Stack>
-            <ConfirmDialog
-                open={openDialog}
-                onClose={handleCloseDialog}
-                executeAction={handleUpdateUser}
-            />
         </DrawerLayout>
     );
 };

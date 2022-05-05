@@ -170,7 +170,6 @@ const PasswordChangeForm = (): JSX.Element => {
                         }}
                         color="secondary"
                         variant="contained"
-                        // type="submit"
                         onClick={handleOpenDialog}
                     >
                         {translate('general.profile_page.edit')}
