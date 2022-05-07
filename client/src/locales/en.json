@@ -53,7 +53,10 @@
         },
         "home_page": {
             "balance": "Balance",
-            "add_income": "Add income"
+            "add_income": "Add income",
+            "amount": "Amount (Ft)",
+            "add": "Add",
+            "amount_required": "Amount is required"
         }
     }
 }

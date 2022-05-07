@@ -53,7 +53,10 @@
         },
         "home_page": {
             "balance": "Egyenleg",
-            "add_income": "Bevétel hozzáadása"
+            "add_income": "Bevétel hozzáadása",
+            "amount": "Összeg (Ft)",
+            "add": "Hozzáadás",
+            "amount_required": "Az összeg megadása közelező"
         }
     }
 }

@@ -1,4 +1,11 @@
-import { Box, Button, Card, Stack, Typography, useMediaQuery } from '@mui/material';
+import {
+    Box,
+    Button,
+    Card,
+    Stack,
+    Typography,
+    useMediaQuery,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import DrawerLayout from '../../components/Drawer/DrawerLayout';
 import useLocales from '../../hooks/useLocale';
@@ -6,13 +13,21 @@ import LocalStorageManager from '../../utils/LocalStorageManager';
 import CurrencyFormat from 'react-currency-format';
 
 import './Home.css';
+import HomeContainer from '../../containers/Home/HomeContainer';
+import IncomeDialog from '../../components/IncomeDialog/IncomeDialog';
 
 const Home = (): JSX.Element => {
     const { translate } = useLocales();
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('sm'));
-
     const user = LocalStorageManager.getUser();
+
+    const {
+        openDialog,
+        handleOpenDialog,
+        handleCloseDialog,
+        handleAddIncomeSubmit,
+    } = HomeContainer();
 
     return (
         <div className="home-container">
@@ -50,8 +65,11 @@ const Home = (): JSX.Element => {
                                         color="secondary"
                                         size="large"
                                         sx={{ mt: matches ? 0 : 5 }}
+                                        onClick={handleOpenDialog}
                                     >
-                                        {translate('general.home_page.add_income')}
+                                        {translate(
+                                            'general.home_page.add_income'
+                                        )}
                                     </Button>
                                 </Stack>
                             </Box>
@@ -59,6 +77,11 @@ const Home = (): JSX.Element => {
                     </Card>
                 </Stack>
             </DrawerLayout>
+            <IncomeDialog
+                open={openDialog}
+                onClose={handleCloseDialog}
+                executeAction={handleAddIncomeSubmit}
+            />
         </div>
     );
 };

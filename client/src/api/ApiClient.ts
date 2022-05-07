@@ -4,6 +4,8 @@ import User from '../models/User';
 import StatusCodes from 'http-status-codes';
 import PasswordChangePayload from './payloads/Profile/PasswordChangePayload';
 import UserEditPayload from './payloads/Profile/UserEditPayload';
+import IncomePayload from './payloads/Home/IncomePayload';
+import Income from '../models/Income';
 
 export const ApiURL =
     config.api.port !== 80 && config.api.port !== 443
@@ -76,6 +78,19 @@ class ApiClient {
     ): Promise<User> {
         const response: AxiosResponse<User> = await this.client.put(
             `/users/${userId}/password/update`,
+            data,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
+        );
+        return response.data;
+    }
+
+    async postIncome(data: IncomePayload): Promise<Income> {
+        const response: AxiosResponse<Income> = await this.client.post(
+            '/incomes',
             data,
             {
                 headers: {
