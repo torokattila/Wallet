@@ -15,6 +15,8 @@ import CheckroomIcon from '@mui/icons-material/Checkroom';
 import LocalBarIcon from '@mui/icons-material/LocalBar';
 import AddCardOutlinedIcon from '@mui/icons-material/AddCardOutlined';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import EditIcon from '@mui/icons-material/Edit';
+
 import PurchaseCategory from '../../enums/PurchaseCategory';
 import CurrencyFormat from 'react-currency-format';
 import moment from 'moment';
@@ -30,7 +32,7 @@ const PurchaseCard = ({ purchase }: PurchaseCardProps): JSX.Element => {
     return (
         <Card
             sx={{
-                p: 6,
+                p: 5,
                 m: 4,
                 borderRadius: '20px',
                 width: matches ? '13vw' : '60vw',
@@ -92,11 +94,21 @@ const PurchaseCard = ({ purchase }: PurchaseCardProps): JSX.Element => {
                     {moment(purchase.created).format('YYYY-MM-DD HH:mm')}
                 </Typography>
 
-                <Tooltip arrow title={translate('general.delete')}>
-                    <IconButton sx={{ mt: 5 }}>
-                        <DeleteOutlineIcon color="secondary" fontSize="large" />
-                    </IconButton>
-                </Tooltip>
+                <Box>
+                    <Tooltip arrow title={translate('general.edit')}>
+                        <IconButton sx={{ mt: 5 }}>
+                            <EditIcon color="secondary" fontSize="large" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip arrow title={translate('general.delete')}>
+                        <IconButton sx={{ mt: 5 }}>
+                            <DeleteOutlineIcon
+                                color="secondary"
+                                fontSize="large"
+                            />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
             </Box>
         </Card>
     );

@@ -68,6 +68,7 @@
             "entertainment": "Szórakozás",
             "other": "Egyéb"
         },
-        "delete": "Törlés"
+        "delete": "Törlés",
+        "edit": "Szerkesztés"
     }
 }

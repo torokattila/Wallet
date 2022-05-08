@@ -68,6 +68,7 @@
             "entertainment": "Entertainment",
             "other": "Other"
         },
-        "delete": "Delete"
+        "delete": "Delete",
+        "edit": "Edit"
     }
 }
