@@ -1,23 +1,29 @@
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import * as Yup from 'yup';
 import IncomePayload from '../../api/payloads/Home/IncomePayload';
 import useApi from '../../hooks/useApi';
 import useLocales from '../../hooks/useLocale';
-import LocalStorageManager from '../../utils/LocalStorageManager';
 
 const HomeContainer = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const apiClient = useApi();
     const { translate } = useLocales();
-    const user = LocalStorageManager.getUser();
 
     const [openDialog, setOpenDialog] = useState<boolean>(false);
     const [amount, setAmount] = useState<string>('');
     const [amountError, setAmountError] = useState<{
         [key: string]: string;
     }>({});
+
+    const { data: user, refetch } = useQuery(
+        'getCurrentUser',
+        async () => await apiClient.getCurrentUser(),
+        {
+            refetchOnWindowFocus: false,
+        }
+    );
 
     const handleOpenDialog = () => {
         setOpenDialog(true);
@@ -43,6 +49,13 @@ const HomeContainer = () => {
             await IncomeSchema.validate(newIncome, { abortEarly: false });
             setAmountError({});
 
+            if (newIncome.amount === 0) {
+                setAmountError({
+                    amount: translate('general.home_page.amount_required'),
+                });
+                return Promise.resolve(false);
+            }
+
             return Promise.resolve(true);
         } catch (error: any) {
             const newError: { [key: string]: string } = {};
@@ -61,16 +74,33 @@ const HomeContainer = () => {
         return income;
     });
 
-    const handleAddIncomeSubmit = async () => {
+    const handleAddIncomeSubmit = async (): Promise<boolean> => {
         const payload: IncomePayload = newIncome;
 
         const isVerified = await verifyNewIncomeForm();
 
         if (isVerified) {
             try {
-                // await postIncome.mutateAsync(payload);
-                handleCloseDialog();
-            } catch (error: any) {}
+                await postIncome.mutateAsync(payload);
+
+                refetch();
+
+                const key = enqueueSnackbar(
+                    translate('general.home_page.successful_amount_creation'),
+                    {
+                        variant: 'success',
+                        onClick: () => {
+                            closeSnackbar(key);
+                        },
+                    }
+                );
+
+                setAmount('');
+
+                return true;
+            } catch (error) {
+                return false;
+            }
         } else {
             const key = enqueueSnackbar(
                 translate('general.profile_page.validation_error'),
@@ -81,6 +111,7 @@ const HomeContainer = () => {
                     },
                 }
             );
+            return false;
         }
     };
 
@@ -92,6 +123,9 @@ const HomeContainer = () => {
         setAmount,
         verifyNewIncomeForm,
         handleAddIncomeSubmit,
+        amountError,
+        refetch,
+        user,
     };
 };
 

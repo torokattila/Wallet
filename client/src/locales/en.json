@@ -56,7 +56,9 @@
             "add_income": "Add income",
             "amount": "Amount (Ft)",
             "add": "Add",
-            "amount_required": "Amount is required"
+            "amount_required": "Amount is required",
+            "successful_amount_creation": "Amount added successfully",
+            "last_five_purchase": "Last 5 purchase"
         }
     }
 }

@@ -56,7 +56,9 @@
             "add_income": "Bevétel hozzáadása",
             "amount": "Összeg (Ft)",
             "add": "Hozzáadás",
-            "amount_required": "Az összeg megadása közelező"
+            "amount_required": "Az összeg megadása közelező",
+            "successful_amount_creation": "Az összeg sikeresen hozzáadva",
+            "last_five_purchase": "Utolsó 5 vásárlás"
         }
     }
 }
