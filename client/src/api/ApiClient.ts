@@ -6,11 +6,19 @@ import PasswordChangePayload from './payloads/Profile/PasswordChangePayload';
 import UserEditPayload from './payloads/Profile/UserEditPayload';
 import IncomePayload from './payloads/Home/IncomePayload';
 import Income from '../models/Income';
+import Purchase from '../models/Purchase';
+import moment from 'moment';
+import PurchasePayload from './payloads/Home/PurchasePayload';
 
 export const ApiURL =
     config.api.port !== 80 && config.api.port !== 443
         ? `${config.api.protocol}://${config.api.baseUrl}:${config.api.port}`
         : `${config.api.protocol}://${config.api.baseUrl}`;
+
+export type PurchaseList = {
+    purchases: Purchase[];
+    totalNumber: number;
+};
 
 class ApiClient {
     protected readonly client: AxiosInstance;
@@ -47,6 +55,7 @@ class ApiClient {
         }
     };
 
+    // User
     async getCurrentUser(): Promise<User> {
         const response: AxiosResponse<User> = await this.client.get<User>(
             `/me`,
@@ -88,9 +97,66 @@ class ApiClient {
         return response.data;
     }
 
+    // Incomes
     async postIncome(data: IncomePayload): Promise<Income> {
         const response: AxiosResponse<Income> = await this.client.post(
             '/incomes',
+            data,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
+        );
+        return response.data;
+    }
+
+    // Purchases
+    async listPurchases(
+        page?: number,
+        size?: number,
+        from?: string,
+        to?: string,
+        category?: string
+    ): Promise<PurchaseList> {
+        const params = [`page=${page}`, `size=${size}`];
+
+        if (!category) {
+            params.push('category=');
+        } else {
+            params.push(`category=${category}`);
+        }
+
+        if (from) {
+            params.push(`from=${moment(from).format('YYYY-MM-DD')}`);
+        }
+
+        if (to) {
+            params.push(`to=${moment(to).format('YYYY-MM-DD')}`);
+        }
+
+        const response: AxiosResponse = await this.client.get<Purchase[]>(
+            `/purchases?${params.join('&')}`,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
+        );
+        const responseHeader =
+            response.headers['X-Total-Count'] ||
+            response.headers['x-total-count'];
+        const result = {
+            purchases: response.data,
+            totalNumber: Number(responseHeader),
+        };
+
+        return result;
+    }
+
+    async postPurchase(data: PurchasePayload): Promise<Purchase> {
+        const response: AxiosResponse<Purchase> = await this.client.post(
+            '/purchases',
             data,
             {
                 headers: {

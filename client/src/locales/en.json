@@ -58,7 +58,16 @@
             "add": "Add",
             "amount_required": "Amount is required",
             "successful_amount_creation": "Amount added successfully",
-            "last_five_purchase": "Last 5 purchase"
-        }
+            "last_five_purchase": "Last 5 purchase",
+            "new_purchase": "New purchase",
+            "category": "Category",
+            "category_required": "Category is required",
+            "successful_purchase_creation": "Purchase added successfully",
+            "food": "Food",
+            "clothing": "Clothing",
+            "entertainment": "Entertainment",
+            "other": "Other"
+        },
+        "delete": "Delete"
     }
 }

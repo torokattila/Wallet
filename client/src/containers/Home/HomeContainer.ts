@@ -8,8 +8,8 @@ import useLocales from '../../hooks/useLocale';
 
 const HomeContainer = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-    const apiClient = useApi();
     const { translate } = useLocales();
+    const apiClient = useApi();
 
     const [openDialog, setOpenDialog] = useState<boolean>(false);
     const [amount, setAmount] = useState<string>('');

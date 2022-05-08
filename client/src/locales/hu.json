@@ -58,7 +58,16 @@
             "add": "Hozzáadás",
             "amount_required": "Az összeg megadása közelező",
             "successful_amount_creation": "Az összeg sikeresen hozzáadva",
-            "last_five_purchase": "Utolsó 5 vásárlás"
-        }
+            "last_five_purchase": "Utolsó 5 vásárlás",
+            "new_purchase": "Új vásárlás",
+            "category": "Kategória",
+            "category_required": "A kategória megadása kötelező",
+            "successful_purchase_creation": "Vásárlás sikeresen hozzáadva",
+            "food": "Élelmiszer",
+            "clothing": "Ruházat",
+            "entertainment": "Szórakozás",
+            "other": "Egyéb"
+        },
+        "delete": "Törlés"
     }
 }
