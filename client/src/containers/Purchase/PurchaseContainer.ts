@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import PurchaseCategory from '../../enums/PurchaseCategory';
 import useApi from '../../hooks/useApi';
 import Purchase from '../../models/Purchase';
 import * as Yup from 'yup';
@@ -24,6 +23,11 @@ const PurchaseContainer = () => {
     const [purchaseErrors, setPurchaseErrors] = useState<{
         [key: string]: string;
     }>({});
+    const [deletablePurchase, setDeletablePurchase] = useState<Purchase | null>(
+        null
+    );
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] =
+        useState<boolean>(false);
 
     const { refetch } = HomeContainer();
 
@@ -42,6 +46,15 @@ const PurchaseContainer = () => {
 
     const handleClosePurchaseDialog = () => {
         setOpenPurchaseDialog(false);
+    };
+
+    const handleOpenDeleteDialog = (purchase: Purchase) => {
+        setDeletablePurchase(purchase);
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleCloseDeleteDialog = () => {
+        setIsDeleteDialogOpen(false);
     };
 
     const PurchaseSchema = Yup.object().shape({
@@ -133,6 +146,45 @@ const PurchaseContainer = () => {
         }
     };
 
+    const deletePurchase = useMutation(
+        async (id: string) => await apiClient.deletePurchase(id)
+    );
+
+    const handleDeletePurchase = async () => {
+        try {
+            await deletePurchase.mutateAsync(deletablePurchase?.id as string);
+            refetchPurchases();
+            refetch();
+
+            const key = enqueueSnackbar(
+                translate('general.home_page.successful_delete'),
+                {
+                    variant: 'success',
+                    onClick: () => {
+                        closeSnackbar(key);
+                    },
+                }
+            );
+        } catch (error: any) {
+            const key = enqueueSnackbar(
+                translate('general.home_page.delete_failed'),
+                {
+                    variant: 'error',
+                    onClick: () => {
+                        closeSnackbar(key);
+                    },
+                }
+            );
+        }
+    };
+
+    const deleteDialogOptions = {
+        currentEntity: deletablePurchase,
+        isOpen: isDeleteDialogOpen,
+        onClose: handleCloseDeleteDialog,
+        removeEntity: () => handleDeletePurchase(),
+    };
+
     return {
         purchaseList,
         refetchPurchases,
@@ -145,6 +197,13 @@ const PurchaseContainer = () => {
         setAmount,
         purchaseErrors,
         handleNewPurchaseSubmit,
+        deletablePurchase,
+        setDeletablePurchase,
+        handleOpenDeleteDialog,
+        handleCloseDeleteDialog,
+        isDeleteDialogOpen,
+        handleDeletePurchase,
+        deleteDialogOptions,
     };
 };
 

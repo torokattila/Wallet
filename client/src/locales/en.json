@@ -66,7 +66,9 @@
             "food": "Food",
             "clothing": "Clothing",
             "entertainment": "Entertainment",
-            "other": "Other"
+            "other": "Other",
+            "successful_delete": "Successful delete",
+            "delete_failed": "Delete failed"
         },
         "delete": "Delete",
         "edit": "Edit"

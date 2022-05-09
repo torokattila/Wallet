@@ -66,7 +66,9 @@
             "food": "Élelmiszer",
             "clothing": "Ruházat",
             "entertainment": "Szórakozás",
-            "other": "Egyéb"
+            "other": "Egyéb",
+            "successful_delete": "Sikeres törlés",
+            "delete_failed": "Sikertelen törlés"
         },
         "delete": "Törlés",
         "edit": "Szerkesztés"

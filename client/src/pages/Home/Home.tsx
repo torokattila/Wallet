@@ -20,6 +20,7 @@ import PurchaseDialog from '../../components/PurchaseDialog/PurchaseDialog';
 import Purchase from '../../models/Purchase';
 
 import PurchaseCard from '../../components/PurchaseCard/PurchaseCard';
+import DeleteEntityDialog from '../../components/DeleteEntityDialog/DeleteEntityDialog';
 
 const Home = (): JSX.Element => {
     const { translate } = useLocales();
@@ -33,6 +34,8 @@ const Home = (): JSX.Element => {
         openPurchaseDialog,
         handleOpenPurchaseDialog,
         handleClosePurchaseDialog,
+        handleOpenDeleteDialog,
+        deleteDialogOptions,
     } = PurchaseContainer();
 
     return (
@@ -144,7 +147,14 @@ const Home = (): JSX.Element => {
                                     .slice(0, 5)
                                     .map((purchase: Purchase) => {
                                         return (
-                                            <PurchaseCard purchase={purchase} />
+                                            <PurchaseCard
+                                                onClick={() =>
+                                                    handleOpenDeleteDialog(
+                                                        purchase
+                                                    )
+                                                }
+                                                purchase={purchase}
+                                            />
                                         );
                                     })}
                             </Stack>
@@ -156,6 +166,7 @@ const Home = (): JSX.Element => {
                 open={openPurchaseDialog}
                 onClose={handleClosePurchaseDialog}
             />
+            <DeleteEntityDialog options={deleteDialogOptions} />
         </div>
     );
 };
