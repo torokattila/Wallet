@@ -26,6 +26,9 @@ const PurchaseContainer = () => {
     const [deletablePurchase, setDeletablePurchase] = useState<Purchase | null>(
         null
     );
+    const [editablePurchase, setEditablePurchase] = useState<
+        Purchase | undefined
+    >(undefined);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] =
         useState<boolean>(false);
 
@@ -40,11 +43,17 @@ const PurchaseContainer = () => {
         }
     );
 
-    const handleOpenPurchaseDialog = () => {
+    const handleOpenPurchaseDialog = (purchase?: Purchase) => {
+        if (purchase) {
+            setEditablePurchase(purchase);
+        }
         setOpenPurchaseDialog(true);
     };
 
     const handleClosePurchaseDialog = () => {
+        if (editablePurchase) {
+            setEditablePurchase(undefined);
+        }
         setOpenPurchaseDialog(false);
     };
 
@@ -146,6 +155,42 @@ const PurchaseContainer = () => {
         }
     };
 
+    const handleUpdatePurchase = async (
+        purchaseId: string,
+        purchase: Purchase
+    ): Promise<boolean> => {
+        try {
+            await apiClient.updatePurchase(purchaseId, purchase);
+
+            refetchPurchases();
+            refetch();
+
+            const key = enqueueSnackbar(
+                translate('general.profile_page.successful_modification'),
+                {
+                    variant: 'success',
+                    onClick: () => {
+                        closeSnackbar(key);
+                    },
+                }
+            );
+
+            return true;
+        } catch (error: any) {
+            const key = enqueueSnackbar(
+                translate('general.profile_page.unsuccessful_modification'),
+                {
+                    variant: 'error',
+                    onClick: () => {
+                        closeSnackbar(key);
+                    },
+                }
+            );
+
+            return false;
+        }
+    };
+
     const deletePurchase = useMutation(
         async (id: string) => await apiClient.deletePurchase(id)
     );
@@ -185,6 +230,13 @@ const PurchaseContainer = () => {
         removeEntity: () => handleDeletePurchase(),
     };
 
+    const purchaseDialogProps = {
+        currentPurchase: editablePurchase,
+        setCurrentPurchase: setEditablePurchase,
+        isOpen: openPurchaseDialog,
+        onClose: handleClosePurchaseDialog,
+    };
+
     return {
         purchaseList,
         refetchPurchases,
@@ -204,6 +256,10 @@ const PurchaseContainer = () => {
         isDeleteDialogOpen,
         handleDeletePurchase,
         deleteDialogOptions,
+        purchaseDialogProps,
+        editablePurchase,
+        setEditablePurchase,
+        handleUpdatePurchase,
     };
 };
 

@@ -6,7 +6,7 @@ interface Purchase extends EntityBase {
     user?: User | null;
     userId: string;
     amount: number;
-    category: PurchaseCategory;
+    category: string;
 }
 
 export default Purchase;

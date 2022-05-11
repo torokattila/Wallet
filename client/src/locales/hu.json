@@ -68,7 +68,8 @@
             "entertainment": "Szórakozás",
             "other": "Egyéb",
             "successful_delete": "Sikeres törlés",
-            "delete_failed": "Sikertelen törlés"
+            "delete_failed": "Sikertelen törlés",
+            "edit_purcase": "Vásárlás szerkesztése"
         },
         "delete": "Törlés",
         "edit": "Szerkesztés"

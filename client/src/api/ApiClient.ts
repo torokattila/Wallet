@@ -167,6 +167,23 @@ class ApiClient {
         return response.data;
     }
 
+    async updatePurchase(
+        purchaseId: string,
+        data: Purchase | undefined
+    ): Promise<Purchase> {
+        const response: AxiosResponse<Purchase> = await this.client.put(
+            `/purchases/${purchaseId}`,
+            data,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
+        );
+
+        return response.data;
+    }
+
     async deletePurchase(purchaseId: string): Promise<Purchase> {
         const response: AxiosResponse<Purchase> = await this.client.delete(
             `/purchases/${purchaseId}`,

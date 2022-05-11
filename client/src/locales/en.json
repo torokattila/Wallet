@@ -68,7 +68,8 @@
             "entertainment": "Entertainment",
             "other": "Other",
             "successful_delete": "Successful delete",
-            "delete_failed": "Delete failed"
+            "delete_failed": "Delete failed",
+            "edit_purcase": "Edit purchase"
         },
         "delete": "Delete",
         "edit": "Edit"

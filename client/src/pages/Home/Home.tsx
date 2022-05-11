@@ -36,6 +36,7 @@ const Home = (): JSX.Element => {
         handleClosePurchaseDialog,
         handleOpenDeleteDialog,
         deleteDialogOptions,
+        purchaseDialogProps,
     } = PurchaseContainer();
 
     return (
@@ -124,7 +125,7 @@ const Home = (): JSX.Element => {
                                     size="large"
                                     variant="contained"
                                     color="secondary"
-                                    onClick={handleOpenPurchaseDialog}
+                                    onClick={() => handleOpenPurchaseDialog()}
                                 >
                                     {translate(
                                         'general.home_page.new_purchase'
@@ -148,8 +149,13 @@ const Home = (): JSX.Element => {
                                     .map((purchase: Purchase) => {
                                         return (
                                             <PurchaseCard
-                                                onClick={() =>
+                                                onDelete={() =>
                                                     handleOpenDeleteDialog(
+                                                        purchase
+                                                    )
+                                                }
+                                                onUpdate={() =>
+                                                    handleOpenPurchaseDialog(
                                                         purchase
                                                     )
                                                 }
@@ -163,8 +169,10 @@ const Home = (): JSX.Element => {
             </DrawerLayout>
             <IncomeDialog open={openDialog} onClose={handleCloseDialog} />
             <PurchaseDialog
-                open={openPurchaseDialog}
-                onClose={handleClosePurchaseDialog}
+                currentPurchase={purchaseDialogProps.currentPurchase}
+                setCurrentPurchase={purchaseDialogProps.setCurrentPurchase}
+                open={purchaseDialogProps.isOpen}
+                onClose={purchaseDialogProps.onClose}
             />
             <DeleteEntityDialog options={deleteDialogOptions} />
         </div>

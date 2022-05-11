@@ -16,13 +16,19 @@ import closeFill from '@iconify/icons-eva/close-fill';
 import useLocales from '../../hooks/useLocale';
 import PurchaseContainer from '../../containers/Purchase/PurchaseContainer';
 import PurchaseCategory from '../../enums/PurchaseCategory';
+import Purchase from '../../models/Purchase';
+import { Dispatch, SetStateAction } from 'react';
 
 type PurchaseDialogProps = {
+    currentPurchase?: Purchase;
+    setCurrentPurchase?: Dispatch<SetStateAction<Purchase | undefined>>;
     open: boolean;
     onClose: () => void;
 };
 
 const PurchaseDialog = ({
+    currentPurchase,
+    setCurrentPurchase,
     open,
     onClose,
 }: PurchaseDialogProps): JSX.Element => {
@@ -34,10 +40,13 @@ const PurchaseDialog = ({
         setAmount,
         purchaseErrors,
         handleNewPurchaseSubmit,
+        handleUpdatePurchase,
     } = PurchaseContainer();
 
     const handleAction = async () => {
-        const submission = await handleNewPurchaseSubmit();
+        const submission = currentPurchase
+            ? await handleUpdatePurchase(currentPurchase.id, currentPurchase)
+            : await handleNewPurchaseSubmit();
 
         if (submission) {
             onClose();
@@ -63,7 +72,13 @@ const PurchaseDialog = ({
                     <Box flexDirection="row" justifyContent="space-between">
                         <Box>
                             <Typography variant="h5" color="secondary">
-                                {translate('general.home_page.new_purchase')}
+                                {currentPurchase
+                                    ? translate(
+                                          'general.home_page.edit_purcase'
+                                      )
+                                    : translate(
+                                          'general.home_page.new_purchase'
+                                      )}
                             </Typography>
                         </Box>
                         <Box>
@@ -100,8 +115,19 @@ const PurchaseDialog = ({
                         <Autocomplete
                             fullWidth
                             options={Object.values(PurchaseCategory)}
-                            value={category}
-                            onChange={(e, v) => setCategory(v ? v : '')}
+                            value={
+                                currentPurchase
+                                    ? currentPurchase.category
+                                    : category
+                            }
+                            onChange={(e, v) =>
+                                currentPurchase && setCurrentPurchase
+                                    ? setCurrentPurchase({
+                                          ...currentPurchase,
+                                          category: v as string,
+                                      })
+                                    : setCategory(v ? v : '')
+                            }
                             getOptionLabel={(option: string) =>
                                 option !== ''
                                     ? translate(`general.home_page.${option}`)
@@ -128,8 +154,19 @@ const PurchaseDialog = ({
                             size="medium"
                             InputProps={{ inputProps: { min: 0 } }}
                             type="number"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
+                            value={
+                                currentPurchase
+                                    ? String(currentPurchase.amount)
+                                    : amount
+                            }
+                            onChange={(e) =>
+                                currentPurchase && setCurrentPurchase
+                                    ? setCurrentPurchase({
+                                          ...currentPurchase,
+                                          amount: Number(e.target.value),
+                                      })
+                                    : setAmount(e.target.value)
+                            }
                             error={purchaseErrors.amount !== undefined}
                             helperText={purchaseErrors.amount}
                         />
@@ -141,7 +178,9 @@ const PurchaseDialog = ({
                         color="secondary"
                         onClick={handleAction}
                     >
-                        {translate('general.home_page.add')}
+                        {currentPurchase
+                            ? translate('general.profile_page.edit')
+                            : translate('general.home_page.add')}
                     </Button>
                 </DialogActions>
             </Dialog>

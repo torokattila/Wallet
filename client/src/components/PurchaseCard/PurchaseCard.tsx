@@ -23,10 +23,15 @@ import moment from 'moment';
 
 type PurchaseCardProps = {
     purchase: Purchase;
-    onClick: (purchase: Purchase) => void;
+    onDelete: (purchase: Purchase) => void;
+    onUpdate: (purchase: Purchase) => void;
 };
 
-const PurchaseCard = ({ purchase, onClick }: PurchaseCardProps): JSX.Element => {
+const PurchaseCard = ({
+    purchase,
+    onDelete,
+    onUpdate,
+}: PurchaseCardProps): JSX.Element => {
     const { translate } = useLocales();
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('lg'));
@@ -98,14 +103,17 @@ const PurchaseCard = ({ purchase, onClick }: PurchaseCardProps): JSX.Element => 
 
                 <Box>
                     <Tooltip arrow title={translate('general.edit')}>
-                        <IconButton sx={{ mt: 5 }}>
+                        <IconButton
+                            sx={{ mt: 5 }}
+                            onClick={() => onUpdate(purchase)}
+                        >
                             <EditIcon color="secondary" fontSize="large" />
                         </IconButton>
                     </Tooltip>
                     <Tooltip arrow title={translate('general.delete')}>
                         <IconButton
                             sx={{ mt: 5 }}
-                            onClick={() => onClick(purchase)}
+                            onClick={() => onDelete(purchase)}
                         >
                             <DeleteOutlineIcon
                                 color="secondary"
