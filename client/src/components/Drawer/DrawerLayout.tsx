@@ -18,6 +18,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import AddCardOutlinedIcon from '@mui/icons-material/AddCardOutlined';
 
 import useLocales from '../../hooks/useLocale';
 import { useNavigate } from 'react-router-dom';
@@ -197,6 +199,38 @@ const DrawerLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                         </ListItemIcon>
                         <Typography color="secondary" variant="h6">
                             {translate('general.sidebar.profile')}
+                        </Typography>
+                    </ListItem>
+                </List>
+                <List>
+                    <ListItem
+                        button
+                        onClick={() => {
+                            navigate('/incomes');
+                            handleDrawerClose();
+                        }}
+                    >
+                        <ListItemIcon>
+                            <AddCardOutlinedIcon color="secondary" />
+                        </ListItemIcon>
+                        <Typography color="secondary" variant="h6">
+                            {translate('general.sidebar.incomes')}
+                        </Typography>
+                    </ListItem>
+                </List>
+                <List>
+                    <ListItem
+                        button
+                        onClick={() => {
+                            navigate('/purchases');
+                            handleDrawerClose();
+                        }}
+                    >
+                        <ListItemIcon>
+                            <ShoppingCartOutlinedIcon color="secondary" />
+                        </ListItemIcon>
+                        <Typography color="secondary" variant="h6">
+                            {translate('general.sidebar.purchases')}
                         </Typography>
                     </ListItem>
                 </List>

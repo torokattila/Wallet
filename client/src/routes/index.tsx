@@ -29,6 +29,22 @@ export default function Router(): React.ReactElement | null {
                 </AuthGuard>
             ),
         },
+        {
+            path: '/incomes',
+            element: (
+                <AuthGuard>
+                    <Incomes />
+                </AuthGuard>
+            ),
+        },
+        {
+            path: '/purchases',
+            element: (
+                <AuthGuard>
+                    <Purchases />
+                </AuthGuard>
+            ),
+        },
     ]);
 }
 
@@ -37,3 +53,5 @@ const Login = Loadable(
 );
 const Profile = Loadable(lazy(() => import('../pages/Profile/Profile')));
 const Home = Loadable(lazy(() => import('../pages/Home/Home')));
+const Incomes = Loadable(lazy(() => import('../pages/Incomes/Incomes')));
+const Purchases = Loadable(lazy(() => import('../pages/Purchases/Purchases')));

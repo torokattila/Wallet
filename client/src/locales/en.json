@@ -26,7 +26,9 @@
         "sidebar": {
             "profile": "Profile",
             "logout": "Logout",
-            "home_page": "Home"
+            "home_page": "Home",
+            "purchases": "Purchases",
+            "incomes": "Incomes"
         },
         "profile_page": {
             "change_data": "Edit credentials",
