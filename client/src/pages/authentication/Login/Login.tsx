@@ -7,8 +7,6 @@ import RegistrationForm from '../../../components/Registration/RegistrationForm'
 import useLocales from '../../../hooks/useLocale';
 import { useLocation } from 'react-router-dom';
 
-import './Login.css';
-
 const ContentStyle = styled('div')(({ theme }) => ({
     maxWidth: 650,
     margin: 'auto',
@@ -25,7 +23,7 @@ const Login = (): JSX.Element => {
     };
 
     return (
-        <div className="login-page-container">
+        <div>
             <Box
                 sx={{
                     display: 'flex',

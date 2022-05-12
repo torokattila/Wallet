@@ -1,4 +1,11 @@
 .home-container {
-    background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(215, 223, 252, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(215, 223, 252, 1) 84%);
     min-height: 100vh;
+}
+
+.home-blurred-container {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8.3px);
+    -webkit-backdrop-filter: blur(8.3px);
 }

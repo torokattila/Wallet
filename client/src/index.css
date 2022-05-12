@@ -4,6 +4,10 @@ html {
 
 body {
   margin: 0;
+  background: url('../public/static/layered-waves.svg');
+  background-size: cover;
+  object-fit: cover;
+  background-repeat: no-repeat;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

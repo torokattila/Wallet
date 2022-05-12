@@ -2,14 +2,12 @@ import { Stack } from '@mui/material';
 import DrawerLayout from '../../components/Drawer/DrawerLayout';
 import PasswordChangeForm from '../../components/PasswordChange/PasswordChangeForm';
 import UserEditForm from '../../components/UserEdit/UserEditForm';
-import './Profile.css';
 
 const Profile = (): JSX.Element => {
     return (
-        <div className='profile-container'>
+        <div>
             <DrawerLayout>
                 <Stack
-                    className="profile-page-container"
                     alignItems="center"
                     display="flex"
                     justifyContent="center"

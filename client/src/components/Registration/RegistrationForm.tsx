@@ -39,7 +39,14 @@ const RegistrationForm = (): JSX.Element => {
     return (
         <form autoComplete="off" onSubmit={handleSubmit}>
             <Stack>
-                <Card sx={{ p: 5, mb: 5, borderRadius: 3 }}>
+                <Card
+                    sx={{
+                        p: 5,
+                        mb: 5,
+                        borderRadius: 3,
+                        boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                    }}
+                >
                     <Typography
                         color="secondary"
                         sx={{ mb: 5, fontWeight: 'bold' }}

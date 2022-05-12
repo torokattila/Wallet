@@ -31,9 +31,7 @@ const Home = (): JSX.Element => {
         HomeContainer();
     const {
         purchaseList,
-        openPurchaseDialog,
         handleOpenPurchaseDialog,
-        handleClosePurchaseDialog,
         handleOpenDeleteDialog,
         deleteDialogOptions,
         purchaseDialogProps,
@@ -42,9 +40,16 @@ const Home = (): JSX.Element => {
     return (
         <div className="home-container">
             <DrawerLayout>
-                <Container maxWidth="xl">
+                <Container maxWidth="xl" className="home-blurred-container">
                     <Stack sx={{ maxWidth: matches ? '50%' : '100%' }}>
-                        <Card sx={{ p: 4, borderRadius: '20px', mt: 5 }}>
+                        <Card
+                            sx={{
+                                p: 4,
+                                borderRadius: '20px',
+                                mt: 5,
+                                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                            }}
+                        >
                             <Stack flexDirection="column" spacing={5}>
                                 <Box>
                                     <Typography
@@ -105,18 +110,31 @@ const Home = (): JSX.Element => {
                         <Box
                             sx={{
                                 display: 'flex',
-                                justifyContent: 'space-between',
+                                justifyContent: matches
+                                    ? 'space-between'
+                                    : 'center',
+                                alignItems: 'center',
+                                flexDirection: matches ? 'row' : 'column',
                                 width: '100%',
                             }}
                         >
-                            <Box>
+                            <Box
+                                sx={{
+                                    p: 3,
+                                    backgroundColor: 'white',
+                                    boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                                    borderRadius: '10px',
+                                }}
+                            >
                                 <Typography
-                                    sx={{ fontWeight: 'bold' }}
+                                    sx={{
+                                        fontWeight: 'bold',
+                                    }}
                                     variant="h5"
                                     color="secondary"
                                 >
                                     {translate(
-                                        'general.home_page.last_five_purchase'
+                                        'general.home_page.last_five_purchases'
                                     )}
                                 </Typography>
                             </Box>
@@ -125,6 +143,7 @@ const Home = (): JSX.Element => {
                                     size="large"
                                     variant="contained"
                                     color="secondary"
+                                    sx={{ mt: matches ? 0 : 5 }}
                                     onClick={() => handleOpenPurchaseDialog()}
                                 >
                                     {translate(
