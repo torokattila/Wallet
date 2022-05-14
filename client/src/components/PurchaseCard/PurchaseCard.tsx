@@ -43,6 +43,7 @@ const PurchaseCard = ({
                 m: 4,
                 borderRadius: '20px',
                 width: matches ? '13vw' : '60vw',
+                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
             }}
         >
             <Box

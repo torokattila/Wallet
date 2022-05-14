@@ -26,6 +26,7 @@ import { useNavigate } from 'react-router-dom';
 import LanguagePopover from '../../layouts/LanguagePopover';
 import LocalStorageManager from '../../utils/LocalStorageManager';
 import { useMediaQuery } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -80,9 +81,14 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const DrawerLayout = ({ children }: { children: ReactNode }): JSX.Element => {
     const { onChangeLang, translate, currentLang, allLang } = useLocales();
     const navigate = useNavigate();
+    const location = useLocation();
     const theme = useTheme();
     const [open, setOpen] = useState<boolean>(false);
     const matches = useMediaQuery(theme.breakpoints.up('sm'));
+    const isHomePage = location.pathname === '/';
+    const isProfilePage = location.pathname === '/profile';
+    const isIncomesPage = location.pathname === '/incomes';
+    const isPurchasesPage = location.pathname === '/purchases';
 
     const handleDrawerOpen = (): void => {
         setOpen(true);
@@ -172,64 +178,142 @@ const DrawerLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                 <Divider />
                 <List>
                     <ListItem
-                        button
+                        sx={{
+                            boxShadow: isHomePage
+                                ? '0 4px 30px rgba(0, 0, 0, 0.1)'
+                                : '',
+                            backgroundColor: isHomePage ? '#9c27b0' : '#fff',
+                            transition: '0.2s',
+                            cursor: 'pointer',
+                            '&:hover': {
+                                backgroundColor: isHomePage ? '' : '#f1d2f7',
+                                transition: '0.2s',
+                                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                            },
+                        }}
                         onClick={() => {
                             navigate('/');
                             handleDrawerClose();
                         }}
                     >
                         <ListItemIcon>
-                            <HomeOutlinedIcon color="secondary" />
+                            <HomeOutlinedIcon
+                                sx={{ color: isHomePage ? '#fff' : '#9c27b0' }}
+                            />
                         </ListItemIcon>
-                        <Typography color="secondary" variant="h6">
+                        <Typography
+                            sx={{ color: isHomePage ? '#fff' : '#9c27b0' }}
+                            variant="h6"
+                        >
                             {translate('general.sidebar.home_page')}
                         </Typography>
                     </ListItem>
                 </List>
                 <List>
                     <ListItem
-                        button
+                        sx={{
+                            boxShadow: isProfilePage
+                                ? '0 4px 30px rgba(0, 0, 0, 0.1)'
+                                : '',
+                            backgroundColor: isProfilePage ? '#9c27b0' : '#fff',
+                            transition: '0.2s',
+                            cursor: 'pointer',
+                            '&:hover': {
+                                backgroundColor: isProfilePage ? '' : '#f1d2f7',
+                                transition: '0.2s',
+                                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                            },
+                        }}
                         onClick={() => {
                             navigate('/profile');
                             handleDrawerClose();
                         }}
                     >
                         <ListItemIcon>
-                            <AccountCircleOutlinedIcon color="secondary" />
+                            <AccountCircleOutlinedIcon
+                                sx={{
+                                    color: isProfilePage ? '#fff' : '#9c27b0',
+                                }}
+                            />
                         </ListItemIcon>
-                        <Typography color="secondary" variant="h6">
+                        <Typography
+                            sx={{ color: isProfilePage ? '#fff' : '#9c27b0' }}
+                            variant="h6"
+                        >
                             {translate('general.sidebar.profile')}
                         </Typography>
                     </ListItem>
                 </List>
                 <List>
                     <ListItem
-                        button
+                        sx={{
+                            boxShadow: isIncomesPage
+                                ? '0 4px 30px rgba(0, 0, 0, 0.1)'
+                                : '',
+                            backgroundColor: isIncomesPage ? '#9c27b0' : '#fff',
+                            transition: '0.2s',
+                            cursor: 'pointer',
+                            '&:hover': {
+                                backgroundColor: isIncomesPage ? '' : '#f1d2f7',
+                                transition: '0.2s',
+                                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                            },
+                        }}
                         onClick={() => {
                             navigate('/incomes');
                             handleDrawerClose();
                         }}
                     >
                         <ListItemIcon>
-                            <AddCardOutlinedIcon color="secondary" />
+                            <AddCardOutlinedIcon
+                                sx={{
+                                    color: isIncomesPage ? '#fff' : '#9c27b0',
+                                }}
+                            />
                         </ListItemIcon>
-                        <Typography color="secondary" variant="h6">
+                        <Typography
+                            sx={{ color: isIncomesPage ? '#fff' : '#9c27b0' }}
+                            variant="h6"
+                        >
                             {translate('general.sidebar.incomes')}
                         </Typography>
                     </ListItem>
                 </List>
                 <List>
                     <ListItem
-                        button
+                        sx={{
+                            boxShadow: isPurchasesPage
+                                ? '0 4px 30px rgba(0, 0, 0, 0.1)'
+                                : '',
+                            backgroundColor: isPurchasesPage
+                                ? '#9c27b0'
+                                : '#fff',
+                            transition: '0.2s',
+                            cursor: 'pointer',
+                            '&:hover': {
+                                backgroundColor: isPurchasesPage
+                                    ? ''
+                                    : '#f1d2f7',
+                                transition: '0.2s',
+                                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                            },
+                        }}
                         onClick={() => {
                             navigate('/purchases');
                             handleDrawerClose();
                         }}
                     >
                         <ListItemIcon>
-                            <ShoppingCartOutlinedIcon color="secondary" />
+                            <ShoppingCartOutlinedIcon
+                                sx={{
+                                    color: isPurchasesPage ? '#fff' : '#9c27b0',
+                                }}
+                            />
                         </ListItemIcon>
-                        <Typography color="secondary" variant="h6">
+                        <Typography
+                            sx={{ color: isPurchasesPage ? '#fff' : '#9c27b0' }}
+                            variant="h6"
+                        >
                             {translate('general.sidebar.purchases')}
                         </Typography>
                     </ListItem>
@@ -237,7 +321,15 @@ const DrawerLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                 <Divider />
                 <List>
                     <ListItem
-                        button
+                        sx={{
+                            transition: '0.2s',
+                            cursor: 'pointer',
+                            '&:hover': {
+                                backgroundColor: '#f1d2f7',
+                                transition: '0.2s',
+                                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                            },
+                        }}
                         onClick={() => {
                             LocalStorageManager.removeLocalStorage();
                             navigate('/login');
