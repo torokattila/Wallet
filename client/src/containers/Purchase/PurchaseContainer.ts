@@ -32,7 +32,7 @@ const PurchaseContainer = () => {
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] =
         useState<boolean>(false);
 
-    const { refetch } = HomeContainer();
+    const { refetchUser } = HomeContainer();
 
     const { data: purchaseList, refetch: refetchPurchases } = useQuery(
         'listPurchases',
@@ -123,7 +123,7 @@ const PurchaseContainer = () => {
                 await postPurchase.mutateAsync(payload);
 
                 refetchPurchases();
-                refetch();
+                refetchUser();
                 setAmount('');
                 setCategory('');
 
@@ -163,7 +163,7 @@ const PurchaseContainer = () => {
             await apiClient.updatePurchase(purchaseId, purchase);
 
             refetchPurchases();
-            refetch();
+            refetchUser();
 
             const key = enqueueSnackbar(
                 translate('general.profile_page.successful_modification'),
@@ -199,7 +199,7 @@ const PurchaseContainer = () => {
         try {
             await deletePurchase.mutateAsync(deletablePurchase?.id as string);
             refetchPurchases();
-            refetch();
+            refetchUser();
 
             const key = enqueueSnackbar(
                 translate('general.home_page.successful_delete'),

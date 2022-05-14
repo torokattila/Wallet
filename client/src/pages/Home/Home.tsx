@@ -21,14 +21,20 @@ import Purchase from '../../models/Purchase';
 
 import PurchaseCard from '../../components/PurchaseCard/PurchaseCard';
 import DeleteEntityDialog from '../../components/DeleteEntityDialog/DeleteEntityDialog';
+import IncomeContainer from '../../containers/Income/IncomeContainer';
 
 const Home = (): JSX.Element => {
     const { translate } = useLocales();
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('lg'));
 
-    const { user, openDialog, handleOpenDialog, handleCloseDialog } =
-        HomeContainer();
+    const { user } = HomeContainer();
+    const {
+        openIncomeDialog,
+        setOpenIncomeDialog,
+        handleOpenIncomeDialog,
+        handleCloseIncomeDialog,
+    } = IncomeContainer();
     const {
         purchaseList,
         handleOpenPurchaseDialog,
@@ -90,7 +96,7 @@ const Home = (): JSX.Element => {
                                             color="secondary"
                                             size="large"
                                             sx={{ mt: matches ? 0 : 5 }}
-                                            onClick={handleOpenDialog}
+                                            onClick={handleOpenIncomeDialog}
                                         >
                                             {translate(
                                                 'general.home_page.add_income'
@@ -186,7 +192,10 @@ const Home = (): JSX.Element => {
                         )}
                 </Container>
             </DrawerLayout>
-            <IncomeDialog open={openDialog} onClose={handleCloseDialog} />
+            <IncomeDialog
+                open={openIncomeDialog}
+                onClose={handleCloseIncomeDialog}
+            />
             <PurchaseDialog
                 currentPurchase={purchaseDialogProps.currentPurchase}
                 setCurrentPurchase={purchaseDialogProps.setCurrentPurchase}

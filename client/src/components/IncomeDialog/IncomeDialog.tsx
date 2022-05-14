@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import closeFill from '@iconify/icons-eva/close-fill';
 import useLocales from '../../hooks/useLocale';
-import HomeContainer from '../../containers/Home/HomeContainer';
+import IncomeContainer from '../../containers/Income/IncomeContainer';
 
 type IncomeDialogProps = {
     open: boolean;
@@ -22,7 +22,7 @@ type IncomeDialogProps = {
 const IncomeDialog = ({ open, onClose }: IncomeDialogProps): JSX.Element => {
     const { translate } = useLocales();
     const { amount, setAmount, handleAddIncomeSubmit, amountError } =
-        HomeContainer();
+        IncomeContainer();
 
     const handleAction = async () => {
         try {

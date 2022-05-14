@@ -74,6 +74,9 @@
             "edit_purcase": "Vásárlás szerkesztése"
         },
         "delete": "Törlés",
-        "edit": "Szerkesztés"
+        "edit": "Szerkesztés",
+        "date": "Dátum",
+        "previous_month": "Előző hónap",
+        "next_month": "Következő hónap"
     }
 }

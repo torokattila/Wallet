@@ -20,6 +20,11 @@ export type PurchaseList = {
     totalNumber: number;
 };
 
+export type IncomeList = {
+    incomes: Income[];
+    totalNumber: number;
+};
+
 class ApiClient {
     protected readonly client: AxiosInstance;
 
@@ -98,10 +103,57 @@ class ApiClient {
     }
 
     // Incomes
+    async listIncomes(
+        page?: number,
+        size?: number,
+        from?: string,
+        to?: string,
+    ): Promise<IncomeList> {
+        const params = [`page=${page}`, `size=${size}`];
+
+        if (from) {
+            params.push(`from=${moment(from).format('YYYY-MM-DD')}`);
+        }
+
+        if (to) {
+            params.push(`to=${moment(to).format('YYYY-MM-DD')}`);
+        }
+
+        const response: AxiosResponse = await this.client.get<Income[]>(
+            `/incomes?${params.join('&')}`,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
+        );
+        const responseHeader =
+            response.headers['X-Total-Count'] ||
+            response.headers['x-total-count'];
+        const result = {
+            incomes: response.data,
+            totalNumber: Number(responseHeader),
+        };
+
+        return result;
+    }
+
     async postIncome(data: IncomePayload): Promise<Income> {
         const response: AxiosResponse<Income> = await this.client.post(
             '/incomes',
             data,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
+        );
+        return response.data;
+    }
+
+    async deleteIncome(incomeId: string): Promise<Purchase> {
+        const response: AxiosResponse<Purchase> = await this.client.delete(
+            `/incomes/${incomeId}`,
             {
                 headers: {
                     access_token: localStorage.getItem('access_token') || '',

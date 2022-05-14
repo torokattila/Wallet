@@ -74,6 +74,9 @@
             "edit_purcase": "Edit purchase"
         },
         "delete": "Delete",
-        "edit": "Edit"
+        "edit": "Edit",
+        "date": "Date",
+        "previous_month": "Previous month",
+        "next_month": "Next month"
     }
 }
