@@ -57,7 +57,7 @@ const list = async (
             queryBuilder.andWhere(
                 new Brackets((qb) => {
                     qb.where('income.created <= :to', {
-                        to: findParams.filter.to,
+                        to: findParams.filter.to + ' 23:59:59',
                     });
                 })
             );

@@ -33,6 +33,7 @@ import './Incomes.css';
 import IncomeDialog from '../../components/IncomeDialog/IncomeDialog';
 import DeleteEntityDialog from '../../components/DeleteEntityDialog/DeleteEntityDialog';
 import { DatePicker, LocalizationProvider } from '@mui/lab';
+import CurrencyFormat from 'react-currency-format';
 
 const Incomes = (): JSX.Element => {
     const { translate } = useLocales();
@@ -48,7 +49,6 @@ const Incomes = (): JSX.Element => {
         setFrom,
         to,
         setTo,
-        handleDateSelect,
         incomeDialogProps,
     } = IncomeContainer();
     const theme = useTheme();
@@ -99,201 +99,257 @@ const Incomes = (): JSX.Element => {
                             </Box>
                         </Box>
 
-                        <Stack alignItems={matches ? 'center' : 'normal'}>
-                            <Card
-                                sx={{
-                                    p: 3,
-                                    borderRadius: '20px',
-                                    boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-                                }}
-                            >
-                                <Stack
-                                    spacing={2}
-                                    justifyContent="center"
-                                    direction={{ xs: 'column', sm: 'row' }}
-                                >
-                                    <LocalizationProvider
-                                        dateAdapter={DateAdapter}
-                                        locale={moment.locale()}
+                        {incomes &&
+                            incomes.incomes &&
+                            incomes.incomes.length > 0 && (
+                                <>
+                                    <Stack
+                                        alignItems={
+                                            matches ? 'center' : 'normal'
+                                        }
                                     >
-                                        <DatePicker
-                                            clearable
-                                            clearText={translate(
-                                                'general.delete'
-                                            )}
-                                            disableFuture
-                                            openTo="day"
-                                            label={translate(
-                                                'general.filter_from'
-                                            )}
-                                            cancelText={translate(
-                                                'general.confirm_dialog.cancel'
-                                            )}
-                                            mask="____-__-__"
-                                            views={['year', 'month', 'day']}
-                                            inputFormat="YYYY-MM-DD"
-                                            onChange={(newValue) =>
-                                                setFrom(newValue)
-                                            }
-                                            value={moment(from) || null}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    type="date"
-                                                    color="secondary"
-                                                    {...params}
-                                                    error={false}
-                                                />
-                                            )}
-                                        />
-                                    </LocalizationProvider>
+                                        <Card
+                                            sx={{
+                                                p: 3,
+                                                borderRadius: '20px',
+                                                boxShadow:
+                                                    '0 4px 30px rgba(0, 0, 0, 0.1)',
+                                            }}
+                                        >
+                                            <Stack
+                                                spacing={2}
+                                                justifyContent="center"
+                                                direction={{
+                                                    xs: 'column',
+                                                    sm: 'row',
+                                                }}
+                                            >
+                                                <LocalizationProvider
+                                                    dateAdapter={DateAdapter}
+                                                    locale={moment.locale()}
+                                                >
+                                                    <DatePicker
+                                                        clearable
+                                                        clearText={translate(
+                                                            'general.delete'
+                                                        )}
+                                                        disableFuture
+                                                        openTo="day"
+                                                        label={translate(
+                                                            'general.filter_from'
+                                                        )}
+                                                        cancelText={translate(
+                                                            'general.confirm_dialog.cancel'
+                                                        )}
+                                                        mask="____-__-__"
+                                                        views={[
+                                                            'year',
+                                                            'month',
+                                                            'day',
+                                                        ]}
+                                                        inputFormat="YYYY-MM-DD"
+                                                        onChange={(newValue) =>
+                                                            setFrom(newValue)
+                                                        }
+                                                        value={
+                                                            moment(from) || null
+                                                        }
+                                                        renderInput={(
+                                                            params
+                                                        ) => (
+                                                            <TextField
+                                                                type="date"
+                                                                color="secondary"
+                                                                {...params}
+                                                                error={false}
+                                                            />
+                                                        )}
+                                                    />
+                                                </LocalizationProvider>
 
-                                    <LocalizationProvider
-                                        dateAdapter={DateAdapter}
-                                        locale={moment.locale()}
+                                                <LocalizationProvider
+                                                    dateAdapter={DateAdapter}
+                                                    locale={moment.locale()}
+                                                >
+                                                    <DatePicker
+                                                        clearable
+                                                        clearText={translate(
+                                                            'general.delete'
+                                                        )}
+                                                        disableFuture
+                                                        openTo="day"
+                                                        label={translate(
+                                                            'general.filter_to'
+                                                        )}
+                                                        cancelText={translate(
+                                                            'general.confirm_dialog.cancel'
+                                                        )}
+                                                        mask="____-__-__"
+                                                        views={[
+                                                            'year',
+                                                            'month',
+                                                            'day',
+                                                        ]}
+                                                        inputFormat="YYYY-MM-DD"
+                                                        onChange={(newValue) =>
+                                                            setTo(newValue)
+                                                        }
+                                                        value={
+                                                            moment(to) || null
+                                                        }
+                                                        renderInput={(
+                                                            params
+                                                        ) => (
+                                                            <TextField
+                                                                type="date"
+                                                                color="secondary"
+                                                                {...params}
+                                                                error={false}
+                                                            />
+                                                        )}
+                                                    />
+                                                </LocalizationProvider>
+                                            </Stack>
+                                        </Card>
+                                    </Stack>
+
+                                    <Card
+                                        sx={{
+                                            boxShadow:
+                                                '0 4px 30px rgba(0, 0, 0, 0.1)',
+                                            py: 2,
+                                            borderRadius: '20px',
+                                            mb: 2,
+                                        }}
                                     >
-                                        <DatePicker
-                                            clearable
-                                            clearText={translate(
-                                                'general.delete'
-                                            )}
-                                            disableFuture
-                                            openTo="day"
-                                            label={translate(
-                                                'general.filter_to'
-                                            )}
-                                            mask="____-__-__"
-                                            views={['year', 'month', 'day']}
-                                            inputFormat="YYYY-MM-DD"
-                                            onChange={(newValue) =>
-                                                setTo(newValue)
-                                            }
-                                            value={moment(to) || null}
-                                            renderInput={(params) => (
-                                                <TextField
-                                                    type="date"
-                                                    color="secondary"
-                                                    {...params}
-                                                    error={false}
-                                                />
-                                            )}
-                                        />
-                                    </LocalizationProvider>
-                                </Stack>
-                            </Card>
-                        </Stack>
-
-                        <Card
-                            sx={{
-                                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-                                py: 2,
-                                borderRadius: '20px',
-                                mb: 2,
-                            }}
-                        >
-                            <TableContainer>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell></TableCell>
-                                            <TableCell align="center">
-                                                <Typography
-                                                    variant="body1"
-                                                    color="secondary"
-                                                    sx={{ fontWeight: 'bold' }}
-                                                >
-                                                    {translate(
-                                                        'general.home_page.amount'
-                                                    )}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                <Typography
-                                                    variant="body1"
-                                                    color="secondary"
-                                                    sx={{ fontWeight: 'bold' }}
-                                                >
-                                                    {translate('general.date')}
-                                                </Typography>
-                                            </TableCell>
-                                            <TableCell></TableCell>
-                                        </TableRow>
-                                    </TableHead>
-
-                                    <TableBody>
-                                        {incomes &&
-                                            incomes.incomes &&
-                                            incomes.incomes.map(
-                                                (income: Income) => (
-                                                    <TableRow key={income.id}>
+                                        <TableContainer>
+                                            <Table>
+                                                <TableHead>
+                                                    <TableRow>
                                                         <TableCell></TableCell>
                                                         <TableCell align="center">
-                                                            <Typography variant="body1">
-                                                                {income.amount}
+                                                            <Typography
+                                                                variant="body1"
+                                                                color="secondary"
+                                                                sx={{
+                                                                    fontWeight:
+                                                                        'bold',
+                                                                }}
+                                                            >
+                                                                {translate(
+                                                                    'general.home_page.amount'
+                                                                )}
                                                             </Typography>
                                                         </TableCell>
                                                         <TableCell align="center">
-                                                            <Typography variant="body1">
-                                                                {moment(
-                                                                    income.created
-                                                                ).format(
-                                                                    'YYYY-MM-DD HH:mm:ss'
+                                                            <Typography
+                                                                variant="body1"
+                                                                color="secondary"
+                                                                sx={{
+                                                                    fontWeight:
+                                                                        'bold',
+                                                                }}
+                                                            >
+                                                                {translate(
+                                                                    'general.date'
                                                                 )}
                                                             </Typography>
                                                         </TableCell>
-                                                        <TableCell align="right">
-                                                            <Tooltip
-                                                                arrow
-                                                                title={translate(
-                                                                    'general.edit'
-                                                                )}
-                                                            >
-                                                                <IconButton>
-                                                                    <EditIcon
-                                                                        onClick={() =>
-                                                                            handleOpenIncomeDialog(
-                                                                                income
-                                                                            )
-                                                                        }
-                                                                        color="secondary"
-                                                                        fontSize="large"
-                                                                    />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                            <Tooltip
-                                                                arrow
-                                                                title={translate(
-                                                                    'general.delete'
-                                                                )}
-                                                            >
-                                                                <IconButton
-                                                                    onClick={() =>
-                                                                        handleOpenDeleteIncomeDialog(
-                                                                            income
-                                                                        )
+                                                        <TableCell></TableCell>
+                                                    </TableRow>
+                                                </TableHead>
+
+                                                <TableBody>
+                                                    {incomes &&
+                                                        incomes.incomes &&
+                                                        incomes.incomes.map(
+                                                            (
+                                                                income: Income
+                                                            ) => (
+                                                                <TableRow
+                                                                    key={
+                                                                        income.id
                                                                     }
                                                                 >
-                                                                    <DeleteOutlineIcon
-                                                                        color="secondary"
-                                                                        fontSize="large"
-                                                                    />
-                                                                </IconButton>
-                                                            </Tooltip>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                )
-                                            )}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                            <Box
-                                display="flex"
-                                alignItems="center"
-                                justifyContent="center"
-                                sx={{ py: { xs: 3, sm: 2 } }}
-                            >
-                                {PaginationComponent}
-                            </Box>
-                        </Card>
+                                                                    <TableCell></TableCell>
+                                                                    <TableCell align="center">
+                                                                        <Typography variant="body1">
+                                                                            <CurrencyFormat
+                                                                                value={
+                                                                                    income.amount
+                                                                                }
+                                                                                thousandSeparator={
+                                                                                    true
+                                                                                }
+                                                                                displayType="text"
+                                                                            />
+                                                                        </Typography>
+                                                                    </TableCell>
+                                                                    <TableCell align="center">
+                                                                        <Typography variant="body1">
+                                                                            {moment(
+                                                                                income.created
+                                                                            ).format(
+                                                                                'YYYY-MM-DD HH:mm:ss'
+                                                                            )}
+                                                                        </Typography>
+                                                                    </TableCell>
+                                                                    <TableCell align="right">
+                                                                        <Tooltip
+                                                                            arrow
+                                                                            title={translate(
+                                                                                'general.edit'
+                                                                            )}
+                                                                        >
+                                                                            <IconButton>
+                                                                                <EditIcon
+                                                                                    onClick={() =>
+                                                                                        handleOpenIncomeDialog(
+                                                                                            income
+                                                                                        )
+                                                                                    }
+                                                                                    color="secondary"
+                                                                                    fontSize="large"
+                                                                                />
+                                                                            </IconButton>
+                                                                        </Tooltip>
+                                                                        <Tooltip
+                                                                            arrow
+                                                                            title={translate(
+                                                                                'general.delete'
+                                                                            )}
+                                                                        >
+                                                                            <IconButton
+                                                                                onClick={() =>
+                                                                                    handleOpenDeleteIncomeDialog(
+                                                                                        income
+                                                                                    )
+                                                                                }
+                                                                            >
+                                                                                <DeleteOutlineIcon
+                                                                                    color="secondary"
+                                                                                    fontSize="large"
+                                                                                />
+                                                                            </IconButton>
+                                                                        </Tooltip>
+                                                                    </TableCell>
+                                                                </TableRow>
+                                                            )
+                                                        )}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                        <Box
+                                            display="flex"
+                                            alignItems="center"
+                                            justifyContent="center"
+                                            sx={{ py: { xs: 3, sm: 2 } }}
+                                        >
+                                            {PaginationComponent}
+                                        </Box>
+                                    </Card>
+                                </>
+                            )}
                     </Stack>
                 </Container>
             </DrawerLayout>

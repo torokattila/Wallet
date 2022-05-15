@@ -10,7 +10,6 @@ import IncomePayload from '../../api/payloads/Home/IncomePayload';
 import HomeContainer from '../Home/HomeContainer';
 import Income from '../../models/Income';
 import { Moment } from 'moment';
-import { DateRange } from '@mui/lab';
 
 const IncomeContainer = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -24,9 +23,9 @@ const IncomeContainer = () => {
     const [amountError, setAmountError] = useState<{
         [key: string]: string;
     }>({});
-    const [page, setPage] = useState<number>(1);
     const [from, setFrom] = useState<Moment | null>(null);
     const [to, setTo] = useState<Moment | null>(null);
+    const [page, setPage] = useState<number>(1);
     const pageSize = 10;
 
     const [deletableIncome, setDeletableIncome] = useState<Income | null>(null);
@@ -52,13 +51,6 @@ const IncomeContainer = () => {
         },
         { refetchOnWindowFocus: false }
     );
-
-    const handleDateSelect = async (
-        ranges: DateRange<Moment>
-    ): Promise<void> => {
-        setFrom(ranges[0]);
-        setTo(ranges[1]);
-    };
 
     const handleOpenIncomeDialog = (income?: Income): void => {
         if (income) {
@@ -301,7 +293,6 @@ const IncomeContainer = () => {
         deletableIncome,
         setDeletableIncome,
         deleteDialogOptions,
-        handleDateSelect,
         handleUpdateIncome,
         incomeDialogProps,
     };

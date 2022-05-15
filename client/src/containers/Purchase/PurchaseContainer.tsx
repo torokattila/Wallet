@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import useApi from '../../hooks/useApi';
 import Purchase from '../../models/Purchase';
@@ -8,6 +8,8 @@ import useLocales from '../../hooks/useLocale';
 import PurchasePayload from '../../api/payloads/Home/PurchasePayload';
 import LocalStorageManager from '../../utils/LocalStorageManager';
 import HomeContainer from '../Home/HomeContainer';
+import { Moment } from 'moment';
+import { Pagination } from '@mui/material';
 
 const PurchaseContainer = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -15,14 +17,18 @@ const PurchaseContainer = () => {
     const apiClient = useApi();
 
     const user = LocalStorageManager.getUser();
-    const [purchases, setPurchases] = useState<Purchase[]>([]);
     const [openPurchaseDialog, setOpenPurchaseDialog] =
         useState<boolean>(false);
     const [category, setCategory] = useState<string>('');
+    const [filterCategory, setFilterCategory] = useState<string>('');
     const [amount, setAmount] = useState<string>('');
+    const [from, setFrom] = useState<Moment | null>(null);
+    const [to, setTo] = useState<Moment | null>(null);
     const [purchaseErrors, setPurchaseErrors] = useState<{
         [key: string]: string;
     }>({});
+    const [page, setPage] = useState<number>(1);
+    const pageSize = 10;
     const [deletablePurchase, setDeletablePurchase] = useState<Purchase | null>(
         null
     );
@@ -37,10 +43,16 @@ const PurchaseContainer = () => {
     const { data: purchaseList, refetch: refetchPurchases } = useQuery(
         'listPurchases',
         async () => {
-            const result = await apiClient.listPurchases();
-            setPurchases(result.purchases);
+            const result = await apiClient.listPurchases(
+                page,
+                pageSize,
+                from?.toISOString(),
+                to?.toISOString(),
+                filterCategory
+            );
             return result;
-        }
+        },
+        { refetchOnWindowFocus: false }
     );
 
     const handleOpenPurchaseDialog = (purchase?: Purchase) => {
@@ -65,6 +77,19 @@ const PurchaseContainer = () => {
     const handleCloseDeleteDialog = () => {
         setIsDeleteDialogOpen(false);
     };
+
+    const handlePaginationChange = (event: unknown, newPage: number): void => {
+        setPage(newPage);
+    };
+
+    const PaginationComponent =
+        purchaseList && purchaseList.totalNumber ? (
+            <Pagination
+                count={Math.ceil(purchaseList.totalNumber / pageSize)}
+                page={page}
+                onChange={handlePaginationChange}
+            />
+        ) : null;
 
     const PurchaseSchema = Yup.object().shape({
         category: Yup.string().required(
@@ -223,6 +248,20 @@ const PurchaseContainer = () => {
         }
     };
 
+    useEffect(() => {
+        refetchPurchases();
+    }, [page]);
+
+    useEffect(() => {
+        if (page !== 1) {
+            setPage(1);
+        }
+
+        if (page === 1) {
+            refetchPurchases();
+        }
+    }, [from, to, filterCategory]);
+
     const deleteDialogOptions = {
         currentEntity: deletablePurchase,
         isOpen: isDeleteDialogOpen,
@@ -260,6 +299,13 @@ const PurchaseContainer = () => {
         editablePurchase,
         setEditablePurchase,
         handleUpdatePurchase,
+        from,
+        setFrom,
+        to,
+        setTo,
+        filterCategory,
+        setFilterCategory,
+        PaginationComponent,
     };
 };
 

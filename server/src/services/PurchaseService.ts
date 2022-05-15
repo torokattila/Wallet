@@ -46,7 +46,7 @@ const list = async (
 
         if (findParams.filter.category) {
             queryBuilder.andWhere('purchase.category = :category', {
-                cagetory: findParams.filter.category,
+                category: findParams.filter.category,
             });
 
             delete findParams.filter.category;
@@ -68,7 +68,7 @@ const list = async (
             queryBuilder.andWhere(
                 new Brackets((qb) => {
                     qb.where('purchase.created <= :to', {
-                        to: findParams.filter.to,
+                        to: findParams.filter.to + ' 23:59:59',
                     });
                 })
             );
