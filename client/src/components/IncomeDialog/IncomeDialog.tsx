@@ -70,7 +70,11 @@ const IncomeDialog = ({
                     <Box flexDirection="row" justifyContent="space-between">
                         <Box>
                             <Typography variant="h5" color="secondary">
-                                {translate('general.home_page.add_income')}
+                                {currentIncome
+                                    ? translate(
+                                          'general.incomes_page.edit_income'
+                                      )
+                                    : translate('general.home_page.add_income')}
                             </Typography>
                         </Box>
                         <Box>
@@ -108,8 +112,19 @@ const IncomeDialog = ({
                         size="medium"
                         type="number"
                         InputProps={{ inputProps: { min: 0 } }}
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
+                        value={
+                            currentIncome
+                                ? String(currentIncome.amount)
+                                : amount
+                        }
+                        onChange={(e) =>
+                            currentIncome && setCurrentIncome
+                                ? setCurrentIncome({
+                                      ...currentIncome,
+                                      amount: Number(e.target.value),
+                                  })
+                                : setAmount(e.target.value)
+                        }
                         error={amountError.amount !== undefined}
                         helperText={amountError.amount}
                     />
@@ -120,7 +135,9 @@ const IncomeDialog = ({
                         color="secondary"
                         onClick={handleAction}
                     >
-                        {translate('general.home_page.add')}
+                        {currentIncome
+                            ? translate('general.profile_page.edit')
+                            : translate('general.home_page.add')}
                     </Button>
                 </DialogActions>
             </Dialog>

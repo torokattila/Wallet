@@ -73,6 +73,9 @@
             "delete_failed": "Delete failed",
             "edit_purcase": "Edit purchase"
         },
+        "incomes_page": {
+            "edit_income": "Edit income"
+        },
         "delete": "Delete",
         "edit": "Edit",
         "date": "Date",

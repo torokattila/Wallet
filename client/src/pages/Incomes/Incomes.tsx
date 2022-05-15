@@ -117,6 +117,10 @@ const Incomes = (): JSX.Element => {
                                         locale={moment.locale()}
                                     >
                                         <DatePicker
+                                            clearable
+                                            clearText={translate(
+                                                'general.delete'
+                                            )}
                                             disableFuture
                                             openTo="day"
                                             label={translate(
@@ -125,7 +129,7 @@ const Incomes = (): JSX.Element => {
                                             cancelText={translate(
                                                 'general.confirm_dialog.cancel'
                                             )}
-                                            mask="____/__/__"
+                                            mask="____-__-__"
                                             views={['year', 'month', 'day']}
                                             inputFormat="YYYY-MM-DD"
                                             onChange={(newValue) =>
@@ -149,12 +153,15 @@ const Incomes = (): JSX.Element => {
                                     >
                                         <DatePicker
                                             clearable
+                                            clearText={translate(
+                                                'general.delete'
+                                            )}
                                             disableFuture
                                             openTo="day"
                                             label={translate(
                                                 'general.filter_to'
                                             )}
-                                            mask="____/__/__"
+                                            mask="____-__-__"
                                             views={['year', 'month', 'day']}
                                             inputFormat="YYYY-MM-DD"
                                             onChange={(newValue) =>

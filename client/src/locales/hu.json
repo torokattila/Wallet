@@ -73,6 +73,9 @@
             "delete_failed": "Sikertelen törlés",
             "edit_purcase": "Vásárlás szerkesztése"
         },
+        "incomes_page": {
+            "edit_income": "Bevétel szerkesztése"
+        },
         "delete": "Törlés",
         "edit": "Szerkesztés",
         "date": "Dátum",

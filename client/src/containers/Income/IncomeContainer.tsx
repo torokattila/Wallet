@@ -68,6 +68,9 @@ const IncomeContainer = () => {
     };
 
     const handleCloseIncomeDialog = (): void => {
+        if (editableIncome) {
+            setEditableIncome(undefined);
+        }
         setOpenIncomeDialog(false);
     };
 
