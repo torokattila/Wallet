@@ -13,20 +13,36 @@ import {
 import closeFill from '@iconify/icons-eva/close-fill';
 import useLocales from '../../hooks/useLocale';
 import IncomeContainer from '../../containers/Income/IncomeContainer';
+import Income from '../../models/Income';
+import { Dispatch, SetStateAction } from 'react';
 
 type IncomeDialogProps = {
+    currentIncome?: Income;
+    setCurrentIncome?: Dispatch<SetStateAction<Income | undefined>>;
     open: boolean;
     onClose: () => void;
 };
 
-const IncomeDialog = ({ open, onClose }: IncomeDialogProps): JSX.Element => {
+const IncomeDialog = ({
+    open,
+    onClose,
+    currentIncome,
+    setCurrentIncome,
+}: IncomeDialogProps): JSX.Element => {
     const { translate } = useLocales();
-    const { amount, setAmount, handleAddIncomeSubmit, amountError } =
-        IncomeContainer();
+    const {
+        amount,
+        setAmount,
+        handleAddIncomeSubmit,
+        handleUpdateIncome,
+        amountError,
+    } = IncomeContainer();
 
     const handleAction = async () => {
         try {
-            const submission = await handleAddIncomeSubmit();
+            const submission = currentIncome
+                ? await handleUpdateIncome(currentIncome.id, currentIncome)
+                : await handleAddIncomeSubmit();
 
             if (submission) {
                 onClose();

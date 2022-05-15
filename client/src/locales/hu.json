@@ -77,6 +77,8 @@
         "edit": "Szerkesztés",
         "date": "Dátum",
         "previous_month": "Előző hónap",
-        "next_month": "Következő hónap"
+        "next_month": "Következő hónap",
+        "filter_from": "Szűrés dátumtól",
+        "filter_to": "Szűrés dátumig"
     }
 }

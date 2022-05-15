@@ -17,11 +17,12 @@ import {
     useMediaQuery,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
+import 'moment/locale/hu';
+import DateAdapter from '@mui/lab/AdapterMoment';
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import closeFill from '@iconify/icons-eva/close-fill';
 
 import DrawerLayout from '../../components/Drawer/DrawerLayout';
 import IncomeContainer from '../../containers/Income/IncomeContainer';
@@ -31,14 +32,7 @@ import Income from '../../models/Income';
 import './Incomes.css';
 import IncomeDialog from '../../components/IncomeDialog/IncomeDialog';
 import DeleteEntityDialog from '../../components/DeleteEntityDialog/DeleteEntityDialog';
-import {
-    DatePicker,
-    DateRange,
-    DateRangePicker,
-    LocalizationProvider,
-} from '@mui/lab';
-import { Icon } from '@iconify/react';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { DatePicker, LocalizationProvider } from '@mui/lab';
 
 const Incomes = (): JSX.Element => {
     const { translate } = useLocales();
@@ -55,6 +49,7 @@ const Incomes = (): JSX.Element => {
         to,
         setTo,
         handleDateSelect,
+        incomeDialogProps,
     } = IncomeContainer();
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('lg'));
@@ -97,62 +92,88 @@ const Incomes = (): JSX.Element => {
                                     variant="contained"
                                     color="secondary"
                                     sx={{ mt: matches ? 0 : 5 }}
-                                    onClick={handleOpenIncomeDialog}
+                                    onClick={() => handleOpenIncomeDialog()}
                                 >
                                     {translate('general.home_page.add_income')}
                                 </Button>
                             </Box>
                         </Box>
 
-                        <Card
-                            sx={{
-                                p: 3,
-                                borderRadius: '20px',
-                                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-                            }}
-                        >
-                            <Stack
-                                spacing={2}
-                                justifyContent="center"
-                                direction={{ xs: 'column', sm: 'row' }}
+                        <Stack alignItems={matches ? 'center' : 'normal'}>
+                            <Card
+                                sx={{
+                                    p: 3,
+                                    borderRadius: '20px',
+                                    boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                                }}
                             >
-                                <DatePicker
-                                    disableFuture
-                                    openTo="day"
-                                    label="Dátumtól"
-                                    mask="____/__/__"
-                                    views={['year', 'month', 'day']}
-                                    inputFormat="yyyy/MM/dd"
-                                    onChange={(newValue) => setFrom(newValue)}
-                                    value={moment(from)}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            type="date"
-                                            color="secondary"
-                                            {...params}
+                                <Stack
+                                    spacing={2}
+                                    justifyContent="center"
+                                    direction={{ xs: 'column', sm: 'row' }}
+                                >
+                                    <LocalizationProvider
+                                        dateAdapter={DateAdapter}
+                                        locale={moment.locale()}
+                                    >
+                                        <DatePicker
+                                            disableFuture
+                                            openTo="day"
+                                            label={translate(
+                                                'general.filter_from'
+                                            )}
+                                            cancelText={translate(
+                                                'general.confirm_dialog.cancel'
+                                            )}
+                                            mask="____/__/__"
+                                            views={['year', 'month', 'day']}
+                                            inputFormat="YYYY-MM-DD"
+                                            onChange={(newValue) =>
+                                                setFrom(newValue)
+                                            }
+                                            value={moment(from) || null}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    type="date"
+                                                    color="secondary"
+                                                    {...params}
+                                                    error={false}
+                                                />
+                                            )}
                                         />
-                                    )}
-                                />
+                                    </LocalizationProvider>
 
-                                <DatePicker
-                                    disableFuture
-                                    openTo="day"
-                                    label="Dátumig"
-                                    mask="____/__/__"
-                                    views={['year', 'month', 'day']}
-                                    inputFormat="yyyy/MM/dd"
-                                    onChange={(newValue) => setTo(newValue)}
-                                    value={moment(to)}
-                                    renderInput={(params) => (
-                                        <TextField
-                                            type="date"
-                                            color="secondary"
-                                            {...params}
+                                    <LocalizationProvider
+                                        dateAdapter={DateAdapter}
+                                        locale={moment.locale()}
+                                    >
+                                        <DatePicker
+                                            clearable
+                                            disableFuture
+                                            openTo="day"
+                                            label={translate(
+                                                'general.filter_to'
+                                            )}
+                                            mask="____/__/__"
+                                            views={['year', 'month', 'day']}
+                                            inputFormat="YYYY-MM-DD"
+                                            onChange={(newValue) =>
+                                                setTo(newValue)
+                                            }
+                                            value={moment(to) || null}
+                                            renderInput={(params) => (
+                                                <TextField
+                                                    type="date"
+                                                    color="secondary"
+                                                    {...params}
+                                                    error={false}
+                                                />
+                                            )}
                                         />
-                                    )}
-                                />
-                            </Stack>
-                        </Card>
+                                    </LocalizationProvider>
+                                </Stack>
+                            </Card>
+                        </Stack>
 
                         <Card
                             sx={{
@@ -221,6 +242,11 @@ const Incomes = (): JSX.Element => {
                                                             >
                                                                 <IconButton>
                                                                     <EditIcon
+                                                                        onClick={() =>
+                                                                            handleOpenIncomeDialog(
+                                                                                income
+                                                                            )
+                                                                        }
                                                                         color="secondary"
                                                                         fontSize="large"
                                                                     />
@@ -265,6 +291,8 @@ const Incomes = (): JSX.Element => {
                 </Container>
             </DrawerLayout>
             <IncomeDialog
+                currentIncome={incomeDialogProps.currentIncome}
+                setCurrentIncome={incomeDialogProps.setCurrentIncome}
                 open={openIncomeDialog}
                 onClose={handleCloseIncomeDialog}
             />

@@ -96,7 +96,7 @@ const Home = (): JSX.Element => {
                                             color="secondary"
                                             size="large"
                                             sx={{ mt: matches ? 0 : 5 }}
-                                            onClick={handleOpenIncomeDialog}
+                                            onClick={() => handleOpenIncomeDialog()}
                                         >
                                             {translate(
                                                 'general.home_page.add_income'

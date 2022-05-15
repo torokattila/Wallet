@@ -151,6 +151,23 @@ class ApiClient {
         return response.data;
     }
 
+    async updateIncome(
+        incomeId: string,
+        data: Income | undefined
+    ): Promise<Income> {
+        const response: AxiosResponse<Income> = await this.client.put(
+            `/incomes/${incomeId}`,
+            data,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
+        );
+
+        return response.data;
+    }
+
     async deleteIncome(incomeId: string): Promise<Purchase> {
         const response: AxiosResponse<Purchase> = await this.client.delete(
             `/incomes/${incomeId}`,

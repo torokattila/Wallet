@@ -30,6 +30,9 @@ const IncomeContainer = () => {
     const pageSize = 10;
 
     const [deletableIncome, setDeletableIncome] = useState<Income | null>(null);
+    const [editableIncome, setEditableIncome] = useState<Income | undefined>(
+        undefined
+    );
 
     const { user, refetchUser } = HomeContainer();
 
@@ -50,25 +53,30 @@ const IncomeContainer = () => {
         { refetchOnWindowFocus: false }
     );
 
-    const handleDateSelect = async (ranges: DateRange<Moment>) => {
+    const handleDateSelect = async (
+        ranges: DateRange<Moment>
+    ): Promise<void> => {
         setFrom(ranges[0]);
         setTo(ranges[1]);
     };
 
-    const handleOpenIncomeDialog = () => {
+    const handleOpenIncomeDialog = (income?: Income): void => {
+        if (income) {
+            setEditableIncome(income);
+        }
         setOpenIncomeDialog(true);
     };
 
-    const handleCloseIncomeDialog = () => {
+    const handleCloseIncomeDialog = (): void => {
         setOpenIncomeDialog(false);
     };
 
-    const handleOpenDeleteIncomeDialog = (income: Income) => {
+    const handleOpenDeleteIncomeDialog = (income: Income): void => {
         setDeletableIncome(income);
         setIsDeleteIncomeDialogOpen(true);
     };
 
-    const handleCloseDeleteIncomeDialog = () => {
+    const handleCloseDeleteIncomeDialog = (): void => {
         setIsDeleteIncomeDialogOpen(false);
     };
 
@@ -168,6 +176,42 @@ const IncomeContainer = () => {
         }
     };
 
+    const handleUpdateIncome = async (
+        incomeId: string,
+        income: Income
+    ): Promise<boolean> => {
+        try {
+            await apiClient.updateIncome(incomeId, income);
+
+            refetchIncomes();
+            refetchUser();
+
+            const key = enqueueSnackbar(
+                translate('general.profile_page.successful_modification'),
+                {
+                    variant: 'success',
+                    onClick: () => {
+                        closeSnackbar(key);
+                    },
+                }
+            );
+
+            return true;
+        } catch (error: any) {
+            const key = enqueueSnackbar(
+                translate('general.profile_page.unsuccessful_modification'),
+                {
+                    variant: 'error',
+                    onClick: () => {
+                        closeSnackbar(key);
+                    },
+                }
+            );
+
+            return false;
+        }
+    };
+
     const deleteIncome = useMutation(
         async (id: string) => await apiClient.deleteIncome(id)
     );
@@ -221,6 +265,13 @@ const IncomeContainer = () => {
         removeEntity: () => handleDeleteIncome(),
     };
 
+    const incomeDialogProps = {
+        currentIncome: editableIncome,
+        setCurrentIncome: setEditableIncome,
+        isOpen: openIncomeDialog,
+        onClose: handleOpenIncomeDialog,
+    };
+
     return {
         page,
         from,
@@ -248,6 +299,8 @@ const IncomeContainer = () => {
         setDeletableIncome,
         deleteDialogOptions,
         handleDateSelect,
+        handleUpdateIncome,
+        incomeDialogProps,
     };
 };
 
