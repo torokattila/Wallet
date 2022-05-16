@@ -27,7 +27,7 @@ class App {
         this.express.use('/register', RegistrationController);
         this.express.use('/login', LoginController);
         this.express.use('/users', authenticate, UserController);
-        this.express.use('/purchases', authenticate, PurchaseController);
+        this.express.use('/purchases', /*authenticate,*/ PurchaseController);
         this.express.use('/incomes', authenticate, IncomeController);
         this.express.use('/me', authenticate, MeController);
     }

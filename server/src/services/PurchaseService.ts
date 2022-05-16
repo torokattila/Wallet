@@ -3,7 +3,9 @@ import { getConnection, Brackets } from 'typeorm';
 import { Logger } from 'common';
 import UserService from './UserService';
 import PaginationOptions from '../types/PaginationOptions';
+import { PurchaseCategoryEN, PurchaseCategoryHU } from 'enums/PurchaseCategory';
 import config from 'config';
+import moment from 'moment';
 
 const logger = Logger(__filename);
 
@@ -16,6 +18,10 @@ export type PurchaseFilterOptions = {
 export type PurchaseListParamsType = {
     filter?: PurchaseFilterOptions;
     pagination?: PaginationOptions;
+};
+
+export type DownloadPurchasesExcelParamsType = {
+    filter?: PurchaseFilterOptions;
 };
 
 export type PurchaseList = [Purchase[], number];
@@ -95,6 +101,102 @@ const list = async (
     } catch (error: any) {
         logger.error('List operation failed in PurchaseService');
         throw new Error('list_opetation_failed_in_PurchaseService');
+    }
+};
+
+export type DownloadedPurchasesTypeHU = {
+    Dátum?: string;
+    Összeg?: number;
+    Kategória?: string;
+};
+
+export type DownloadedPurchasesTypeEN = {
+    Date?: string;
+    Amount?: number;
+    Category?: string;
+};
+
+const getPurchasesExcel = async (
+    userId: string,
+    locale: string,
+    params?: DownloadPurchasesExcelParamsType
+): Promise<DownloadedPurchasesTypeHU[] | DownloadedPurchasesTypeEN[]> => {
+    const defaultParams: DownloadPurchasesExcelParamsType = {
+        filter: {},
+    };
+
+    const findParams: DownloadPurchasesExcelParamsType = {
+        filter: { ...defaultParams.filter, ...params.filter },
+    };
+
+    try {
+        const queryBuilder =
+            getPurchaseRepository().createQueryBuilder('purchase');
+        queryBuilder.andWhere('purchase.userId = :userId', { userId });
+
+        if (findParams.filter.category) {
+            queryBuilder.andWhere('purchase.category = :category', {
+                category: findParams.filter.category,
+            });
+
+            delete findParams.filter.category;
+        }
+
+        if (findParams.filter.from) {
+            queryBuilder.andWhere(
+                new Brackets((qb) => {
+                    qb.where('purchase.created >= :from', {
+                        from: findParams.filter.from,
+                    });
+                })
+            );
+
+            delete findParams.filter.from;
+        }
+
+        if (findParams.filter.to) {
+            queryBuilder.andWhere(
+                new Brackets((qb) => {
+                    qb.where('purchase.created <= :to', {
+                        to: findParams.filter.to + ' 23:59:59',
+                    });
+                })
+            );
+
+            delete findParams.filter.to;
+        }
+
+        queryBuilder.orderBy('purchase.created', 'DESC');
+
+        const purchases = await queryBuilder.getMany();
+
+        return purchases.map((purchase: Purchase) => {
+            delete purchase.id;
+            delete purchase.modified;
+            delete purchase.userId;
+
+            if (locale === 'en') {
+                return {
+                    Date: moment(purchase.created).format(
+                        'YYYY-MM-DD HH:mm:ss'
+                    ),
+                    Amount: purchase.amount,
+                    Category: PurchaseCategoryEN[purchase.category],
+                };
+            } else {
+                return {
+                    Dátum: moment(purchase.created).format(
+                        'YYYY-MM-DD HH:mm:ss'
+                    ),
+                    Összeg: purchase.amount,
+                    Kategória: PurchaseCategoryHU[purchase.category],
+                };
+            }
+        });
+    } catch (error: any) {
+        console.log(error);
+        logger.error('Create excel file failed in PurchaseService');
+        throw new Error('create_excel_opetation_failed_in_PurchaseService');
     }
 };
 
@@ -180,4 +282,5 @@ export default {
     update,
     findById,
     remove,
+    getPurchasesExcel,
 };

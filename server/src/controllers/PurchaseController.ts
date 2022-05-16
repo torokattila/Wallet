@@ -8,6 +8,7 @@ import PurchaseService, {
 } from 'services/PurchaseService';
 import { validate as uuidValidate } from 'uuid';
 import PaginationOptions from 'types/PaginationOptions';
+import User from 'entities/User';
 
 const logger = Logger(__filename);
 
@@ -27,6 +28,10 @@ class PurchaseController {
 
     init() {
         this.router.get('/', PromiseRejectionHandler(this.listPurchases));
+        this.router.get(
+            '/excel/download',
+            PromiseRejectionHandler(this.downloadPurchases)
+        );
         this.router.post('/', PromiseRejectionHandler(this.createPurchase));
         this.router.get('/:id', PromiseRejectionHandler(this.getPurchase));
         this.router.put('/:id', PromiseRejectionHandler(this.updatePurchase));
@@ -79,6 +84,43 @@ class PurchaseController {
             })
             .status(StatusCodes.OK)
             .send(purchases);
+    }
+
+    private async downloadPurchases(req: Request, res: Response) {
+        logger.info(
+            `GET /purchases/excel/download called, query params: ${JSON.stringify(
+                req.query
+            )}`
+        );
+
+        const { from, to, category, locale } = req.query;
+        const filter = {} as PurchaseFilterOptions;
+
+        const newUser = new User();
+        newUser.id = '647c253d-ccd6-41b6-beec-93befaf3c4c2';
+
+        req.user = newUser;
+
+        const userId = req.user.id;
+
+        if (from) {
+            filter.from = from as string;
+        }
+
+        if (to) {
+            filter.to = to as string;
+        }
+
+        if (category) {
+            filter.category = category as string;
+        }
+
+        const purchasesFile = await PurchaseService.getPurchasesExcel(userId, locale as string, {
+            filter,
+        });
+
+        logger.info(`GET /purchases status code: ${StatusCodes.OK}`);
+        return res.status(StatusCodes.OK).send(purchasesFile);
     }
 
     private async createPurchase(req: Request, res: Response) {
