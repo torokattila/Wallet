@@ -82,6 +82,7 @@
         "previous_month": "Előző hónap",
         "next_month": "Következő hónap",
         "filter_from": "Szűrés dátumtól",
-        "filter_to": "Szűrés dátumig"
+        "filter_to": "Szűrés dátumig",
+        "download_result": "Eredmény letöltése"
     }
 }

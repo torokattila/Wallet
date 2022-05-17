@@ -107,7 +107,7 @@ class ApiClient {
         page?: number,
         size?: number,
         from?: string,
-        to?: string,
+        to?: string
     ): Promise<IncomeList> {
         const params = [`page=${page}`, `size=${size}`];
 
@@ -221,6 +221,44 @@ class ApiClient {
         };
 
         return result;
+    }
+
+    async downloadPurchaseFilterResult(
+        from?: string,
+        to?: string,
+        category?: string,
+        locale?: string,
+    ): Promise<Purchase[]> {
+        const params = [];
+
+        if (!category) {
+            params.push('category=');
+        } else {
+            params.push(`category=${category}`);
+        }
+
+        if (from) {
+            params.push(`from=${moment(from).format('YYYY-MM-DD')}`);
+        }
+
+        if (to) {
+            params.push(`to=${moment(to).format('YYYY-MM-DD')}`);
+        }
+
+        if (locale) {
+            params.push(`locale=${locale}`);
+        }
+
+        const response: AxiosResponse = await this.client.get<Purchase[]>(
+            `/purchases/excel/download?${params.join('&')}`,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
+        );
+
+        return response.data;
     }
 
     async postPurchase(data: PurchasePayload): Promise<Purchase> {

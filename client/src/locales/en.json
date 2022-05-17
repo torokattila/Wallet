@@ -82,6 +82,7 @@
         "previous_month": "Previous month",
         "next_month": "Next month",
         "filter_from": "Filter from",
-        "filter_to": "Filter to"
+        "filter_to": "Filter to",
+        "download_result": "Download result"
     }
 }

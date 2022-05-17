@@ -24,6 +24,18 @@ export type DownloadPurchasesExcelParamsType = {
     filter?: PurchaseFilterOptions;
 };
 
+export type DownloadedPurchasesTypeHU = {
+    Dátum?: string;
+    Összeg?: number;
+    Kategória?: string;
+};
+
+export type DownloadedPurchasesTypeEN = {
+    Date?: string;
+    Amount?: number;
+    Category?: string;
+};
+
 export type PurchaseList = [Purchase[], number];
 
 const getPurchaseRepository = () => getConnection().getRepository(Purchase);
@@ -102,18 +114,6 @@ const list = async (
         logger.error('List operation failed in PurchaseService');
         throw new Error('list_opetation_failed_in_PurchaseService');
     }
-};
-
-export type DownloadedPurchasesTypeHU = {
-    Dátum?: string;
-    Összeg?: number;
-    Kategória?: string;
-};
-
-export type DownloadedPurchasesTypeEN = {
-    Date?: string;
-    Amount?: number;
-    Category?: string;
 };
 
 const getPurchasesExcel = async (

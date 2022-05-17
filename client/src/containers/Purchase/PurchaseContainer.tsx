@@ -11,9 +11,11 @@ import HomeContainer from '../Home/HomeContainer';
 import { Moment } from 'moment';
 import { Pagination } from '@mui/material';
 
+import * as XLSX from 'xlsx';
+
 const PurchaseContainer = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-    const { translate } = useLocales();
+    const { translate, currentLang } = useLocales();
     const apiClient = useApi();
 
     const user = LocalStorageManager.getUser();
@@ -54,6 +56,33 @@ const PurchaseContainer = () => {
         },
         { refetchOnWindowFocus: false }
     );
+
+    const {
+        data: downloadablePurchases,
+        refetch: refetchDownloadablePurchases,
+    } = useQuery(
+        'downloadPurchaseFilterResult',
+        async () => {
+            const result = await apiClient.downloadPurchaseFilterResult(
+                from?.toISOString(),
+                to?.toISOString(),
+                filterCategory,
+                currentLang.value
+            );
+
+            return result;
+        },
+        { refetchOnWindowFocus: false }
+    );
+
+    const downloadExcel = (): void => {
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
+            downloadablePurchases ? downloadablePurchases : []
+        );
+        const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+        XLSX.writeFile(workbook, 'purchases.xlsx');
+    };
 
     const handleOpenPurchaseDialog = (purchase?: Purchase) => {
         if (purchase) {
@@ -262,6 +291,10 @@ const PurchaseContainer = () => {
         }
     }, [from, to, filterCategory]);
 
+    useEffect(() => {
+        refetchDownloadablePurchases();
+    }, [from, to, filterCategory, currentLang.value]);
+
     const deleteDialogOptions = {
         currentEntity: deletablePurchase,
         isOpen: isDeleteDialogOpen,
@@ -306,6 +339,7 @@ const PurchaseContainer = () => {
         filterCategory,
         setFilterCategory,
         PaginationComponent,
+        downloadExcel,
     };
 };
 

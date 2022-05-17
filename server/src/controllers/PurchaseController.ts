@@ -96,10 +96,10 @@ class PurchaseController {
         const { from, to, category, locale } = req.query;
         const filter = {} as PurchaseFilterOptions;
 
-        const newUser = new User();
-        newUser.id = '647c253d-ccd6-41b6-beec-93befaf3c4c2';
+        // const newUser = new User();
+        // newUser.id = '647c253d-ccd6-41b6-beec-93befaf3c4c2';
 
-        req.user = newUser;
+        // req.user = newUser;
 
         const userId = req.user.id;
 
@@ -115,9 +115,13 @@ class PurchaseController {
             filter.category = category as string;
         }
 
-        const purchasesFile = await PurchaseService.getPurchasesExcel(userId, locale as string, {
-            filter,
-        });
+        const purchasesFile = await PurchaseService.getPurchasesExcel(
+            userId,
+            locale as string,
+            {
+                filter,
+            }
+        );
 
         logger.info(`GET /purchases status code: ${StatusCodes.OK}`);
         return res.status(StatusCodes.OK).send(purchasesFile);

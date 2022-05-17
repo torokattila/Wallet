@@ -58,6 +58,7 @@ const Purchases = (): JSX.Element => {
         handleOpenPurchaseDialog,
         purchaseDialogProps,
         deleteDialogOptions,
+        downloadExcel,
     } = PurchaseContainer();
 
     return (
@@ -279,6 +280,18 @@ const Purchases = (): JSX.Element => {
                                             </Stack>
                                         </Card>
                                     </Stack>
+
+                                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={() => downloadExcel()}
+                                        >
+                                            {translate(
+                                                'general.download_result'
+                                            )}
+                                        </Button>
+                                    </Box>
 
                                     <Card
                                         sx={{
