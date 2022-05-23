@@ -1,6 +1,7 @@
 import { Stack } from '@mui/material';
 import DrawerLayout from '../../components/Drawer/DrawerLayout';
 import PasswordChangeForm from '../../components/PasswordChange/PasswordChangeForm';
+import UserDeleteForm from '../../components/UserEdit/UserDeleteForm';
 import UserEditForm from '../../components/UserEdit/UserEditForm';
 
 const Profile = (): JSX.Element => {
@@ -17,6 +18,7 @@ const Profile = (): JSX.Element => {
                 >
                     <UserEditForm />
                     <PasswordChangeForm />
+                    <UserDeleteForm />
                 </Stack>
             </DrawerLayout>
         </div>

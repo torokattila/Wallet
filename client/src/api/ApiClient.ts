@@ -102,6 +102,19 @@ class ApiClient {
         return response.data;
     }
 
+    async deleteUser(userId: string): Promise<User> {
+        const response: AxiosResponse<User> = await this.client.delete(
+            `/users/${userId}`,
+            {
+                headers: {
+                    access_token: localStorage.getItem('access_token') || '',
+                },
+            }
+        );
+
+        return response.data;
+    }
+
     // Incomes
     async listIncomes(
         page?: number,
@@ -227,7 +240,7 @@ class ApiClient {
         from?: string,
         to?: string,
         category?: string,
-        locale?: string,
+        locale?: string
     ): Promise<Purchase[]> {
         const params = [];
 

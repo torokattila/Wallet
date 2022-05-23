@@ -108,382 +108,347 @@ const Purchases = (): JSX.Element => {
                             </Box>
                         </Box>
 
-                        {purchaseList &&
-                            purchaseList.purchases &&
-                            purchaseList.purchases.length > 0 && (
-                                <>
+                        <>
+                            <Stack alignItems={matches ? 'center' : 'normal'}>
+                                <Card
+                                    sx={{
+                                        p: 3,
+                                        borderRadius: '20px',
+                                        boxShadow:
+                                            '0 4px 30px rgba(0, 0, 0, 0.1)',
+                                    }}
+                                >
                                     <Stack
                                         alignItems={
                                             matches ? 'center' : 'normal'
                                         }
                                     >
-                                        <Card
-                                            sx={{
-                                                p: 3,
-                                                borderRadius: '20px',
-                                                boxShadow:
-                                                    '0 4px 30px rgba(0, 0, 0, 0.1)',
+                                        <Stack
+                                            spacing={2}
+                                            justifyContent="center"
+                                            direction={{
+                                                xs: 'column',
+                                                sm: 'row',
                                             }}
                                         >
-                                            <Stack
-                                                alignItems={
-                                                    matches
-                                                        ? 'center'
-                                                        : 'normal'
-                                                }
+                                            <LocalizationProvider
+                                                dateAdapter={DateAdapter}
+                                                locale={moment.locale()}
                                             >
-                                                <Stack
-                                                    spacing={2}
-                                                    justifyContent="center"
-                                                    direction={{
-                                                        xs: 'column',
-                                                        sm: 'row',
-                                                    }}
-                                                >
-                                                    <LocalizationProvider
-                                                        dateAdapter={
-                                                            DateAdapter
-                                                        }
-                                                        locale={moment.locale()}
-                                                    >
-                                                        <DatePicker
-                                                            clearable
-                                                            clearText={translate(
-                                                                'general.delete'
-                                                            )}
-                                                            disableFuture
-                                                            openTo="day"
-                                                            label={translate(
-                                                                'general.filter_from'
-                                                            )}
-                                                            cancelText={translate(
-                                                                'general.confirm_dialog.cancel'
-                                                            )}
-                                                            mask="____-__-__"
-                                                            views={[
-                                                                'year',
-                                                                'month',
-                                                                'day',
-                                                            ]}
-                                                            inputFormat="YYYY-MM-DD"
-                                                            onChange={(
-                                                                newValue
-                                                            ) =>
-                                                                setFrom(
-                                                                    newValue
-                                                                )
-                                                            }
-                                                            value={
-                                                                moment(from) ||
-                                                                null
-                                                            }
-                                                            renderInput={(
-                                                                params
-                                                            ) => (
-                                                                <TextField
-                                                                    fullWidth
-                                                                    type="date"
-                                                                    color="secondary"
-                                                                    {...params}
-                                                                    error={
-                                                                        false
-                                                                    }
-                                                                />
-                                                            )}
+                                                <DatePicker
+                                                    clearable
+                                                    clearText={translate(
+                                                        'general.delete'
+                                                    )}
+                                                    disableFuture
+                                                    openTo="day"
+                                                    label={translate(
+                                                        'general.filter_from'
+                                                    )}
+                                                    cancelText={translate(
+                                                        'general.confirm_dialog.cancel'
+                                                    )}
+                                                    mask="____-__-__"
+                                                    views={[
+                                                        'year',
+                                                        'month',
+                                                        'day',
+                                                    ]}
+                                                    inputFormat="YYYY-MM-DD"
+                                                    onChange={(newValue) =>
+                                                        setFrom(newValue)
+                                                    }
+                                                    value={moment(from) || null}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            fullWidth
+                                                            type="date"
+                                                            color="secondary"
+                                                            {...params}
+                                                            error={false}
                                                         />
-                                                    </LocalizationProvider>
+                                                    )}
+                                                />
+                                            </LocalizationProvider>
 
-                                                    <LocalizationProvider
-                                                        dateAdapter={
-                                                            DateAdapter
-                                                        }
-                                                        locale={moment.locale()}
-                                                    >
-                                                        <DatePicker
-                                                            clearable
-                                                            clearText={translate(
-                                                                'general.delete'
-                                                            )}
-                                                            disableFuture
-                                                            openTo="day"
-                                                            label={translate(
-                                                                'general.filter_to'
-                                                            )}
-                                                            cancelText={translate(
-                                                                'general.confirm_dialog.cancel'
-                                                            )}
-                                                            mask="____-__-__"
-                                                            views={[
-                                                                'year',
-                                                                'month',
-                                                                'day',
-                                                            ]}
-                                                            inputFormat="YYYY-MM-DD"
-                                                            onChange={(
-                                                                newValue
-                                                            ) =>
-                                                                setTo(newValue)
-                                                            }
-                                                            value={
-                                                                moment(to) ||
-                                                                null
-                                                            }
-                                                            renderInput={(
-                                                                params
-                                                            ) => (
-                                                                <TextField
-                                                                    fullWidth
-                                                                    type="date"
-                                                                    color="secondary"
-                                                                    {...params}
-                                                                    error={
-                                                                        false
-                                                                    }
-                                                                />
-                                                            )}
+                                            <LocalizationProvider
+                                                dateAdapter={DateAdapter}
+                                                locale={moment.locale()}
+                                            >
+                                                <DatePicker
+                                                    clearable
+                                                    clearText={translate(
+                                                        'general.delete'
+                                                    )}
+                                                    disableFuture
+                                                    openTo="day"
+                                                    label={translate(
+                                                        'general.filter_to'
+                                                    )}
+                                                    cancelText={translate(
+                                                        'general.confirm_dialog.cancel'
+                                                    )}
+                                                    mask="____-__-__"
+                                                    views={[
+                                                        'year',
+                                                        'month',
+                                                        'day',
+                                                    ]}
+                                                    inputFormat="YYYY-MM-DD"
+                                                    onChange={(newValue) =>
+                                                        setTo(newValue)
+                                                    }
+                                                    value={moment(to) || null}
+                                                    renderInput={(params) => (
+                                                        <TextField
+                                                            fullWidth
+                                                            type="date"
+                                                            color="secondary"
+                                                            {...params}
+                                                            error={false}
                                                         />
-                                                    </LocalizationProvider>
+                                                    )}
+                                                />
+                                            </LocalizationProvider>
 
-                                                    <Autocomplete
-                                                        fullWidth
-                                                        options={Object.values(
-                                                            PurchaseCategory
-                                                        )}
-                                                        value={filterCategory}
-                                                        onChange={(e, v) =>
-                                                            setFilterCategory(
-                                                                v ? v : ''
-                                                            )
-                                                        }
-                                                        getOptionLabel={(
-                                                            option: string
-                                                        ) =>
-                                                            option !== ''
-                                                                ? translate(
-                                                                      `general.home_page.${option}`
-                                                                  )
-                                                                : ''
-                                                        }
-                                                        renderInput={(
-                                                            params
-                                                        ) => (
-                                                            <TextField
-                                                                color="secondary"
-                                                                {...params}
-                                                                label={translate(
-                                                                    'general.home_page.category'
-                                                                )}
-                                                            />
+                                            <Autocomplete
+                                                fullWidth
+                                                options={Object.values(
+                                                    PurchaseCategory
+                                                )}
+                                                value={filterCategory}
+                                                onChange={(e, v) =>
+                                                    setFilterCategory(
+                                                        v ? v : ''
+                                                    )
+                                                }
+                                                getOptionLabel={(
+                                                    option: string
+                                                ) =>
+                                                    option !== ''
+                                                        ? translate(
+                                                              `general.home_page.${option}`
+                                                          )
+                                                        : ''
+                                                }
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                        color="secondary"
+                                                        {...params}
+                                                        label={translate(
+                                                            'general.home_page.category'
                                                         )}
                                                     />
-                                                </Stack>
-                                            </Stack>
-                                        </Card>
+                                                )}
+                                            />
+                                        </Stack>
                                     </Stack>
+                                </Card>
+                            </Stack>
 
-                                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                        <Button
-                                            variant="contained"
-                                            color="secondary"
-                                            onClick={() => downloadExcel()}
-                                        >
-                                            {translate(
-                                                'general.download_result'
-                                            )}
-                                        </Button>
-                                    </Box>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={() =>
+                                        purchaseList &&
+                                        purchaseList.purchases &&
+                                        purchaseList.purchases.length > 0
+                                            ? downloadExcel()
+                                            : null
+                                    }
+                                >
+                                    {translate('general.download_result')}
+                                </Button>
+                            </Box>
 
-                                    <Card
-                                        sx={{
-                                            boxShadow:
-                                                '0 4px 30px rgba(0, 0, 0, 0.1)',
-                                            py: 2,
-                                            borderRadius: '20px',
-                                            mb: 2,
-                                        }}
-                                    >
-                                        <TableContainer>
-                                            <Table>
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <TableCell></TableCell>
-                                                        <TableCell align="center">
-                                                            <Typography
-                                                                variant="body1"
-                                                                color="secondary"
-                                                                sx={{
-                                                                    fontWeight:
-                                                                        'bold',
-                                                                }}
-                                                            >
-                                                                {translate(
-                                                                    'general.home_page.category'
-                                                                )}
-                                                            </Typography>
-                                                        </TableCell>
-                                                        <TableCell align="center">
-                                                            <Typography
-                                                                variant="body1"
-                                                                color="secondary"
-                                                                sx={{
-                                                                    fontWeight:
-                                                                        'bold',
-                                                                }}
-                                                            >
-                                                                {translate(
-                                                                    'general.home_page.amount'
-                                                                )}
-                                                            </Typography>
-                                                        </TableCell>
-                                                        <TableCell align="center">
-                                                            <Typography
-                                                                variant="body1"
-                                                                color="secondary"
-                                                                sx={{
-                                                                    fontWeight:
-                                                                        'bold',
-                                                                }}
-                                                            >
-                                                                {translate(
-                                                                    'general.date'
-                                                                )}
-                                                            </Typography>
-                                                        </TableCell>
-                                                        <TableCell></TableCell>
-                                                    </TableRow>
-                                                </TableHead>
-
-                                                <TableBody>
-                                                    {purchaseList &&
-                                                        purchaseList.purchases &&
-                                                        purchaseList.purchases.map(
-                                                            (
-                                                                purchase: Purchase
-                                                            ) => (
-                                                                <TableRow
-                                                                    key={
-                                                                        purchase.id
-                                                                    }
-                                                                >
-                                                                    <TableCell align="center">
-                                                                        {purchase.category ===
-                                                                        PurchaseCategory.FOOD ? (
-                                                                            <FastfoodIcon
-                                                                                color="secondary"
-                                                                                sx={{
-                                                                                    fontSize: 30,
-                                                                                }}
-                                                                            />
-                                                                        ) : purchase.category ===
-                                                                          PurchaseCategory.CLOTHING ? (
-                                                                            <CheckroomIcon
-                                                                                color="secondary"
-                                                                                sx={{
-                                                                                    fontSize: 30,
-                                                                                }}
-                                                                            />
-                                                                        ) : purchase.category ===
-                                                                          PurchaseCategory.ENTERTAINMENT ? (
-                                                                            <LocalBarIcon
-                                                                                color="secondary"
-                                                                                sx={{
-                                                                                    fontSize: 30,
-                                                                                }}
-                                                                            />
-                                                                        ) : (
-                                                                            <AddCardOutlinedIcon
-                                                                                color="secondary"
-                                                                                sx={{
-                                                                                    fontSize: 30,
-                                                                                }}
-                                                                            />
-                                                                        )}
-                                                                    </TableCell>
-                                                                    <TableCell align="center">
-                                                                        <Typography variant="body1">
-                                                                            {translate(
-                                                                                `general.home_page.${purchase.category}`
-                                                                            )}
-                                                                        </Typography>
-                                                                    </TableCell>
-                                                                    <TableCell align="center">
-                                                                        <Typography variant="body1">
-                                                                            <CurrencyFormat
-                                                                                value={
-                                                                                    purchase.amount
-                                                                                }
-                                                                                thousandSeparator={
-                                                                                    true
-                                                                                }
-                                                                                displayType="text"
-                                                                            />
-                                                                        </Typography>
-                                                                    </TableCell>
-                                                                    <TableCell align="center">
-                                                                        <Typography variant="body1">
-                                                                            {moment(
-                                                                                purchase.created
-                                                                            ).format(
-                                                                                'YYYY-MM-DD HH:mm:ss'
-                                                                            )}
-                                                                        </Typography>
-                                                                    </TableCell>
-                                                                    <TableCell align="right">
-                                                                        <Tooltip
-                                                                            arrow
-                                                                            title={translate(
-                                                                                'general.edit'
-                                                                            )}
-                                                                        >
-                                                                            <IconButton>
-                                                                                <EditIcon
-                                                                                    onClick={() =>
-                                                                                        handleOpenPurchaseDialog(
-                                                                                            purchase
-                                                                                        )
-                                                                                    }
-                                                                                    color="secondary"
-                                                                                    fontSize="large"
-                                                                                />
-                                                                            </IconButton>
-                                                                        </Tooltip>
-                                                                        <Tooltip
-                                                                            arrow
-                                                                            title={translate(
-                                                                                'general.delete'
-                                                                            )}
-                                                                        >
-                                                                            <IconButton
-                                                                                onClick={() =>
-                                                                                    handleOpenDeleteDialog(
-                                                                                        purchase
-                                                                                    )
-                                                                                }
-                                                                            >
-                                                                                <DeleteOutlineIcon
-                                                                                    color="secondary"
-                                                                                    fontSize="large"
-                                                                                />
-                                                                            </IconButton>
-                                                                        </Tooltip>
-                                                                    </TableCell>
-                                                                </TableRow>
-                                                            )
+                            <Card
+                                sx={{
+                                    boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                                    py: 2,
+                                    borderRadius: '20px',
+                                    mb: 2,
+                                }}
+                            >
+                                <TableContainer>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell></TableCell>
+                                                <TableCell align="center">
+                                                    <Typography
+                                                        variant="body1"
+                                                        color="secondary"
+                                                        sx={{
+                                                            fontWeight: 'bold',
+                                                        }}
+                                                    >
+                                                        {translate(
+                                                            'general.home_page.category'
                                                         )}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                        <Box
-                                            display="flex"
-                                            alignItems="center"
-                                            justifyContent="center"
-                                            sx={{ py: { xs: 3, sm: 2 } }}
-                                        >
-                                            {PaginationComponent}
-                                        </Box>
-                                    </Card>
-                                </>
-                            )}
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    <Typography
+                                                        variant="body1"
+                                                        color="secondary"
+                                                        sx={{
+                                                            fontWeight: 'bold',
+                                                        }}
+                                                    >
+                                                        {translate(
+                                                            'general.home_page.amount'
+                                                        )}
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    <Typography
+                                                        variant="body1"
+                                                        color="secondary"
+                                                        sx={{
+                                                            fontWeight: 'bold',
+                                                        }}
+                                                    >
+                                                        {translate(
+                                                            'general.date'
+                                                        )}
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell></TableCell>
+                                            </TableRow>
+                                        </TableHead>
+
+                                        <TableBody>
+                                            {purchaseList &&
+                                                purchaseList.purchases &&
+                                                purchaseList.purchases.map(
+                                                    (purchase: Purchase) => (
+                                                        <TableRow
+                                                            key={purchase.id}
+                                                        >
+                                                            <TableCell align="center">
+                                                                {purchase.category ===
+                                                                PurchaseCategory.FOOD ? (
+                                                                    <FastfoodIcon
+                                                                        color="secondary"
+                                                                        sx={{
+                                                                            fontSize: 30,
+                                                                        }}
+                                                                    />
+                                                                ) : purchase.category ===
+                                                                  PurchaseCategory.CLOTHING ? (
+                                                                    <CheckroomIcon
+                                                                        color="secondary"
+                                                                        sx={{
+                                                                            fontSize: 30,
+                                                                        }}
+                                                                    />
+                                                                ) : purchase.category ===
+                                                                  PurchaseCategory.ENTERTAINMENT ? (
+                                                                    <LocalBarIcon
+                                                                        color="secondary"
+                                                                        sx={{
+                                                                            fontSize: 30,
+                                                                        }}
+                                                                    />
+                                                                ) : (
+                                                                    <AddCardOutlinedIcon
+                                                                        color="secondary"
+                                                                        sx={{
+                                                                            fontSize: 30,
+                                                                        }}
+                                                                    />
+                                                                )}
+                                                            </TableCell>
+                                                            <TableCell align="center">
+                                                                <Typography variant="body1">
+                                                                    {translate(
+                                                                        `general.home_page.${purchase.category}`
+                                                                    )}
+                                                                </Typography>
+                                                            </TableCell>
+                                                            <TableCell align="center">
+                                                                <Typography variant="body1">
+                                                                    <CurrencyFormat
+                                                                        value={
+                                                                            purchase.amount
+                                                                        }
+                                                                        thousandSeparator={
+                                                                            true
+                                                                        }
+                                                                        displayType="text"
+                                                                    />
+                                                                </Typography>
+                                                            </TableCell>
+                                                            <TableCell align="center">
+                                                                <Typography variant="body1">
+                                                                    {moment(
+                                                                        purchase.created
+                                                                    ).format(
+                                                                        'YYYY-MM-DD HH:mm:ss'
+                                                                    )}
+                                                                </Typography>
+                                                            </TableCell>
+                                                            <TableCell align="right">
+                                                                <Tooltip
+                                                                    arrow
+                                                                    title={translate(
+                                                                        'general.edit'
+                                                                    )}
+                                                                >
+                                                                    <IconButton>
+                                                                        <EditIcon
+                                                                            onClick={() =>
+                                                                                handleOpenPurchaseDialog(
+                                                                                    purchase
+                                                                                )
+                                                                            }
+                                                                            color="secondary"
+                                                                            fontSize="large"
+                                                                        />
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                                <Tooltip
+                                                                    arrow
+                                                                    title={translate(
+                                                                        'general.delete'
+                                                                    )}
+                                                                >
+                                                                    <IconButton
+                                                                        onClick={() =>
+                                                                            handleOpenDeleteDialog(
+                                                                                purchase
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <DeleteOutlineIcon
+                                                                            color="secondary"
+                                                                            fontSize="large"
+                                                                        />
+                                                                    </IconButton>
+                                                                </Tooltip>
+                                                            </TableCell>
+                                                        </TableRow>
+                                                    )
+                                                )}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                                <Box
+                                    display="flex"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                    sx={{ py: { xs: 3, sm: 2 } }}
+                                >
+                                    {PaginationComponent}
+                                </Box>
+                            </Card>
+                        </>
                     </Stack>
                 </Container>
             </DrawerLayout>

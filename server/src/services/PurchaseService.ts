@@ -26,14 +26,16 @@ export type DownloadPurchasesExcelParamsType = {
 
 export type DownloadedPurchasesTypeHU = {
     Dátum?: string;
-    Összeg?: number;
+    Összeg?: string;
     Kategória?: string;
+    Összesen?: string;
 };
 
 export type DownloadedPurchasesTypeEN = {
     Date?: string;
-    Amount?: number;
+    Amount?: string;
     Category?: string;
+    Total?: string;
 };
 
 export type PurchaseList = [Purchase[], number];
@@ -170,7 +172,16 @@ const getPurchasesExcel = async (
 
         const purchases = await queryBuilder.getMany();
 
-        return purchases.map((purchase: Purchase) => {
+        const totalAmount =
+            purchases.length > 0
+                ? purchases
+                      .map((purchase: Purchase) => purchase.amount)
+                      .reduce(
+                          (accum, current) => Number(accum) + Number(current)
+                      )
+                : 0;
+
+        const finalPurchases = purchases.map((purchase: Purchase) => {
             delete purchase.id;
             delete purchase.modified;
             delete purchase.userId;
@@ -180,19 +191,39 @@ const getPurchasesExcel = async (
                     Date: moment(purchase.created).format(
                         'YYYY-MM-DD HH:mm:ss'
                     ),
-                    Amount: purchase.amount,
+                    Amount: `${purchase.amount}`,
                     Category: PurchaseCategoryEN[purchase.category],
+                    Total: '',
                 };
             } else {
                 return {
                     Dátum: moment(purchase.created).format(
                         'YYYY-MM-DD HH:mm:ss'
                     ),
-                    Összeg: purchase.amount,
+                    Összeg: `${purchase.amount}`,
                     Kategória: PurchaseCategoryHU[purchase.category],
+                    Összesen: '',
                 };
             }
         });
+
+        if (locale === 'en') {
+            finalPurchases.push({
+                Date: '',
+                Amount: '',
+                Category: '',
+                Total: `${totalAmount}`,
+            });
+        } else {
+            finalPurchases.push({
+                Dátum: '',
+                Összeg: '',
+                Kategória: '',
+                Összesen: `${totalAmount}`,
+            });
+        }
+
+        return finalPurchases;
     } catch (error: any) {
         console.log(error);
         logger.error('Create excel file failed in PurchaseService');

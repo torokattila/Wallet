@@ -96,7 +96,9 @@ const Home = (): JSX.Element => {
                                             color="secondary"
                                             size="large"
                                             sx={{ mt: matches ? 0 : 5 }}
-                                            onClick={() => handleOpenIncomeDialog()}
+                                            onClick={() =>
+                                                handleOpenIncomeDialog()
+                                            }
                                         >
                                             {translate(
                                                 'general.home_page.add_income'
@@ -160,36 +162,32 @@ const Home = (): JSX.Element => {
                         </Box>
                     </Stack>
 
-                    {purchaseList &&
-                        purchaseList.purchases &&
-                        purchaseList.purchases.length > 0 && (
-                            <Stack
-                                sx={{ mt: 2 }}
-                                justifyContent="center"
-                                flexDirection={matches ? 'row' : 'column'}
-                                alignItems="center"
-                            >
-                                {purchaseList.purchases
-                                    .slice(0, 5)
-                                    .map((purchase: Purchase) => {
-                                        return (
-                                            <PurchaseCard
-                                                onDelete={() =>
-                                                    handleOpenDeleteDialog(
-                                                        purchase
-                                                    )
-                                                }
-                                                onUpdate={() =>
-                                                    handleOpenPurchaseDialog(
-                                                        purchase
-                                                    )
-                                                }
-                                                purchase={purchase}
-                                            />
-                                        );
-                                    })}
-                            </Stack>
-                        )}
+                    <Stack
+                        sx={{ mt: 2 }}
+                        justifyContent="center"
+                        flexDirection={matches ? 'row' : 'column'}
+                        alignItems="center"
+                    >
+                        {purchaseList &&
+                            purchaseList.purchases &&
+                            purchaseList.purchases
+                                .slice(0, 5)
+                                .map((purchase: Purchase) => {
+                                    return (
+                                        <PurchaseCard
+                                            onDelete={() =>
+                                                handleOpenDeleteDialog(purchase)
+                                            }
+                                            onUpdate={() =>
+                                                handleOpenPurchaseDialog(
+                                                    purchase
+                                                )
+                                            }
+                                            purchase={purchase}
+                                        />
+                                    );
+                                })}
+                    </Stack>
                 </Container>
             </DrawerLayout>
             <IncomeDialog

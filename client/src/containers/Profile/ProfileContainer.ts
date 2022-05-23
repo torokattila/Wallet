@@ -6,8 +6,10 @@ import useApi from '../../hooks/useApi';
 import * as Yup from 'yup';
 import UserEditPayload from '../../api/payloads/Profile/UserEditPayload';
 import PasswordChangePayload from '../../api/payloads/Profile/PasswordChangePayload';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileContainer = () => {
+    const navigate = useNavigate();
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const { translate } = useLocales();
     const user = LocalStorageManager.getUser();
@@ -247,6 +249,26 @@ const ProfileContainer = () => {
         }
     };
 
+    const handleDeleteUser = async () => {
+        try {
+            await apiClient.deleteUser(user?.id ? user.id : '');
+            await LocalStorageManager.removeLocalStorage();
+            navigate('/');
+        } catch (error: any) {
+            const key = enqueueSnackbar(
+                translate(
+                    'general.home_page.delete_failed'
+                ),
+                {
+                    variant: 'error',
+                    onClick: () => {
+                        closeSnackbar(key);
+                    },
+                }
+            );
+        }
+    }
+
     const handleOpenDialog = () => {
         setOpenDialog(true);
     };
@@ -281,6 +303,7 @@ const ProfileContainer = () => {
         handleOpenDialog,
         handleCloseDialog,
         handleUpdateUser,
+        handleDeleteUser,
     };
 };
 

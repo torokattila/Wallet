@@ -45,7 +45,8 @@
             "validation_error": "Data validation failed",
             "password_change_failed": "Failed to change password",
             "successful_modification": "Successful modification",
-            "unsuccessful_modification": "Unsuccessful modification"
+            "unsuccessful_modification": "Unsuccessful modification",
+            "delete_account": "Delete account"
         },
         "confirm_dialog": {
             "are_you_sure": "Are you sure?",

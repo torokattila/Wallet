@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     Card,
     Stack,
@@ -6,6 +7,9 @@ import {
     Typography,
     useMediaQuery,
 } from '@mui/material';
+
+import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
+
 import ProfileContainer from '../../containers/Profile/ProfileContainer';
 import useLocales from '../../hooks/useLocale';
 import { useTheme } from '@mui/material/styles';
@@ -40,13 +44,27 @@ const UserEditForm = (): JSX.Element => {
                     boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
                 }}
             >
-                <Typography
-                    variant="h5"
-                    color="secondary"
-                    sx={{ fontWeight: 'bold' }}
+                <Box
+                    sx={{ display: 'flex' }}
+                    flexDirection="row"
+                    justifyContent="space-between"
                 >
-                    {translate('general.profile_page.change_data')}
-                </Typography>
+                    <Box>
+                        <Typography
+                            variant="h5"
+                            color="secondary"
+                            sx={{ fontWeight: 'bold' }}
+                        >
+                            {translate('general.profile_page.change_data')}
+                        </Typography>
+                    </Box>
+                    <Box>
+                        <NoteAltOutlinedIcon
+                            fontSize="large"
+                            color="secondary"
+                        />
+                    </Box>
+                </Box>
 
                 <Stack
                     sx={{ maxWidth: matches ? '50%' : '100%', mt: 10 }}

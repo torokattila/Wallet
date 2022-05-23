@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react';
 import {
+    Box,
     Button,
     Card,
     IconButton,
@@ -9,8 +10,11 @@ import {
     Typography,
     useMediaQuery,
 } from '@mui/material';
+
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
+
 import { useTheme } from '@mui/material/styles';
 import useLocales from '../../hooks/useLocale';
 import ProfileContainer from '../../containers/Profile/ProfileContainer';
@@ -49,13 +53,28 @@ const PasswordChangeForm = (): JSX.Element => {
                     boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
                 }}
             >
-                <Typography
-                    variant="h5"
-                    color="secondary"
-                    sx={{ fontWeight: 'bold' }}
+                <Box
+                    sx={{ display: 'flex' }}
+                    flexDirection="row"
+                    justifyContent="space-between"
                 >
-                    {translate('general.profile_page.change_password')}
-                </Typography>
+                    <Box>
+                        <Typography
+                            variant="h5"
+                            color="secondary"
+                            sx={{ fontWeight: 'bold' }}
+                        >
+                            {translate('general.profile_page.change_password')}
+                        </Typography>
+                    </Box>
+
+                    <Box>
+                        <VpnKeyOutlinedIcon
+                            fontSize="large"
+                            color="secondary"
+                        />
+                    </Box>
+                </Box>
 
                 <Stack
                     sx={{ maxWidth: matches ? '50%' : '100%', mt: 10 }}

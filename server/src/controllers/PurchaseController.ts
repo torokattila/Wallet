@@ -4,6 +4,8 @@ import { PromiseRejectionHandler } from '../common';
 import { Logger } from '../common';
 import * as Yup from 'yup';
 import PurchaseService, {
+    DownloadedPurchasesTypeEN,
+    DownloadedPurchasesTypeHU,
     PurchaseFilterOptions,
 } from 'services/PurchaseService';
 import { validate as uuidValidate } from 'uuid';
@@ -96,11 +98,6 @@ class PurchaseController {
         const { from, to, category, locale } = req.query;
         const filter = {} as PurchaseFilterOptions;
 
-        // const newUser = new User();
-        // newUser.id = '647c253d-ccd6-41b6-beec-93befaf3c4c2';
-
-        // req.user = newUser;
-
         const userId = req.user.id;
 
         if (from) {
@@ -115,7 +112,7 @@ class PurchaseController {
             filter.category = category as string;
         }
 
-        const purchasesFile = await PurchaseService.getPurchasesExcel(
+        const purchasesResult = await PurchaseService.getPurchasesExcel(
             userId,
             locale as string,
             {
@@ -124,7 +121,7 @@ class PurchaseController {
         );
 
         logger.info(`GET /purchases status code: ${StatusCodes.OK}`);
-        return res.status(StatusCodes.OK).send(purchasesFile);
+        return res.status(StatusCodes.OK).send(purchasesResult);
     }
 
     private async createPurchase(req: Request, res: Response) {

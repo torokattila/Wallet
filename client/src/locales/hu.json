@@ -45,7 +45,8 @@
             "validation_error": "Az adatok validálása sikertelen",
             "password_change_failed": "Sikertelen jelszó módosítás",
             "successful_modification": "Sikeres módosítás",
-            "unsuccessful_modification": "Sikertelen módosítás"
+            "unsuccessful_modification": "Sikertelen módosítás",
+            "delete_account": "Fiók törlése"
         },
         "confirm_dialog": {
             "are_you_sure": "Biztos benne?",

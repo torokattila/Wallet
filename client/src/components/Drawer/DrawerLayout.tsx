@@ -212,41 +212,6 @@ const DrawerLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                 <List>
                     <ListItem
                         sx={{
-                            boxShadow: isProfilePage
-                                ? '0 4px 30px rgba(0, 0, 0, 0.1)'
-                                : '',
-                            backgroundColor: isProfilePage ? '#9c27b0' : '#fff',
-                            transition: '0.2s',
-                            cursor: 'pointer',
-                            '&:hover': {
-                                backgroundColor: isProfilePage ? '' : '#f1d2f7',
-                                transition: '0.2s',
-                                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
-                            },
-                        }}
-                        onClick={() => {
-                            navigate('/profile');
-                            handleDrawerClose();
-                        }}
-                    >
-                        <ListItemIcon>
-                            <AccountCircleOutlinedIcon
-                                sx={{
-                                    color: isProfilePage ? '#fff' : '#9c27b0',
-                                }}
-                            />
-                        </ListItemIcon>
-                        <Typography
-                            sx={{ color: isProfilePage ? '#fff' : '#9c27b0' }}
-                            variant="h6"
-                        >
-                            {translate('general.sidebar.profile')}
-                        </Typography>
-                    </ListItem>
-                </List>
-                <List>
-                    <ListItem
-                        sx={{
                             boxShadow: isIncomesPage
                                 ? '0 4px 30px rgba(0, 0, 0, 0.1)'
                                 : '',
@@ -315,6 +280,41 @@ const DrawerLayout = ({ children }: { children: ReactNode }): JSX.Element => {
                             variant="h6"
                         >
                             {translate('general.sidebar.purchases')}
+                        </Typography>
+                    </ListItem>
+                </List>
+                <List>
+                    <ListItem
+                        sx={{
+                            boxShadow: isProfilePage
+                                ? '0 4px 30px rgba(0, 0, 0, 0.1)'
+                                : '',
+                            backgroundColor: isProfilePage ? '#9c27b0' : '#fff',
+                            transition: '0.2s',
+                            cursor: 'pointer',
+                            '&:hover': {
+                                backgroundColor: isProfilePage ? '' : '#f1d2f7',
+                                transition: '0.2s',
+                                boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                            },
+                        }}
+                        onClick={() => {
+                            navigate('/profile');
+                            handleDrawerClose();
+                        }}
+                    >
+                        <ListItemIcon>
+                            <AccountCircleOutlinedIcon
+                                sx={{
+                                    color: isProfilePage ? '#fff' : '#9c27b0',
+                                }}
+                            />
+                        </ListItemIcon>
+                        <Typography
+                            sx={{ color: isProfilePage ? '#fff' : '#9c27b0' }}
+                            variant="h6"
+                        >
+                            {translate('general.sidebar.profile')}
                         </Typography>
                     </ListItem>
                 </List>
