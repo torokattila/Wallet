@@ -1,4 +1,3 @@
-import React from 'react';
 import { createContext, ReactNode, useEffect, useReducer } from 'react';
 import {
     ActionMap,
@@ -8,10 +7,6 @@ import {
 import User from '../models/User';
 import useApi from '../hooks/useApi';
 import AuthTypes from '../enums/AuthTypes';
-
-type AuthData = {
-    access_token: string;
-};
 
 type AuthPayload = {
     [AuthTypes.Initial]: {

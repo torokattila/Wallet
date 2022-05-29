@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import * as Yup from 'yup';
 import LoginPayload from '../../api/payloads/Login/LoginPayload';
@@ -8,6 +8,12 @@ import { useSnackbar } from 'notistack';
 import useLocales from '../../hooks/useLocale';
 import LocalStorageManager from '../../utils/LocalStorageManager';
 import { useNavigate } from 'react-router-dom';
+import {
+    GoogleLoginResponse,
+    GoogleLoginResponseOffline,
+} from 'react-google-login';
+import GoogleLoginPayload from '../../api/payloads/Login/GoogleLoginPayload';
+import { gapi } from 'gapi-script';
 
 const LoginContainer = () => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -18,6 +24,8 @@ const LoginContainer = () => {
     const [password, setPassword] = useState<string>('');
     const [isPassword, setIsPassword] = useState<boolean>(true);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [isGoogleLoginFailed, setIsGoogleLoginFailed] =
+        useState<boolean>(false);
 
     const loginUser = {
         email,
@@ -85,6 +93,44 @@ const LoginContainer = () => {
         }
     };
 
+    const handleGoogleLogin = async (
+        response: GoogleLoginResponse | GoogleLoginResponseOffline
+    ): Promise<void> => {
+        const payload: GoogleLoginPayload = {
+            firstname:
+                'profileObj' in response ? response?.profileObj.givenName : '',
+            lastname:
+                'profileObj' in response ? response?.profileObj.familyName : '',
+            google_id: 'profileObj' in response ? response?.googleId : '',
+            email: 'profileObj' in response ? response?.profileObj.email : '',
+        };
+
+        await axios
+            .post(`${config.social.googleUrl}`, payload)
+            .then((response: AxiosResponse) => {
+                const { user, token } = response.data;
+                
+                LocalStorageManager.setUser(user);
+                LocalStorageManager.setToken(token);
+                navigate('/');
+            })
+            .catch((error: any) => {
+                console.log(error)
+                setIsGoogleLoginFailed(true);
+            });
+    };
+
+    useEffect(() => {
+        function start() {
+            gapi.auth2.init({
+                client_id: process.env.REACT_APP_CLIENT_ID,
+                scope: '',
+            });
+        }
+
+        gapi.load('client:auth2', start);
+    }, []);
+
     return {
         email,
         setEmail,
@@ -94,6 +140,8 @@ const LoginContainer = () => {
         setIsPassword,
         handleSubmit,
         errors,
+        handleGoogleLogin,
+        isGoogleLoginFailed,
     };
 };
 

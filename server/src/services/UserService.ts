@@ -37,6 +37,22 @@ const findById = async (userId: string): Promise<User> => {
     }
 };
 
+const findByGoogleId = async (googleId: string): Promise<User | undefined> => {
+    const queryBuilder = getUserRepository().createQueryBuilder('user');
+    queryBuilder.leftJoinAndSelect('user.purchases', 'purchases');
+    queryBuilder.leftJoinAndSelect('user.incomes', 'incomes');
+
+    queryBuilder.andWhere('user.googleId = :id', { id: googleId });
+
+    const user = await queryBuilder.getOne();
+
+    if (user) {
+        delete user.password;
+    }
+
+    return Promise.resolve(user);
+};
+
 const update = async (userId: string, user: Partial<User>): Promise<User> => {
     try {
         const editedUser = user;
@@ -130,4 +146,5 @@ export default {
     generateHash,
     verifyPassword,
     validatePasswordMatch,
+    findByGoogleId,
 };

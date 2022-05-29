@@ -17,7 +17,7 @@ export default class User extends EntityBase {
     @Column()
     lastname: string;
 
-    @Column()
+    @Column({ nullable: true })
     password: string;
 
     @Column({ default: 0 })

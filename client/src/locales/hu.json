@@ -5,7 +5,8 @@
             "login": "Bejelentkezés",
             "login_google": "Belépés Google fiókkal",
             "dont_have_account": "Nincs még fiókod?",
-            "have_account": "Van már fiókod?"
+            "have_account": "Van már fiókod?",
+            "login_failed": "Sikertelen bejelentkezés"
         },
         "form": {
             "email": "E-mail cím",

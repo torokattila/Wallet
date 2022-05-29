@@ -28,7 +28,7 @@ const baseConfig: ConfigInterface = {
     registrationUrl: 'http://localhost:6060/register',
     frontendUrl: 'http://localhost:3000',
     social: {
-        googleUrl: 'http://localhost/6060/auth/google',
+        googleUrl: 'http://localhost:6060/auth/google',
     },
 };
 

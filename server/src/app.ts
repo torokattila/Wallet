@@ -9,6 +9,7 @@ import UserController from './controllers/UserController';
 import { authenticate } from './middlewares/Authenticate';
 import IncomeController from './controllers/IncomeController';
 import MeController from './controllers/MeController';
+import GoogleLoginController from 'controllers/GoogleLoginController';
 
 class App {
     public express: Application;
@@ -26,6 +27,7 @@ class App {
     private routes() {
         this.express.use('/register', RegistrationController);
         this.express.use('/login', LoginController);
+        this.express.use('/auth/google', GoogleLoginController);
         this.express.use('/users', authenticate, UserController);
         this.express.use('/purchases', authenticate, PurchaseController);
         this.express.use('/incomes', authenticate, IncomeController);

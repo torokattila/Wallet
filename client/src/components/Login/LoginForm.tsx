@@ -14,10 +14,15 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { useNavigate } from 'react-router-dom';
 import useLocales from '../../hooks/useLocale';
 import LoginContainer from '../../containers/Login/LoginContainer';
+import { useSnackbar } from 'notistack';
+import { useGoogleAuth } from '../../contexts/GoogleAuthContext';
 
 const LoginForm = (): JSX.Element => {
     const { translate } = useLocales();
     const navigate = useNavigate();
+    // @ts-ignore
+    const { signIn } = useGoogleAuth();
+
     const {
         email,
         setEmail,
@@ -123,6 +128,7 @@ const LoginForm = (): JSX.Element => {
                                 p: 2,
                                 borderRadius: '8px',
                             }}
+                            onClick={signIn}
                         >
                             <GoogleIcon sx={{ mr: 2, color: 'secondary' }} />
                             <Typography

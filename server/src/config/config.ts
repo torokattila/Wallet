@@ -23,6 +23,19 @@ const config: any = {
         jwtTokenSecret: process.env.JWT_TOKEN_SECRET,
         tokenSecret: process.env.TOKEN_SECRET,
         defaultPageSize: Number.MAX_SAFE_INTEGER,
+
+        social: {
+            google: {
+                clientId: '',
+                clientSecret: '',
+                authorizeUrl: '',
+                tokenUrl: '',
+                redirectUri: '',
+                responseType: 'code',
+                grantType: 'authorization_code',
+                scope: 'profile email',
+            }
+        }
     },
     development: {
         env: 'dev',
@@ -43,6 +56,19 @@ const config: any = {
             'http://localhost:3000',
         ],
         clientUrl: 'https://my-wallet-webapp.herokuapp.com',
+        
+        social: {
+            google: {
+                clientId: '',
+                clientSecret: '',
+                authorizeUrl: '',
+                tokenUrl: '',
+                redirectUri: '',
+                responseType: 'code',
+                grantType: 'authorization_code',
+                scope: 'profile email',
+            }
+        }
     },
 };
 

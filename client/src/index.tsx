@@ -10,6 +10,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from './locales/i18n';
 import { SnackbarProvider } from 'notistack';
 import 'moment/locale/hu';
+import { GoogleAuthProvider } from './contexts/GoogleAuthContext';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -30,7 +31,9 @@ root.render(
                                 horizontal: 'right',
                             }}
                         >
-                            <App />
+                            <GoogleAuthProvider>
+                                <App />
+                            </GoogleAuthProvider>
                         </SnackbarProvider>
                     </AuthProvider>
                 </BrowserRouter>
