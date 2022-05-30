@@ -14,7 +14,6 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { useNavigate } from 'react-router-dom';
 import useLocales from '../../hooks/useLocale';
 import LoginContainer from '../../containers/Login/LoginContainer';
-import { useSnackbar } from 'notistack';
 import { useGoogleAuth } from '../../contexts/GoogleAuthContext';
 
 const LoginForm = (): JSX.Element => {

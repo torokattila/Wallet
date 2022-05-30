@@ -22,6 +22,7 @@ import Purchase from '../../models/Purchase';
 import PurchaseCard from '../../components/PurchaseCard/PurchaseCard';
 import DeleteEntityDialog from '../../components/DeleteEntityDialog/DeleteEntityDialog';
 import IncomeContainer from '../../containers/Income/IncomeContainer';
+import { motion } from 'framer-motion';
 
 const Home = (): JSX.Element => {
     const { translate } = useLocales();
@@ -31,7 +32,6 @@ const Home = (): JSX.Element => {
     const { user } = HomeContainer();
     const {
         openIncomeDialog,
-        setOpenIncomeDialog,
         handleOpenIncomeDialog,
         handleCloseIncomeDialog,
     } = IncomeContainer();
@@ -46,7 +46,24 @@ const Home = (): JSX.Element => {
     return (
         <div className="home-container">
             <DrawerLayout>
-                <Container maxWidth="xl" className="home-blurred-container">
+                <Container
+                    maxWidth="xl"
+                    className="home-blurred-container"
+                    component={motion.div}
+                    initial={{
+                        opacity: 0,
+                        x: '-100vw'
+                    }}
+                    animate={{
+                        x: 0,
+                        opacity: 1,
+                        transition: {
+                            type: 'spring',
+                            bounce: 0.1,
+                            duration: 1.5,
+                        },
+                    }}
+                >
                     <Stack sx={{ maxWidth: matches ? '50%' : '100%' }}>
                         <Card
                             sx={{

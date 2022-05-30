@@ -1,9 +1,4 @@
-import GoogleLogin, {
-    GoogleLoginProps,
-    GoogleLoginResponseOffline,
-    useGoogleLogin,
-    UseGoogleLoginResponse,
-} from 'react-google-login';
+import { GoogleLoginResponseOffline, useGoogleLogin, UseGoogleLoginResponse } from 'react-google-login';
 import LoginContainer from '../containers/Login/LoginContainer';
 import { createContext, useContext, ReactNode } from 'react';
 import { useSnackbar } from 'notistack';

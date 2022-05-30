@@ -4,7 +4,6 @@ import { Localization } from '@mui/material/locale';
 import {
     Box,
     IconButton,
-    ListItem,
     ListItemIcon,
     ListItemText,
     MenuItem,

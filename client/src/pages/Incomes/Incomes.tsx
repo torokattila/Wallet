@@ -35,6 +35,8 @@ import DeleteEntityDialog from '../../components/DeleteEntityDialog/DeleteEntity
 import { DatePicker, LocalizationProvider } from '@mui/lab';
 import CurrencyFormat from 'react-currency-format';
 
+import { motion } from 'framer-motion';
+
 const Incomes = (): JSX.Element => {
     const { translate } = useLocales();
     const {
@@ -61,6 +63,20 @@ const Incomes = (): JSX.Element => {
                     maxWidth="lg"
                     className="incomes-blurred-container"
                     sx={{ pb: 3 }}
+                    component={motion.div}
+                    initial={{
+                        opacity: 0,
+                        x: '-100vw',
+                    }}
+                    animate={{
+                        x: 0,
+                        opacity: 1,
+                        transition: {
+                            type: 'spring',
+                            bounce: 0.1,
+                            duration: 1.5,
+                        },
+                    }}
                 >
                     <Stack spacing={3}>
                         <Box

@@ -40,6 +40,8 @@ import PurchaseDialog from '../../components/PurchaseDialog/PurchaseDialog';
 import DeleteEntityDialog from '../../components/DeleteEntityDialog/DeleteEntityDialog';
 import CurrencyFormat from 'react-currency-format';
 
+import { motion } from 'framer-motion';
+
 const Purchases = (): JSX.Element => {
     const { translate } = useLocales();
     const theme = useTheme();
@@ -68,6 +70,20 @@ const Purchases = (): JSX.Element => {
                     maxWidth="lg"
                     className="purchases-blurred-container"
                     sx={{ pb: 3 }}
+                    component={motion.div}
+                    initial={{
+                        opacity: 0,
+                        x: '-100vw',
+                    }}
+                    animate={{
+                        x: 0,
+                        opacity: 1,
+                        transition: {
+                            type: 'spring',
+                            bounce: 0.1,
+                            duration: 1.5,
+                        },
+                    }}
                 >
                     <Stack spacing={3}>
                         <Box
