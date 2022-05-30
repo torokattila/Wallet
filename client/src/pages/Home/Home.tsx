@@ -63,7 +63,7 @@ const Home = (): JSX.Element => {
                                         color="secondary"
                                         sx={{ fontWeight: 'bold' }}
                                     >
-                                        Hello {user ? user.lastname : ''}!
+                                        Hello {user ? user.firstname : ''}!
                                     </Typography>
                                 </Box>
                                 <Box>

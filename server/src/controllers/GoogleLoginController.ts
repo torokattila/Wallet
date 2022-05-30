@@ -80,7 +80,8 @@ class GoogleLoginController {
                 }
             }
         } catch (error) {
-            console.log(error);
+            logger.info(`POST /auth/google status code ${StatusCodes.BAD_REQUEST}`);
+            return res.sendStatus(StatusCodes.BAD_REQUEST);
         }
     }
 }

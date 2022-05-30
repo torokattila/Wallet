@@ -29,6 +29,7 @@
     "axios": "^0.26.1",
     "date-fns": "^2.28.0",
     "formik": "^2.2.9",
+    "framer-motion": "^6.3.5",
     "gapi-script": "^1.2.0",
     "http-status-codes": "^2.2.0",
     "i18next": "^21.6.16",

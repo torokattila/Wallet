@@ -278,6 +278,7 @@ const ProfileContainer = () => {
     };
 
     return {
+        user,
         email,
         setEmail,
         firstname,

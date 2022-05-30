@@ -21,6 +21,7 @@ const UserEditForm = (): JSX.Element => {
     const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
     const {
+        user,
         email,
         setEmail,
         firstname,
@@ -73,6 +74,7 @@ const UserEditForm = (): JSX.Element => {
                     <TextField
                         color="secondary"
                         type="email"
+                        disabled={user?.googleId ? true : false}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         label={translate('general.form.email')}
