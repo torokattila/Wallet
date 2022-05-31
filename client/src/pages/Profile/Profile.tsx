@@ -4,8 +4,6 @@ import PasswordChangeForm from '../../components/PasswordChange/PasswordChangeFo
 import UserDeleteForm from '../../components/UserEdit/UserDeleteForm';
 import UserEditForm from '../../components/UserEdit/UserEditForm';
 
-import { motion } from 'framer-motion';
-
 const Profile = (): JSX.Element => {
     return (
         <div>
@@ -17,20 +15,6 @@ const Profile = (): JSX.Element => {
                     flexDirection="column"
                     spacing={6}
                     sx={{ margin: 0 }}
-                    component={motion.div}
-                    initial={{
-                        opacity: 0,
-                        x: '-100vw',
-                    }}
-                    animate={{
-                        x: 0,
-                        opacity: 1,
-                        transition: {
-                            type: 'spring',
-                            bounce: 0.1,
-                            duration: 1.5,
-                        },
-                    }}
                 >
                     <UserEditForm />
                     <PasswordChangeForm />

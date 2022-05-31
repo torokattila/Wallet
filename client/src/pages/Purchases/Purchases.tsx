@@ -46,6 +46,7 @@ const Purchases = (): JSX.Element => {
     const { translate } = useLocales();
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('lg'));
+    const biggerThanSmallScreen = useMediaQuery(theme.breakpoints.up('sm'));
 
     const {
         from,
@@ -289,9 +290,16 @@ const Purchases = (): JSX.Element => {
                                     py: 2,
                                     borderRadius: '20px',
                                     mb: 2,
+                                    maxWidth: biggerThanSmallScreen ? '200vw' : '80vw',
                                 }}
                             >
-                                <TableContainer>
+                                <TableContainer
+                                    sx={{
+                                        overflowX: 'auto',
+                                        marginLeft: 'auto',
+                                        marginRight: 'auto',
+                                    }}
+                                >
                                     <Table>
                                         <TableHead>
                                             <TableRow>

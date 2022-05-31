@@ -15,6 +15,8 @@ import useLocales from '../../hooks/useLocale';
 import { useTheme } from '@mui/material/styles';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 
+import { motion } from 'framer-motion';
+
 const UserEditForm = (): JSX.Element => {
     const { translate } = useLocales();
     const theme = useTheme();
@@ -43,6 +45,20 @@ const UserEditForm = (): JSX.Element => {
                     width: matches ? '60%' : '100%',
                     borderRadius: '15px',
                     boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
+                }}
+                component={motion.div}
+                initial={{
+                    opacity: 0,
+                    x: '-100vw',
+                }}
+                animate={{
+                    x: 0,
+                    opacity: 1,
+                    transition: {
+                        type: 'spring',
+                        bounce: 0.1,
+                        duration: 1.5,
+                    },
                 }}
             >
                 <Box
