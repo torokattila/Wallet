@@ -40,8 +40,8 @@ const prodConfig: ConfigInterface = {
         port: 443,
     },
     apiUrl: 'https://my-wallet-webapp-backend.herokuapp.com',
-    loginUrl: 'https://my-wallet-webapp.herokuapp-backend.com/login',
-    registrationUrl: 'https://my-wallet-webapp.herokuapp-backend.com/register',
+    loginUrl: 'https://my-wallet-webapp-backend.herokuapp.com/login',
+    registrationUrl: 'https://my-wallet-webapp-backend.herokuapp.com/register',
     frontendUrl: 'https://my-wallet-webapp.herokuapp.com',
     social: {
         googleUrl: 'https://my-wallet-webapp.herokuapp-backend.com/auth/google',
