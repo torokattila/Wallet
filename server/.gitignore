@@ -12,5 +12,7 @@ data/**/*
 log
 package-lock.json
 yarn.lock
+junit.xml
+.eslintignore
 
 *.pk

@@ -84,7 +84,7 @@ class RegistrationController {
                 secret
             );
 
-            logger.info(`POST /register status code: ${StatusCodes.CREATED}`);
+            logger.info(`POST /register status code: ${StatusCodes.OK}`);
             return res.status(StatusCodes.OK).send({
                 token: accessToken,
                 user: result,
