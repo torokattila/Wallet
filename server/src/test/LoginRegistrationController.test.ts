@@ -1,7 +1,8 @@
+import { login } from '../../jest.setup';
 import { StatusCodes } from 'http-status-codes';
-import UserService from 'services/UserService';
 import request from 'supertest';
-import app from '../../app';
+import app from '../app';
+import UserService from 'services/UserService';
 
 const testRegisterData = {
     firstname: 'Test',
@@ -9,6 +10,16 @@ const testRegisterData = {
     email: 'test@test.com',
     password: 'test',
     passwordConfirm: 'test',
+};
+
+const testLoginDatas = {
+    email: 'test@test.com',
+    password: 'test',
+};
+
+const wrongTestLoginData = {
+    email: 'testuser2@test.com',
+    password: 'test',
 };
 
 const registerUrl = '/register';
@@ -24,7 +35,7 @@ describe('POST /register', () => {
         const { errors } = response.body;
 
         expect(response.status).toBe(StatusCodes.BAD_REQUEST);
-        expect(response.body).not.toBeNull();
+        expect(errors).not.toBeUndefined();
         expect(errors[0]).toBe('password_confirm_required');
     });
 
@@ -35,10 +46,33 @@ describe('POST /register', () => {
 
         expect(response.status).toBe(StatusCodes.OK);
         expect(response.body).not.toBeNull();
+        expect(response.body.token).not.toBeUndefined();
 
         const createdUser = await UserService.findByEmail(
             testRegisterData.email
         );
         expect(response.body.user.email).toEqual(createdUser.email);
+    });
+});
+
+describe('POST /login', () => {
+    test('Successful login with correct login credentials', async () => {
+        const response = await login(testLoginDatas);
+
+        expect(response.status).toBe(StatusCodes.OK);
+        expect(response.body).not.toBeNull();
+        expect(response.body.user.email).toEqual(testLoginDatas.email);
+        expect(response.body.token).not.toBeNull();
+    });
+
+    test('Failed login with wrong credentials', async () => {
+        const response = await login(wrongTestLoginData);
+
+        const { errors } = response.body;
+
+        expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+        expect(errors).not.toBeUndefined();
+        expect(response.body.token).toBeUndefined();
+        expect(errors[0]).toEqual('user_not_found');
     });
 });

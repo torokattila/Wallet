@@ -85,6 +85,7 @@ const remove = async (userId: string): Promise<void> => {
     try {
         await getUserRepository().delete(userId);
     } catch (error: any) {
+        console.log(error)
         logger.error('Delete operation failed in UserService');
         throw new Error('delete_operation_failed_in_UserService');
     }

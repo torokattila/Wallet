@@ -1,6 +1,9 @@
 import { Connection, createConnection } from 'typeorm';
 import dotenv from 'dotenv';
 import User from './src/entities/User';
+import request from 'supertest';
+import app from './src/app';
+import UserService from 'services/UserService';
 
 dotenv.config();
 
@@ -20,7 +23,6 @@ const testUser: User = {
 
 let connection: Connection;
 
-// @ts-ignore
 beforeAll(async () => {
     try {
         connection = await createConnection({
@@ -41,8 +43,26 @@ beforeAll(async () => {
     }
 });
 
-// @ts-ignore
 afterAll(async () => {
-    connection.close();
-    console.log('Database connection closed');
+    try {
+        // Remove test user after all tests
+        const foundTestUser = await UserService.findByEmail(testUser.email);
+
+        if (foundTestUser) {
+            await UserService.remove(foundTestUser.id);
+        }
+    } catch (error) {
+        console.log(error);
+    } finally {
+        await connection.close();
+        console.log('Database connection closed');
+    }
 });
+
+const login = async (credentials: { email: string; password: string }) => {
+    const response = await request(app).post('/login').send(credentials);
+
+    return response;
+};
+
+export { login };
