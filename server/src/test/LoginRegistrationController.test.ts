@@ -5,6 +5,7 @@ import app from '../app';
 import UserService from 'services/UserService';
 
 const testRegisterData = {
+    id: '123e4567-e89b-12d3-a456-426614174000',
     firstname: 'Test',
     lastname: 'User',
     email: 'test@test.com',
@@ -12,7 +13,7 @@ const testRegisterData = {
     passwordConfirm: 'test',
 };
 
-const testLoginDatas = {
+export const testLoginDatas = {
     email: 'test@test.com',
     password: 'test',
 };
@@ -24,7 +25,7 @@ const wrongTestLoginData = {
 
 const registerUrl = '/register';
 
-describe('POST /register', () => {
+describe('POST /register test', () => {
     test('Failed registration with incorrent registration credentials', async () => {
         const response = await request(app).post(registerUrl).send({
             email: testRegisterData.email,
@@ -55,7 +56,7 @@ describe('POST /register', () => {
     });
 });
 
-describe('POST /login', () => {
+describe('POST /login test', () => {
     test('Successful login with correct login credentials', async () => {
         const response = await login(testLoginDatas);
 

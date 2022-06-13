@@ -7,7 +7,7 @@ import UserService from 'services/UserService';
 
 dotenv.config();
 
-const testUser: User = {
+export const testUser: User = {
     id: '123e4567-e89b-12d3-a456-426614174000',
     googleId: '',
     balance: 0,
@@ -46,11 +46,7 @@ beforeAll(async () => {
 afterAll(async () => {
     try {
         // Remove test user after all tests
-        const foundTestUser = await UserService.findByEmail(testUser.email);
-
-        if (foundTestUser) {
-            await UserService.remove(foundTestUser.id);
-        }
+        await UserService.remove(testUser.id);
     } catch (error) {
         console.log(error);
     } finally {
