@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import IncomeService from 'services/IncomeService';
 import request from 'supertest';
 import { testLoginDatas } from 'test/LoginRegistrationController.test';
-import { login } from '../../../jest.setup';
+import { login, testUser } from '../../../jest.setup';
 import app from '../../app';
 
 const successfulPostIncomeData = {
@@ -41,10 +41,12 @@ const updateIncomesUrl = `/incomes/${successfulPostIncomeData.id}`;
 describe('POST /incomes test', () => {
     test('Create income fails due to lack of amount', async () => {
         const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
+
         const response = await request(app)
             .post(incomesUrl)
             .send(wrongPostIncomeData)
-            .set('access_token', `${await loginResponse.body.token}`);
+            .set('access_token', token);
 
         const { errors } = response.body;
 
@@ -61,10 +63,11 @@ describe('POST /incomes test', () => {
 
     test('Successfully create income', async () => {
         const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
         const response = await request(app)
             .post(incomesUrl)
             .send(successfulPostIncomeData)
-            .set('access_token', `${await loginResponse.body.token}`);
+            .set('access_token', token);
 
         expect(response.status).toBe(StatusCodes.CREATED);
         expect(response.body).not.toBeUndefined();
@@ -78,13 +81,61 @@ describe('POST /incomes test', () => {
     });
 });
 
+describe(`GET /incomes/${successfulPostIncomeData.id} test`, () => {
+    test('Get specific income fails because id is not a uuid', async () => {
+        const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
+        const response = await request(app)
+            .get('/incomes/12345')
+            .set('access_token', token);
+
+        expect(response.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
+        expect(response.body).not.toEqual(successfulPostIncomeData);
+        expect(response.body).toEqual({});
+    });
+
+    test('Get specific income fails because income not found with incoming id param', async () => {
+        const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
+        const response = await request(app)
+            .get(`/incomes/${testUser.id}`)
+            .set('access_token', token);
+
+        const { errors } = response.body;
+
+        expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+        expect(errors).not.toBeUndefined();
+        expect(errors[0]).toEqual('income_not_found');
+        expect(response.body).not.toEqual(successfulPostIncomeData);
+    });
+
+    test('Get specific income successfully', async () => {
+        const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
+        const response = await request(app)
+            .get(`/incomes/${successfulPostIncomeData.id}`)
+            .set('access_token', token);
+
+        expect(response.status).toBe(StatusCodes.OK);
+        expect(response.body).not.toBeUndefined();
+
+        // Check if created income is in the db
+        const storedIncome = await IncomeService.findById(
+            successfulPostIncomeData.id
+        );
+        expect(storedIncome).not.toBeNull();
+        expect(response.body.id).toEqual(storedIncome.id);
+    });
+});
+
 describe(`PUT /incomes/${successfulPostIncomeData.id} test`, () => {
     test('Update income fails because income id is not a uuid', async () => {
         const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
         const response = await request(app)
             .put('/incomes/12345')
             .send(updatedIncomeData)
-            .set('access_token', `${await loginResponse.body.token}`);
+            .set('access_token', token);
 
         expect(response.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
         expect(response.body).not.toEqual(updatedIncomeData);
@@ -96,10 +147,11 @@ describe(`PUT /incomes/${successfulPostIncomeData.id} test`, () => {
 
     test('Update income fails because updated income does not have an amount property', async () => {
         const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
         const response = await request(app)
             .put(updateIncomesUrl)
             .send(wrongUpdatedIncomeData)
-            .set('access_token', `${await loginResponse.body.token}`);
+            .set('access_token', token);
 
         const { errors } = response.body;
 
@@ -116,6 +168,7 @@ describe(`PUT /incomes/${successfulPostIncomeData.id} test`, () => {
 
     test('Update income fails because updated income does not have a userId property', async () => {
         const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
         const response = await request(app)
             .put(updateIncomesUrl)
             .send({
@@ -124,7 +177,7 @@ describe(`PUT /incomes/${successfulPostIncomeData.id} test`, () => {
                 modified: new Date(),
                 amount: 2500,
             })
-            .set('access_token', `${await loginResponse.body.token}`);
+            .set('access_token', token);
 
         const { errors } = response.body;
 
@@ -139,10 +192,11 @@ describe(`PUT /incomes/${successfulPostIncomeData.id} test`, () => {
 
     test('Successful income update', async () => {
         const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
         const response = await request(app)
             .put(updateIncomesUrl)
             .send(updatedIncomeData)
-            .set('access_token', `${await loginResponse.body.token}`);
+            .set('access_token', token);
 
         expect(response.status).toBe(StatusCodes.OK);
         expect(response.body).not.toBeUndefined();
