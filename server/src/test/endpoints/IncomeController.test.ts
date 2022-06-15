@@ -4,6 +4,8 @@ import request from 'supertest';
 import { testLoginDatas } from 'test/LoginRegistrationController.test';
 import { login, testUser } from '../../../jest.setup';
 import app from '../../app';
+import { v4 as uuidv4 } from 'uuid';
+import Income from 'entities/Income';
 
 const successfulPostIncomeData = {
     id: '39caef44-eb57-11ec-8ea0-0242ac120002',
@@ -34,6 +36,18 @@ const wrongPostIncomeData = {
     created: new Date(),
     modified: new Date(),
 };
+
+const newIncomesArray: any = [];
+
+for (let i = 1; i <= 3; i++) {
+    newIncomesArray.push({
+        id: uuidv4(),
+        userId: '123e4567-e89b-12d3-a456-426614174000',
+        created: new Date(),
+        modified: new Date(),
+        amount: i * 1000,
+    });
+}
 
 const incomesUrl = '/incomes';
 const updateIncomesUrl = `/incomes/${successfulPostIncomeData.id}`;
@@ -125,6 +139,24 @@ describe(`GET /incomes/${successfulPostIncomeData.id} test`, () => {
         );
         expect(storedIncome).not.toBeNull();
         expect(response.body.id).toEqual(storedIncome.id);
+    });
+});
+
+describe('GET /incomes test', () => {
+    test('Successfully list all incomes', async () => {
+        for (const income of newIncomesArray) {
+            await IncomeService.create(income);
+        }
+
+        const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
+        const response = await request(app)
+            .get(incomesUrl)
+            .set('access_token', token);
+
+        expect(response.status).toBe(StatusCodes.OK);
+        expect(response.body).not.toBeUndefined();
+        expect(response.body.length).toBe(4);
     });
 });
 
