@@ -4,7 +4,7 @@ import request from 'supertest';
 import app from '../app';
 import UserService from 'services/UserService';
 
-const testRegisterData = {
+export const testRegisterData = {
     id: '123e4567-e89b-12d3-a456-426614174000',
     firstname: 'Test',
     lastname: 'User',

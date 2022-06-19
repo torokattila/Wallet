@@ -20,21 +20,16 @@ const findByEmail = async (email: string): Promise<User> => {
 };
 
 const findById = async (userId: string): Promise<User> => {
-    try {
-        const queryBuilder = getUserRepository().createQueryBuilder('user');
-        queryBuilder.leftJoinAndSelect('user.purchases', 'purchases');
-        queryBuilder.leftJoinAndSelect('user.incomes', 'incomes');
+    const queryBuilder = getUserRepository().createQueryBuilder('user');
+    queryBuilder.leftJoinAndSelect('user.purchases', 'purchases');
+    queryBuilder.leftJoinAndSelect('user.incomes', 'incomes');
 
-        queryBuilder.andWhere('user.id = :id', { id: userId });
+    queryBuilder.andWhere('user.id = :id', { id: userId });
 
-        const user = await queryBuilder.getOne();
-        delete user.password;
+    const user = await queryBuilder.getOne();
+    delete user.password;
 
-        return Promise.resolve(user);
-    } catch (error: any) {
-        logger.error('Find user by id operation failed in UserService');
-        throw new Error('user_not_found');
-    }
+    return Promise.resolve(user);
 };
 
 const findByGoogleId = async (googleId: string): Promise<User | undefined> => {
@@ -85,7 +80,7 @@ const remove = async (userId: string): Promise<void> => {
     try {
         await getUserRepository().delete(userId);
     } catch (error: any) {
-        console.log(error)
+        console.log(error);
         logger.error('Delete operation failed in UserService');
         throw new Error('delete_operation_failed_in_UserService');
     }

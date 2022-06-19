@@ -5,6 +5,7 @@ import { Logger } from '../common';
 import { validate as uuidValidate } from 'uuid';
 import UserService from 'services/UserService';
 import * as Yup from 'yup';
+import User from 'entities/User';
 
 const logger = Logger(__filename);
 
@@ -43,15 +44,17 @@ class UserController {
             throw new Error('invalid_path_parameters');
         }
 
-        const user = await UserService.findById(id);
+        let user: User;
 
-        if (!user) {
+        try {
+            user = await UserService.findById(id);
+        } catch (error: any) {
+            logger.error('Find user by id operation failed in UserService');
+
             return res.status(StatusCodes.BAD_REQUEST).send({
                 errors: ['user_not_found'],
             });
         }
-
-        delete user.password;
 
         logger.info(`GET /users/:id status code: ${StatusCodes.OK}`);
         return res.status(StatusCodes.OK).send(user);
