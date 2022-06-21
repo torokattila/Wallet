@@ -5,8 +5,23 @@ import app from '../../app';
 import PurchaseCategory from 'enums/PurchaseCategory';
 import { StatusCodes } from 'http-status-codes';
 import PurchaseService from 'services/PurchaseService';
+import { v4 as uuidv4 } from 'uuid';
+import Purchase from 'entities/Purchase';
 
 const purchasesUrl = '/purchases';
+
+const newPurchasesArray: any[] = [];
+
+for (let i = 1; i <= 3; i++) {
+    newPurchasesArray.push({
+        id: uuidv4(),
+        userId: '123e4567-e89b-12d3-a456-426614174000',
+        created: new Date(),
+        modified: new Date(),
+        category: PurchaseCategory.FOOD,
+        amount: i * 1000,
+    });
+}
 
 const successfulPostedPurchase = {
     id: 'de57018a-431d-4064-b5a1-95891eabdb91',
@@ -142,5 +157,24 @@ describe(`GET /purchases/${successfulPostedPurchase.id} test`, () => {
         );
         expect(storedPurchase).not.toBeNull();
         expect(response.body.id).toEqual(storedPurchase.id);
+    });
+});
+
+describe('GET /purchases test', () => {
+    test('Successfully list all purchases', async () => {
+        for (const purchase of newPurchasesArray) {
+            await PurchaseService.create(purchase);
+        }
+
+        const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
+
+        const response = await request(app)
+            .get(purchasesUrl)
+            .set('access_token', token);
+
+        expect(response.status).toBe(StatusCodes.OK);
+        expect(response.body).not.toBeUndefined();
+        expect(response.body.length).toBe(4);
     });
 });
