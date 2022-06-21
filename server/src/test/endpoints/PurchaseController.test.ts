@@ -1,6 +1,6 @@
 import { testLoginDatas } from 'test/LoginRegistrationController.test';
 import request from 'supertest';
-import { login } from '../../../jest.setup';
+import { login, testUser } from '../../../jest.setup';
 import app from '../../app';
 import PurchaseCategory from 'enums/PurchaseCategory';
 import { StatusCodes } from 'http-status-codes';
@@ -83,8 +83,6 @@ describe('POST /purchases test', () => {
             .send(successfulPostedPurchase)
             .set('access_token', token);
 
-        console.log(response);
-
         expect(response.status).toBe(StatusCodes.CREATED);
         expect(response.body).not.toBeUndefined();
         expect(response.body.id).toEqual(successfulPostedPurchase.id);
@@ -94,5 +92,55 @@ describe('POST /purchases test', () => {
             successfulPostedPurchase.id
         );
         expect(storedIncome).not.toBeNull();
+    });
+});
+
+describe(`GET /purchases/${successfulPostedPurchase.id} test`, () => {
+    test('Get specific purchase fails because id query param is not a valid UUID', async () => {
+        const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
+
+        const response = await request(app)
+            .get(`${purchasesUrl}/12345`)
+            .set('access_token', token);
+
+        expect(response.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
+        expect(response.body).not.toEqual(successfulPostedPurchase);
+        expect(response.body).toEqual({});
+    });
+
+    test('Get specific purchase fails because purchase not found with provided id param', async () => {
+        const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
+
+        const response = await request(app)
+            .get(`${purchasesUrl}/${testUser.id}`)
+            .set('access_token', token);
+
+        const { errors } = response.body;
+
+        expect(response.status).toBe(StatusCodes.BAD_REQUEST);
+        expect(errors).not.toBeUndefined();
+        expect(errors[0]).toEqual('purchase_not_found');
+        expect(response.body).not.toEqual(successfulPostedPurchase);
+    });
+
+    test('Get specific purchase successfully', async () => {
+        const loginResponse = await login(testLoginDatas);
+        const token = await loginResponse.body.token;
+
+        const response = await request(app)
+            .get(`${purchasesUrl}/${successfulPostedPurchase.id}`)
+            .set('access_token', token);
+
+        expect(response.status).toBe(StatusCodes.OK);
+        expect(response.body).not.toBeUndefined();
+
+        // Check if created purchase is in the db
+        const storedPurchase = await PurchaseService.findById(
+            successfulPostedPurchase.id
+        );
+        expect(storedPurchase).not.toBeNull();
+        expect(response.body.id).toEqual(storedPurchase.id);
     });
 });
