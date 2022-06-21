@@ -3,14 +3,9 @@ import { StatusCodes } from 'http-status-codes';
 import { PromiseRejectionHandler } from '../common';
 import { Logger } from '../common';
 import * as Yup from 'yup';
-import PurchaseService, {
-    DownloadedPurchasesTypeEN,
-    DownloadedPurchasesTypeHU,
-    PurchaseFilterOptions,
-} from 'services/PurchaseService';
+import PurchaseService, { PurchaseFilterOptions } from 'services/PurchaseService';
 import { validate as uuidValidate } from 'uuid';
 import PaginationOptions from 'types/PaginationOptions';
-import User from 'entities/User';
 
 const logger = Logger(__filename);
 

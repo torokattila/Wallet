@@ -5,7 +5,6 @@ import { testLoginDatas } from 'test/LoginRegistrationController.test';
 import { login, testUser } from '../../../jest.setup';
 import app from '../../app';
 import { v4 as uuidv4 } from 'uuid';
-import Income from 'entities/Income';
 
 const successfulPostIncomeData = {
     id: '39caef44-eb57-11ec-8ea0-0242ac120002',
