@@ -296,7 +296,6 @@ describe(`DELETE /purchases/${successfulPostedPurchase.id} test`, () => {
             .delete(`${purchasesUrl}/${successfulPostedPurchase.id}`)
             .set('access_token', token);
 
-        console.log(response);
         const { errors } = response.body;
 
         expect(response.status).toBe(StatusCodes.NO_CONTENT);

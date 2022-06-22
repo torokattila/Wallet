@@ -14,5 +14,7 @@ package-lock.json
 yarn.lock
 junit.xml
 .eslintignore
+coverage
+yarn-error.log
 
 *.pk

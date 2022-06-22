@@ -9,4 +9,12 @@ module.exports = {
     reporters: ['default', 'jest-junit'],
     setupFilesAfterEnv: ['./jest.setup.ts'],
     testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
+    collectCoverage: true,
+    collectCoverageFrom: [
+        './src/(**|!(db|types|enums|config|services|controllers|middlewares))/*.ts',
+    ],
+    coverageDirectory: 'coverage',
+    coveragePathIgnorePatterns: ['\\\\node_modules\\\\'],
+    coverageProvider: 'v8',
+    coverageReporters: ['json', 'text', 'lcov', 'clover'],
 };
