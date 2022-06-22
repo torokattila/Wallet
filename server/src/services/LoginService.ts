@@ -1,7 +1,6 @@
 import User from 'entities/User';
 import UserService from './UserService';
 import { Logger } from '../common';
-import { authenticate } from 'middlewares/Authenticate';
 
 const logger = Logger(__filename);
 

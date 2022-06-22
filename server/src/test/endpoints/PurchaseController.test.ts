@@ -6,7 +6,6 @@ import PurchaseCategory from 'enums/PurchaseCategory';
 import { StatusCodes } from 'http-status-codes';
 import PurchaseService from 'services/PurchaseService';
 import { v4 as uuidv4 } from 'uuid';
-import Purchase from 'entities/Purchase';
 
 const purchasesUrl = '/purchases';
 
@@ -274,5 +273,39 @@ describe(`PUT /purchases/${successfulPostedPurchase.id} test`, () => {
         expect(errors).toBeUndefined();
         expect(storedPurchase.amount).toEqual(updatedPurchaseData.amount);
         expect(storedPurchase.category).toEqual(updatedPurchaseData.category);
+    });
+});
+
+describe(`DELETE /purchases/${successfulPostedPurchase.id} test`, () => {
+    test('Delete purchase fails because purchase id query param is not a UUID', async () => {
+        const loginResponse = await login(testLoginDatas);
+
+        const token = await loginResponse.body.token;
+        const response = await request(app)
+            .delete(`${purchasesUrl}/12345`)
+            .set('access_token', token);
+
+        expect(response.status).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
+    });
+
+    test('Delete purchase successfully', async () => {
+        const loginResponse = await login(testLoginDatas);
+
+        const token = await loginResponse.body.token;
+        const response = await request(app)
+            .delete(`${purchasesUrl}/${successfulPostedPurchase.id}`)
+            .set('access_token', token);
+
+        console.log(response);
+        const { errors } = response.body;
+
+        expect(response.status).toBe(StatusCodes.NO_CONTENT);
+        expect(errors).toBeUndefined();
+
+        // Check if purchase is removed from the db
+        const storedPurchase = await PurchaseService.findById(
+            successfulPostedPurchase.id
+        );
+        expect(storedPurchase).toBeNull();
     });
 });

@@ -256,7 +256,8 @@ const update = async (
 ): Promise<Purchase> => {
     try {
         const oldPurchase = await findById(purchaseId);
-        const purchaseUser = await UserService.findById(oldPurchase.userId);
+        const foundUser = await UserService.findById(oldPurchase.userId);
+        const purchaseUser = await UserService.findByEmail(foundUser.email);
         purchaseUser.balance += oldPurchase.amount;
 
         const updatedUser = await UserService.save(purchaseUser);
