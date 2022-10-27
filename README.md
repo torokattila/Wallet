@@ -1,3 +1,3 @@
 # Wallet
 
-[Link to the page](https://my-wallet-webapp.herokuapp.com/)
+[Link to the page](https://wallet-teal-beta.vercel.app/)

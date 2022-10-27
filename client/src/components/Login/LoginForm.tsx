@@ -49,6 +49,7 @@ const LoginForm = (): JSX.Element => {
                         sx={{ mb: 5, fontWeight: 'bold' }}
                         align="center"
                         variant="h5"
+                        data-testId="login-card-title"
                     >
                         {translate('general.login.login')}
                     </Typography>
